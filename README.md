@@ -19,3 +19,11 @@
 3. 点击Settings -> Secrets
 4. 新增 new secret  参数名IQIYI_COOKIE 值是你刚才获取的authcookie
 5. 任意修改仓库内所有文件，即可触发执行。
+
+# 可选参数
+
+PUSH_KEY 
+
+打开https://sc.ftqq.com/3.version 登录后点击 发送消息获取你的SCKEY  
+
+在Secrets 中添加新的PUSH_KEY = Server酱SCKEY 
