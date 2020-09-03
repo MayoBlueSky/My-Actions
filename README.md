@@ -14,7 +14,7 @@
 3. 签到并发送通知
 
 # 使用方式
-1. 打开爱奇艺官网 获取你的authcookie
+1. 打开爱奇艺官网 获取你的authcookie  获取方式 B 站[教程](https://www.bilibili.com/read/cv7437179)
 2. 右上角fork本仓库
 3. 点击Settings -> Secrets
 4. 新增 new secret  参数名IQIYI_COOKIE 值是你刚才获取的authcookie
