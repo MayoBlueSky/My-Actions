@@ -58,7 +58,7 @@ async function start() {
             content = fs.readFileSync(path, "utf8");
         }
         await sendNotify("爱奇艺签到-" + new Date().toLocaleDateString(), content);
-        console.log("爱奇艺签到-" + new Date().toLocaleDateString())
+        console.log("爱奇艺签到-" + content)
         console.log('发送结果完毕')
     }
 }
