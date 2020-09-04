@@ -51,14 +51,15 @@ async function start() {
     await exec("node iQIYI.js >> result.txt");
     console.log('执行完毕')
 
+    let content = "";
+    const path = "./result.txt";
+    if (fs.existsSync(path)) {
+        content = fs.readFileSync(path, "utf8");
+    }
+    console.log("爱奇艺签到-" + content)
+
     if (serverJ) {
-        const path = "./result.txt";
-        let content = "";
-        if (fs.existsSync(path)) {
-            content = fs.readFileSync(path, "utf8");
-        }
         await sendNotify("爱奇艺签到-" + new Date().toLocaleDateString(), content);
-        console.log("爱奇艺签到-" + content)
         console.log('发送结果完毕')
     }
 }
