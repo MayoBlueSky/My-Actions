@@ -14,12 +14,13 @@
 3. 签到并发送通知
 
 # 使用方式
-1. 打开爱奇艺官网 获取你的authcookie  获取方式 B 站[教程](https://www.bilibili.com/read/cv7437179)
+1. 打开爱奇艺官网 获取你的authcookie  获取方式 B 站[教程](https://www.bilibili.com/read/cv7437179)  authcookie有效期一般三个月
 2. 右上角fork本仓库
 3. 点击Settings -> Secrets
 4. 新增 new secret  参数名IQIYI_COOKIE 值是你刚才获取的authcookie
 5. 任意修改仓库内所有文件，即可触发执行。
 
+可使用Star触发，点击自己仓库右上角Star即可激活，如是Unstar状态需要点击两次即可。
 # 可选参数
 
 PUSH_KEY 
