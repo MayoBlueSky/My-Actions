@@ -28,3 +28,6 @@ PUSH_KEY
 打开https://sc.ftqq.com/3.version 登录后点击 发送消息获取你的SCKEY  
 
 在Secrets 中添加新的PUSH_KEY = Server酱SCKEY 
+
+#### 其他项目：
+* [哔哩哔哩漫画签到](https://github.com/BlueskyClouds/Bilibili-Manga)
