@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master
+  watch:
+    types: started
   schedule:
     - cron: '5 16 * * *'
 jobs:
