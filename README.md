@@ -13,6 +13,8 @@
 2. 替换参数值
 3. 签到并发送通知
 
+# 项目更新
+[保持和原作者同步的代码更新](https://blog.blueskyclouds.com/jsfx/58.html)
 # 使用方式
 1. 打开爱奇艺官网 获取你的authcookie  获取方式 B 站[教程](https://www.bilibili.com/read/cv7437179)  authcookie有效期一般三个月
 2. 右上角fork本仓库
