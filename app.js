@@ -92,7 +92,7 @@ async function start() {
         if (fs.existsSync(path)) {
             content = fs.readFileSync(path, "utf8");
         }
-        await Barksend(encodeURI("爱奇艺签到-")) + new Date().toLocaleDateString(), encodeURI(content));
+        await Barksend(encodeURI("爱奇艺签到-") + new Date().toLocaleDateString()), encodeURI(content);
         console.log("爱奇艺签到-" + content)
         console.log('发送结果完毕')
     }
