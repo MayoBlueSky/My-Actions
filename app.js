@@ -61,7 +61,7 @@ async function deleteFile(path) {
 }
 
 //url将时间/转换成-
-async function url_encode(url){
+function url_encode(url){
     url = encodeURIComponent(url);
     url = url.replace(/\%2F/g, "-");
     return url;
@@ -100,7 +100,7 @@ async function start() {
         if (fs.existsSync(path)) {
             content = fs.readFileSync(path, "utf8");
         }
-        await Barksend(encodeURI("爱奇艺签到-" + url_encode(new Date().toLocaleDateString())), content);
+        await Barksend(encodeURI("爱奇艺签到-" + url_encode(new Date().toLocaleDateString())), encodeURI(content));
 
         console.log("爱奇艺签到-" + content)
         console.log('发送结果完毕')
