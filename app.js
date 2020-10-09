@@ -12,6 +12,7 @@ const KEY = process.env.iQIYI_COOKIE
 const serverJ = process.env.PUSH_KEY
 const Bark = process.env.BARK_PUSH
 
+
 async function downFile () {
     const url = 'https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js'
     await download(url, './')
