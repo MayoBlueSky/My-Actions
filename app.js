@@ -1,3 +1,33 @@
+Skip to content
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+
+@BlueskyClouds
+MisterGlasses
+/
+iQIYI-DailyBonus
+forked from BlueskyClouds/iQIYI-DailyBonus
+0
+129
+Code
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+iQIYI-DailyBonus/app.js /
+@BlueskyClouds
+BlueskyClouds 修正
+Latest commit 51e10a4 42 minutes ago
+History
+1 contributor
+107 lines (96 sloc)  3.06 KB
+
 // version v0.0.1
 // create by BlueSkyClouds
 // detail url: https://github.com/BlueskyClouds/iQIYI-DailyBonus
@@ -10,7 +40,7 @@ const download = require('download')
 // 公共变量
 const KEY = process.env.iQIYI_COOKIE
 const serverJ = process.env.PUSH_KEY
-const barK = process.env.BARK_PUSH
+const Bark = process.env.BARK_PUSH
 
 async function downFile () {
     const url = 'https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js'
@@ -39,7 +69,7 @@ async function sendNotify (text,desp) {
 
 async function Barksend (text,desp) {
     const options ={
-        uri:  `https://api.day.app/${barK}/${text}/${desp}`,
+        uri:  `https://api.day.app/${Bark}/${text}/${desp}`,
         json: true,
         method: 'GET'
     }
@@ -73,6 +103,7 @@ async function start() {
     // 执行
     await exec("node iQIYI.js >> result.txt");
     console.log('执行完毕')
+
     if (serverJ) {
         const path = "./result.txt";
         let content = "";
@@ -84,7 +115,7 @@ async function start() {
         console.log('发送结果完毕')
     }
 
-    if (barK) {
+    if (Bark) {
         const path = "./result.txt";
         let content = "";
         if (fs.existsSync(path)) {
