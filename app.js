@@ -73,6 +73,7 @@ async function start() {
     // 执行
     await exec("node iQIYI.js >> result.txt");
     console.log('执行完毕')
+
     if (serverJ) {
         const path = "./result.txt";
         let content = "";
@@ -82,6 +83,7 @@ async function start() {
         await sendNotify("爱奇艺签到-" + new Date().toLocaleDateString(), content);
         console.log("爱奇艺签到-" + content)
         console.log('发送结果完毕')
+        //运行完成后，删除下载的文件
         console.log('运行完成后，删除下载的文件\n')
         await deleteFile(path);
     }
@@ -93,7 +95,7 @@ async function start() {
             content = fs.readFileSync(path, "utf8");
         }
         await Barksend(encodeURI("爱奇艺签到-" + new Date().toLocaleDateString()), encodeURI(content));
-        console.log(content)
+        console.log("爱奇艺签到-" + content)
         console.log('发送结果完毕')
         //运行完成后，删除下载的文件
         console.log('运行完成后，删除下载的文件\n')
