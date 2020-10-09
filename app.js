@@ -12,7 +12,6 @@ const KEY = process.env.iQIYI_COOKIE
 const serverJ = process.env.PUSH_KEY
 const Bark = process.env.BARK_PUSH
 
-
 async function downFile () {
     const url = 'https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js'
     await download(url, './')
@@ -60,6 +59,7 @@ async function deleteFile(path) {
         // console.log('unlinkRes', unlinkRes)
     }
 }
+
 async function start() {
     if (!KEY) {
         console.log('请填写 key 后在继续')
@@ -92,7 +92,7 @@ async function start() {
         if (fs.existsSync(path)) {
             content = fs.readFileSync(path, "utf8");
         }
-        await Barksend(encodeURI("爱奇艺签到"), encodeURI(content));
+        await Barksend(encodeURI("爱奇艺签到-") + new Date().toLocaleDateString()), encodeURI(content));
         console.log("爱奇艺签到-" + content)
         console.log('发送结果完毕')
     }
