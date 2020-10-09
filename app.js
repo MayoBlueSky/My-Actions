@@ -10,7 +10,7 @@ const download = require('download')
 // 公共变量
 const KEY = process.env.iQIYI_COOKIE
 const serverJ = process.env.PUSH_KEY
-const Bark = process.env.BARK_PUSH
+const barK = process.env.BARK_PUSH
 
 async function downFile () {
     const url = 'https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js'
@@ -39,7 +39,7 @@ async function sendNotify (text,desp) {
 
 async function Barksend (text,desp) {
     const options ={
-        uri:  `https://api.day.app/${Bark}/${text}/${desp}`,
+        uri:  `https://api.day.app/${barK}/${text}/${desp}`,
         json: true,
         method: 'GET'
     }
@@ -84,7 +84,7 @@ async function start() {
         console.log('发送结果完毕')
     }
 
-    if (Bark) {
+    if (barK) {
         const path = "./result.txt";
         let content = "";
         if (fs.existsSync(path)) {
