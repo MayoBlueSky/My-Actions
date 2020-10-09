@@ -24,10 +24,11 @@
 
 **本项目需要设置的 Secrets:**
 
-| 名称     | 内容           |   类型     |
-| -------- | ------------- |  ------ |
+| 名称     | 内容           |   类型     |  说明|
+| -------- | ------------- |  ------ | ----- |
 | IQIYI_COOKIE  | 爱奇艺authcookie   | 必写参数 |
-| PUSH_KEY | Server酱SCKEY值 | 可选参数 |
+| PUSH_KEY | Server酱SCKEY值 | 可选参数 | cookie失效推送[server酱的微信通知](http://sc.ftqq.com/3.version) |
+| BARK_PUSH | Bark推送值 | 可选参数 | cookie失效推送BARK这个APP,此token是https://api.day.app/后面的内容|
 
 可使用Star触发，点击自己仓库右上角Star即可激活，如是Unstar状态需要点击两次即可。
 # 可选参数

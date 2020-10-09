@@ -25,3 +25,4 @@ jobs:
         env:
           iQIYI_COOKIE: ${{ secrets.iQIYI_COOKIE }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
+          BARK_PUSH: ${{ secrets.BARK_PUSH }}
