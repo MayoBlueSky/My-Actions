@@ -74,9 +74,10 @@ async function start() {
     await exec("node iQIYI.js >> result.txt");
     console.log('执行完毕')
 
+    const path = "./result.txt";
+    let content = "";
+
     if (serverJ) {
-        const path = "./result.txt";
-        let content = "";
         if (fs.existsSync(path)) {
             content = fs.readFileSync(path, "utf8");
         }
@@ -85,8 +86,6 @@ async function start() {
         console.log('发送结果完毕')
     }
     if (Bark) {
-        const path = "./result.txt";
-        let content = "";
         if (fs.existsSync(path)) {
             content = fs.readFileSync(path, "utf8");
         }
