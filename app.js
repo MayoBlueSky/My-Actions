@@ -73,7 +73,6 @@ async function start() {
     // 执行
     await exec("node iQIYI.js >> result.txt");
     console.log('执行完毕')
-    console.log(fs.readFileSync("./result.txt", "utf8"))
     if (serverJ) {
         const path = "./result.txt";
         let content = "";
