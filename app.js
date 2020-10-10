@@ -7,10 +7,10 @@ const fs = require('fs')
 const rp = require('request-promise')
 const download = require('download')
 
+const notify = $.isNode() ? require('./sendNotify') : '';
 // 公共变量
-const KEY = process.env.iQIYI_COOKIE
-const serverJ = process.env.PUSH_KEY
-let Bark = process.env.BARK_PUSH
+//const KEY = process.env.iQIYI_COOKIE
+const KEY = 'b880m2m1SEJEkgMLyWGgTcrpGim2HJurxgXyObBUPuWFl1bWgm3gkVz63Jfm2hYU4JaAyJ3d1'
 
 async function downFile () {
     const url = 'https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js'
@@ -21,33 +21,6 @@ async function changeFiele () {
     let content = await fs.readFileSync('./iQIYI.js', 'utf8')
     content = content.replace(/var cookie = ''/, `var cookie = '${KEY}'`)
     await fs.writeFileSync( './iQIYI.js', content, 'utf8')
-}
-
-async function sendNotify (text,desp) {
-    const options ={
-        uri:  `https://sc.ftqq.com/${serverJ}.send`,
-        form: { text, desp },
-        json: true,
-        method: 'POST'
-    }
-    await rp.post(options).then(res=>{
-        console.log(res)
-    }).catch((err)=>{
-        console.log(err)
-    })
-}
-
-async function Barksend (text,desp) {
-    const options ={
-        uri:  `https://api.day.app/${Bark}/${text}/${desp}`,
-        json: true,
-        method: 'GET'
-    }
-    await rp.get(options).then(res=>{
-        console.log(res)
-    }).catch((err)=>{
-        console.log(err)
-    })
 }
 
 async function deleteFile(path) {
@@ -82,32 +55,15 @@ async function start() {
     // 执行
     await exec("node iQIYI.js >> result.txt");
     console.log('执行完毕')
-
-    if (serverJ) {
-        const path = "./result.txt";
-        let content = "";
-        if (fs.existsSync(path)) {
-            content = fs.readFileSync(path, "utf8");
-        }
-        await sendNotify("爱奇艺签到-" + new Date().toLocaleDateString(), content);
-        console.log("爱奇艺签到-" + content)
-        console.log('发送结果完毕')
+    const path = "./result.txt";
+    let content = "";
+    if (fs.existsSync(path)) {
+        content = fs.readFileSync(path, "utf8");
     }
+    await notify.sendNotify("爱奇艺签到-" + new Date().toLocaleDateString(), content);
 
-    if (Bark) {
-        const path = "./result.txt";
-        let content = "";
-        if (fs.existsSync(path)) {
-            content = fs.readFileSync(path, "utf8");
-        }
-        await Barksend(encodeURI("爱奇艺签到-" + url_encode(new Date().toLocaleDateString())), encodeURI(content));
-
-        console.log("爱奇艺签到-" + content)
-        console.log('发送结果完毕')
-    }
     //运行完成后，删除下载的文件
     console.log('运行完成后，删除下载的文件\n')
-    const path = "./result.txt";
     await deleteFile(path);
 
 }
