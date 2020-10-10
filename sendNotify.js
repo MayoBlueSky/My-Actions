@@ -82,11 +82,10 @@ function BarkNotify(text, desp) {
     return  new Promise(resolve => {
         if (BARK_PUSH) {
             const options = {
-                url: `${BARK_PUSH}/${encodeURIComponent(text)}`,
+                url: `${BARK_PUSH}/${encodeURIComponent(text)}/${encodeURIComponent(desp)}?sound=${BARK_SOUND}`,
                 json: true,
                 method: 'GET'
             }
-            console.log(options)
             rp.get(options).then(res=>{
                 console.log(res)
             }).catch((err)=>{
