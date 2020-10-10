@@ -10,8 +10,7 @@ const download = require('download')
 const $ = new Env('爱奇艺会员签到');
 const notify = $.isNode() ? require('./sendNotify') : '';
 // 公共变量
-//const KEY = process.env.iQIYI_COOKIE
-const KEY = 'b880m2m1SEJEkgMLyWGgTcrpGim2HJurxgXyObBUPuWFl1bWgm3gkVz63Jfm2hYU4JaAyJ3d1'
+const KEY = process.env.iQIYI_COOKIE
 
 async function downFile () {
     const url = 'https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js'
