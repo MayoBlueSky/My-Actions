@@ -28,17 +28,9 @@
 | -------- | ------------- |  ------ | ----- |
 | IQIYI_COOKIE  | 爱奇艺authcookie   | 必写参数 |
 | PUSH_KEY | Server酱SCKEY值 | 可选参数 | cookie失效推送[server酱的微信通知](http://sc.ftqq.com/3.version) |
-| BARK_PUSH | Bark推送值 | 可选参数 | 此内容支撑自建Dark添加整个链接即可|
+| BARK_PUSH | Bark推送值 | 可选参数 | 此内容支持自建Dark添加整个链接即可(自建链接切记删除最后一个/  比如你的是https://a.a.com/ 只需要填写https://a.a.com即可)|
 |BARK_SOUND | BARK app推送铃声|可选参数|BARK app推送铃声,铃声列表去APP查看复制填写|
 
 可使用Star触发，点击自己仓库右上角Star即可激活，如是Unstar状态需要点击两次即可。
-# 可选参数
-
-PUSH_KEY 
-
-打开https://sc.ftqq.com/3.version 登录后点击 发送消息获取你的SCKEY  
-
-在Secrets 中添加新的PUSH_KEY = Server酱SCKEY 
-
 #### 其他项目：
 * [哔哩哔哩漫画签到](https://github.com/BlueskyClouds/Bilibili-Manga)
