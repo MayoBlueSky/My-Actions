@@ -95,7 +95,6 @@ async function start() {
     }
 
     if (Bark) {
-        console.log(Bark)
         const path = "./result.txt";
         let content = "";
         if (fs.existsSync(path)) {
