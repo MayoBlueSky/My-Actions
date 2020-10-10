@@ -10,7 +10,7 @@ const download = require('download')
 // 公共变量
 const KEY = process.env.iQIYI_COOKIE
 const serverJ = process.env.PUSH_KEY
-const Bark = process.env.BARK_PUSH
+let Bark = process.env.BARK_PUSH
 
 async function downFile () {
     const url = 'https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js'
@@ -95,6 +95,21 @@ async function start() {
     }
 
     if (Bark) {
+
+        if (process.env.BARK_PUSH) {
+            if(process.env.BARK_PUSH.indexOf('https') > -1 || process.env.BARK_PUSH.indexOf('http') > -1) {
+                //兼容BARK自建用户
+                Bark = process.env.BARK_PUSH
+            } else {
+                Bark = `https://api.day.app/${process.env.BARK_PUSH}`
+            }
+        } else {
+            if(Bark && Bark.indexOf('https') === -1 && Bark.indexOf('http') === -1) {
+                //兼容BARK本地用户只填写设备码的情况
+                Bark = `https://api.day.app/${Bark}`
+            }
+        }
+        console.log(Bark)
         const path = "./result.txt";
         let content = "";
         if (fs.existsSync(path)) {
