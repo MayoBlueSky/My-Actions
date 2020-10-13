@@ -10,6 +10,7 @@ const $ = new Env('爱奇艺会员签到');
 const notify = $.isNode() ? require('./sendNotify') : '';
 // 公共变量
 const KEY = process.env.iQIYI_COOKIE
+const SEND_KEY = process.env.SEND_KEY
 
 async function downFile () {
     const url = 'https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js'
@@ -51,7 +52,13 @@ async function start() {
     if (fs.existsSync(path)) {
         content = fs.readFileSync(path, "utf8");
     }
-    if (content.includes("Cookie")) {
+
+    if(SEND_KEY) {
+        if (content.includes("Cookie")) {
+            await notify.sendNotify("爱奇艺签到-" + new Date().toLocaleDateString(), content);
+            console.log("爱奇艺签到-" + content)
+        }
+    }else{
         await notify.sendNotify("爱奇艺签到-" + new Date().toLocaleDateString(), content);
         console.log("爱奇艺签到-" + content)
     }
