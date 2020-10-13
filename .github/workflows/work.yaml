@@ -25,6 +25,7 @@ jobs:
       - run: node app.js
         env:
           iQIYI_COOKIE: ${{ secrets.iQIYI_COOKIE }}
+          SEND_KEY: ${{ secrets.SEND_KEY }}
           PUSH_KEY: ${{ secrets.PUSH_KEY }}
           BARK_PUSH: ${{ secrets.BARK_PUSH }}
           BARK_SOUND: ${{ secrets.BARK_SOUND }}
