@@ -12,8 +12,6 @@ let BARK_PUSH = '';
 //注：此处设置github action用户填写到Settings-Secrets里面（Name输入BARK_SOUND , Value输入app提供的铃声名称，例如:birdsong）
 let BARK_SOUND = '';
 
-const rp = require('request-promise')
-
 if (process.env.PUSH_KEY) {
     SCKEY = process.env.PUSH_KEY;
 }
@@ -83,14 +81,25 @@ function BarkNotify(text, desp) {
         if (BARK_PUSH) {
             const options = {
                 url: `${BARK_PUSH}/${encodeURIComponent(text)}/${encodeURIComponent(desp)}?sound=${BARK_SOUND}`,
-                json: true,
-                method: 'GET'
             }
-            rp.get(options).then(res=>{
-                console.log(res)
-            }).catch((err)=>{
-                console.log('\nBark APP发送通知调用API失败！！\n')
-                console.log(err)
+            $.get(options, (err, resp, data) => {
+                try {
+                    if (err) {
+                        console.log('\nBark APP发送通知调用API失败！！\n')
+                        console.log(err);
+                    } else {
+                        data = JSON.parse(data);
+                        if (data.code === 200) {
+                            console.log('\nBark APP发送通知消息成功\n')
+                        } else {
+                            console.log(`\n${data.message}\n`);
+                        }
+                    }
+                } catch (e) {
+                    $.logErr(e, resp);
+                } finally {
+                    resolve();
+                }
             })
         } else {
             console.log('\n您未提供Bark的APP推送BARK_PUSH，取消Bark推送消息通知\n');
