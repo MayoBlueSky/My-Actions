@@ -8,8 +8,8 @@
 const $ = new Env('腾讯视频会员签到');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const _key = '11'
-const ref_url = process.env.v_ref_url
-const _cookie = process.env.v_cookie
+const ref_url = process.env.V_REF_URL
+const _cookie = process.env.V_COOKIE
 const SEND_KEY = process.env.SEND_KEY
 const auth = getAuth()
 

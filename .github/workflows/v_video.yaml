@@ -24,8 +24,8 @@ jobs:
               run: |
                   node v_video.js
               env:
-                  v_ref_url: ${{ secrets.V_REF_URL }}
-                  v_cookie: ${{ secrets.V_COOKIE }}
+                  V_REF_URL: ${{ secrets.V_REF_URL }}
+                  V_COOKIE: ${{ secrets.V_COOKIE }}
                   SEND_KEY: ${{ secrets.SEND_KEY }}
                   PUSH_KEY: ${{ secrets.PUSH_KEY }}
                   BARK_PUSH: ${{ secrets.BARK_PUSH }}

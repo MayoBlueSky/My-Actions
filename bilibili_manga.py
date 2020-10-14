@@ -9,7 +9,7 @@ msg = ""
 serverJ = os.environ['push_key']
 # 尝试登陆
 b = bilibili.Bilibili()
-b.login(username=os.environ['bili-user'], password=os.environ['bili-password'])
+b.login(username=os.environ['BILI_USER'], password=os.environ['BILI_PASS'])
 
 # 获取 Cookie
 cookie_str = ""
