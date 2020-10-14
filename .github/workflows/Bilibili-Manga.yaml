@@ -1,0 +1,31 @@
+name: 哔哩哔哩漫画签到
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "5 16 * * *"
+  watch:
+    types: [started]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: "Set up Python"
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+
+      - name: "安装依赖包"
+        run: pip install -r ./requirements.txt
+
+      - name: "运行 哔哩哔哩漫画签到"
+        run: python3 xmly_speed.py
+        env:
+          bili-user: ${{ secrets.bili-user }}
+          bili-password: ${{ secrets.bili-password }}
+          push_key: ${{ secrets.PUSH_KEY }}

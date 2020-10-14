@@ -1,28 +1,28 @@
-name: Github iQIYI-DailyBonus
+name: 爱奇艺会员签到
 
 on:
-  push:
-    branches:
-      - master
-  watch:
-    types: started
   workflow_dispatch:
   schedule:
-    - cron: '5 16 * * *'
+    - cron: "5 16 * * *"
+  watch:
+    types: [started]
+
 jobs:
   build:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:
-      - name: Checkout codes
-        uses: actions/checkout@v2
-      - name: Use Node.js
+      - uses: actions/checkout@v1
+      - name: Use Node.js 10.x
         uses: actions/setup-node@v1
         with:
-          node-version: '12.x'
-      - name: Run app
-        run: npm install
-      - run: node app.js
+          node-version: 10.x
+      - name: npm install
+        run: |
+          npm install
+      - name: "运行【爱奇艺会员签到】"
+        run: |
+          node iqiyi.js
         env:
           iQIYI_COOKIE: ${{ secrets.iQIYI_COOKIE }}
           SEND_KEY: ${{ secrets.SEND_KEY }}

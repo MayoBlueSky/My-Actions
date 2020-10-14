@@ -13,5 +13,4 @@ yarn-error.log*
 node_modules/
 package-lock.json
 
-Manga.js
 result.txt

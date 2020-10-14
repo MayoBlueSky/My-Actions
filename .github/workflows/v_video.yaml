@@ -1,0 +1,32 @@
+name: 腾讯视频签到
+
+on:
+    workflow_dispatch:
+    schedule:
+        - cron: "5 16 * * *"
+    watch:
+        types: [started]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        if: github.event.repository.owner.id == github.event.sender.id
+        steps:
+            - uses: actions/checkout@v1
+            - name: Use Node.js 10.x
+              uses: actions/setup-node@v1
+              with:
+                  node-version: 10.x
+            - name: npm install
+              run: |
+                  npm install
+            - name: "运行【腾讯视频签到】"
+              run: |
+                  node v_video.js
+              env:
+                  v_ref_url: ${{ secrets.V_REF_URL }}
+                  v_cookie: ${{ secrets.V_COOKIE }}
+                  SEND_KEY: ${{ secrets.SEND_KEY }}
+                  PUSH_KEY: ${{ secrets.PUSH_KEY }}
+                  BARK_PUSH: ${{ secrets.BARK_PUSH }}
+                  BARK_SOUND: ${{ secrets.BARK_SOUND }}
