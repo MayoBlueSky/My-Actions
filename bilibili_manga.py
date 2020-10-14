@@ -1,5 +1,6 @@
 import requests
 import bilibili
+from bilibili import *
 import re
 import time
 import os
