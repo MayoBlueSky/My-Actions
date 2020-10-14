@@ -24,7 +24,7 @@ jobs:
         run: pip install -r ./requirements.txt
 
       - name: "运行 哔哩哔哩漫画签到"
-        run: python3 xmly_speed.py
+        run: python3 bilibili_manga.py
         env:
           bili-user: ${{ secrets.bili-user }}
           bili-password: ${{ secrets.bili-password }}
