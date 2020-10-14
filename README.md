@@ -13,8 +13,8 @@
 # 使用方式
 1. 右上角fork本仓库
 2. 点击Settings -> Secrets -> 点击绿色按钮 (如无绿色按钮说明已激活。直接到第四步。)
-3. 新增 new secret 详情查看#本项目需要设置的 Secrets:
-4. 任意修改仓库内任意文件或点击右上角 Star 即可触发。
+3. 新增 new secret 并设置 Secrets:
+4. 点击Actions并选择你要签到的项目后点击Run workflow
 
 **本项目需要设置的 Secrets:**
 
