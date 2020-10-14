@@ -1,5 +1,5 @@
 {
-  "name": "iQIYI-DailyBonus",
+  "name": "My-Actions",
   "version": "1.0.0",
   "description": "",
   "main": "Manga.js",
@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BlueskyClouds/iQIYI-DailyBonus.git"
+    "url": "git+https://github.com/BlueskyClouds/My-Actions.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/BlueskyClouds/iQIYI-DailyBonus/issues"
+    "url": "https://github.com/BlueskyClouds/My-Actions/issues"
   },
-  "homepage": "https://github.com/BlueskyClouds/iQIYI-DailyBonusa#readme",
+  "homepage": "https://github.com/BlueskyClouds/My-Actions#readme",
   "dependencies": {
     "download": "^8.0.0",
     "request": "^2.88.2",
