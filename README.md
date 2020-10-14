@@ -1,4 +1,4 @@
-# iQIYI-DailyBonus
+# My-Actions
 
 <p align="center">
     <img alt="Version" src="https://img.shields.io/badge/release-0.0.1-blue"/>
@@ -7,20 +7,14 @@
     </a>
 </p>
 
-# 爱奇艺自动签到
-功能：
-1. 获取签到最新代码
-2. 替换参数值
-3. 签到并发送通知
 
 # 项目更新
 [保持和原作者同步的代码更新](https://blog.blueskyclouds.com/jsfx/58.html)  尽量跟原作者同步。
 # 使用方式
-1. 打开爱奇艺官网 获取你的authcookie  获取方式 B 站[文字教程](https://www.bilibili.com/read/cv7437179) [视频教程](https://www.bilibili.com/video/BV1B541157DE) authcookie有效期一般三个月
-2. 右上角fork本仓库
-3. 点击Settings -> Secrets -> 点击绿色按钮 (如无绿色按钮说明已激活。直接到第四步。)
-4. 新增 new secret  参数名IQIYI_COOKIE 值是你刚才获取的authcookie
-5. 任意修改仓库内任意文件或点击右上角 Star 即可触发。
+1. 右上角fork本仓库
+2. 点击Settings -> Secrets -> 点击绿色按钮 (如无绿色按钮说明已激活。直接到第四步。)
+3. 新增 new secret 详情查看#本项目需要设置的 Secrets:
+4. 任意修改仓库内任意文件或点击右上角 Star 即可触发。
 
 **本项目需要设置的 Secrets:**
 
