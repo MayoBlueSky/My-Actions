@@ -57,6 +57,8 @@ async function start() {
         if (content.includes("Cookie")) {
             await notify.sendNotify("爱奇艺签到-" + new Date().toLocaleDateString(), content);
             console.log("爱奇艺签到-" + content)
+        }else{
+            console.log("爱奇艺签到-" + content)
         }
     }else{
         await notify.sendNotify("爱奇艺签到-" + new Date().toLocaleDateString(), content);
