@@ -22,6 +22,6 @@ jobs:
           npm install
       - name: "运行【93x论坛签到】"
         run: |
-          node 93x.js
+          node function/93x.js
         env:
           93X_COOKIE: ${{ secrets.93X_COOKIE }}

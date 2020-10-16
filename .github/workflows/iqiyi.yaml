@@ -22,7 +22,7 @@ jobs:
           npm install
       - name: "运行【爱奇艺会员签到】"
         run: |
-          node iqiyi.js
+          node function/iqiyi.js
         env:
           iQIYI_COOKIE: ${{ secrets.iQIYI_COOKIE }}
           SEND_KEY: ${{ secrets.SEND_KEY }}

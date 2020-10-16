@@ -24,7 +24,7 @@ jobs:
         run: pip install -r ./requirements.txt
 
       - name: "运行 哔哩哔哩漫画签到"
-        run: python3 bilibili_manga.py
+        run: python3 function/bilibili_manga.py
         env:
           BILI_USER: ${{ secrets.BILI_USER }}
           BILI_PASS: ${{ secrets.BILI_PASS }}

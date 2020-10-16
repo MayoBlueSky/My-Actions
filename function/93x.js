@@ -1,8 +1,5 @@
-
-
 var $ = new Env('93x论坛签到');
 const CookieWA = process.env.93X_COOKIE
-const CookieWA = '';
 var user_auth = '';
 
 if(CookieWA){
