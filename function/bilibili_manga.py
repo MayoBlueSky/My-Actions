@@ -1,7 +1,6 @@
 import requests
 import sys
-sys.path.append("..")
-from API.bilibili import *
+from function.bilibili import *
 import time
 import os
 
