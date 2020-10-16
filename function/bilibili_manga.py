@@ -1,9 +1,9 @@
 import requests
-import sys;
-sys.path.append("My-Actions/function/")
-from bilibili import *
 import time
 import os
+import sys;
+sys.path.append("My-Actions/Api/")
+from bilibili import *
 
 msg = ""
 
