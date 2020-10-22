@@ -6,28 +6,21 @@ const exec = require('child_process').execSync
 const fs = require('fs')
 const download = require('download')
 
-const $ = new Env('中国电信签到');
+const $ = new Env('吾爱破解签到');
 const notify = $.isNode() ? require('../sendNotify') : '';
 // 公共变量
-const KEY = process.env.TELECOM_MOBILE
+const KEY = process.env.WA_COOKIE
 const SEND_KEY = process.env.SEND_KEY
 
 async function downFile () {
-    const url = 'https://raw.githubusercontent.com/chavyleung/scripts/master/10000/10000.js'
+    const url = 'https://raw.githubusercontent.com/NobyDa/Script/master/52pojie-DailyBonus/52pojie.js'
     await download(url, './')
 }
 
 async function changeFiele () {
-    let content = await fs.readFileSync('./10000.js', 'utf8')
-    //替换各种无用信息.
-    content = content.replace("\"\\n\"", "\"\"")
-    content = content.replace("中国电信", ``)
-    content = content.replace(/==============\\ud83d\\udce3\\u7cfb\\u7edf\\u901a\\u77e5\\ud83d\\udce3==============/, ``)
-    content = content.replace("\\ud83d\\udd14${this.name}, \\u5f00\\u59cb!", ``)
-    content = content.replace("\\ud83d\\udd14${this.name}, \\u7ed3\\u675f! \\ud83d\\udd5b ${e} \\u79d2", ``)
-
-    content = content.replace("const phonedat = $.getdata($.KEY_mobile)", `const phonedat = '${KEY}'`)
-    await fs.writeFileSync( './10000.js', content, 'utf8')
+    let content = await fs.readFileSync('./52pojie.js', 'utf8')
+    content = content.replace(/const CookieWA = ''/, `const CookieWA = '${KEY}'`)
+    await fs.writeFileSync( './52pojie.js', content, 'utf8')
 }
 
 async function deleteFile(path) {
@@ -42,7 +35,7 @@ async function deleteFile(path) {
 
 async function start() {
     if (!KEY) {
-        console.log('请填写电信号码后再继续')
+        console.log('请填写 key 后在继续')
         return
     }
     // 下载最新代码
@@ -52,7 +45,7 @@ async function start() {
     await changeFiele();
     console.log('替换变量完毕')
     // 执行
-    await exec("node 10000.js >> result.txt");
+    await exec("node 52pojie.js >> result.txt");
     console.log('执行完毕')
     const path = "./result.txt";
     let content = "";
@@ -61,15 +54,15 @@ async function start() {
     }
 
     if(SEND_KEY) {
-        if (content.includes("签到成功") | content.includes("已签")) {
-            console.log("电信签到-" + content)
+        if (content.includes("签到成功")|content.includes("已签")) {
+            console.log("吾爱破解签到-" + content)
         }else{
-            await notify.sendNotify("中国电信签到-" + new Date().toLocaleDateString(), content);
-            console.log("中国电信签到-" + content)
+            await notify.sendNotify("吾爱破解签到-" + new Date().toLocaleDateString(), content);
+            console.log("吾爱破解签到-" + content)
         }
     }else{
-        await notify.sendNotify("中国电信签到-" + new Date().toLocaleDateString(), content);
-        console.log("中国电信签到-" + content)
+        await notify.sendNotify("吾爱破解签到-" + new Date().toLocaleDateString(), content);
+        console.log("吾爱破解签到-" + content)
     }
 
     //运行完成后，删除下载的文件
