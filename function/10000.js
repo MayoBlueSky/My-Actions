@@ -13,13 +13,13 @@ const KEY = process.env.TELECOM_MOBILE
 const SEND_KEY = process.env.SEND_KEY
 
 async function downFile () {
-    const url = 'https://raw.githubusercontent.com/MisterGlasses/Quantumult/master/QuantumultX/Script/10000.js'
+    const url = 'https://raw.githubusercontent.com/chavyleung/scripts/master/10000/10000.js'
     await download(url, './')
 }
 
 async function changeFiele () {
     let content = await fs.readFileSync('./10000.js', 'utf8')
-    content = content.replace(/const phonedat = ''/, `const phonedat = '${KEY}'`)
+    content = content.replace("const phonedat = $.getdata($.KEY_mobile)", `const phonedat = '${KEY}'`)
     await fs.writeFileSync( './10000.js', content, 'utf8')
 }
 

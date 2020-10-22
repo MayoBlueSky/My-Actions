@@ -21,7 +21,7 @@
 | 名称     | 内容           |   说明|
 | -------- | ------------- |   ----- |
 | IQIYI_COOKIE |爱奇艺authcookie|爱奇艺cookie中 P00001的值 详情[文字教程](https://www.bilibili.com/read/cv7437179) [视频教程](https://www.bilibili.com/video/BV1B541157DE) 电脑版有效期三个月
-| BILI_USER |哔哩哔哩账号|B站账号|
+| BILI_USER |哔哩哔哩账号|B站账号(由于是账号密码登录,不存在Cookie过期,咱不提供过期提醒.)|
 | BILI_PASS |哔哩哔哩密码|B站密码|
 | V_REF_URL |腾讯视频Request URL|https://access.video.qq.com/user/auth_refresh|
 | V_COOKIE |access.video.qq.com下Cookie||
