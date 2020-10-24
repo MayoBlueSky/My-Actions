@@ -12,9 +12,25 @@ let BARK_PUSH = '';
 //注：此处设置github action用户填写到Settings-Secrets里面（Name输入BARK_SOUND , Value输入app提供的铃声名称，例如:birdsong）
 let BARK_SOUND = '';
 
+// =======================================telegram机器人通知设置区域===========================================
+//此处填你telegram bot 的Token，例如：1077xxx4424:AAFjv0FcqxxxxxxgEMGfi22B4yh15R5uw
+//注：此处设置github action用户填写到Settings-Secrets里面(Name输入TG_BOT_TOKEN)
+let TG_BOT_TOKEN = '';
+//此处填你接收通知消息的telegram用户的id，例如：129xxx206
+//注：此处设置github action用户填写到Settings-Secrets里面(Name输入TG_USER_ID)
+let TG_USER_ID = '';
+
 if (process.env.PUSH_KEY) {
     SCKEY = process.env.PUSH_KEY;
 }
+
+if (process.env.TG_BOT_TOKEN) {
+    TG_BOT_TOKEN = process.env.TG_BOT_TOKEN;
+}
+if (process.env.TG_USER_ID) {
+    TG_USER_ID = process.env.TG_USER_ID;
+}
+
 if (process.env.BARK_PUSH) {
     if(process.env.BARK_PUSH.indexOf('https') > -1 || process.env.BARK_PUSH.indexOf('http') > -1) {
         //兼容BARK自建用户
@@ -36,6 +52,7 @@ async function sendNotify(text, desp) {
     //提供的通知
     await serverNotify(text, desp);
     await BarkNotify(text, desp);
+    await tgBotNotify(text, desp);
 }
 
 function serverNotify(text, desp) {
@@ -103,6 +120,44 @@ function BarkNotify(text, desp) {
             })
         } else {
             console.log('\n您未提供Bark的APP推送BARK_PUSH，取消Bark推送消息通知\n');
+            resolve()
+        }
+    })
+}
+
+function tgBotNotify(text, desp) {
+    return  new Promise(resolve => {
+        if (TG_BOT_TOKEN && TG_USER_ID) {
+            const options = {
+                url: `https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`,
+                body: `chat_id=${TG_USER_ID}&text=${text}\n\n${desp}`,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }
+            $.post(options, (err, resp, data) => {
+                try {
+                    if (err) {
+                        console.log('\ntelegram发送通知消息失败！！\n')
+                        console.log(err);
+                    } else {
+                        data = JSON.parse(data);
+                        if (data.ok) {
+                            console.log('\nTelegram发送通知消息完成。\n')
+                        } else if (data.error_code === 400) {
+                            console.log('\n请主动给bot发送一条消息并检查接收用户ID是否正确。\n')
+                        } else if (data.error_code === 401){
+                            console.log('\nTelegram bot token 填写错误。\n')
+                        }
+                    }
+                } catch (e) {
+                    $.logErr(e, resp);
+                } finally {
+                    resolve(data);
+                }
+            })
+        } else {
+            console.log('\n您未提供telegram机器人推送所需的TG_BOT_TOKEN和TG_USER_ID，取消telegram推送消息通知\n');
             resolve()
         }
     })
