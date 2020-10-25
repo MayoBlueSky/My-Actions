@@ -8,8 +8,8 @@
 </p>
 
 
-# 项目更新
-[保持和原作者同步的代码更新](https://blog.blueskyclouds.com/jsfx/58.html)  尽量跟原作者同步。
+### 本项目已可以实现自动同步上游更改！[具体点击](#自动同步)
+
 # 使用方式
 1. 右上角fork本仓库
 2. 点击Settings -> Secrets -> 点击绿色按钮 (如无绿色按钮说明已激活。直接到第四步。)
@@ -40,4 +40,28 @@
 <p align="center">
     <img src="https://cdn.jsdelivr.net/gh/BlueskyClouds/BlueskyClouds.github.io/2020/10/19/img/2020-10-19.jpg">
 </p>
+
+### 同步Fork后的代码
+
+#### 手动同步
+
+[手动同步 https://blog.blueskyclouds.com/jsfx/58.html](https://blog.blueskyclouds.com/jsfx/58.html)
+
+#### 自动同步
+
+##### 方案A - 强制远程分支覆盖自己的分支
+1. 参考[这里](https://github.com/lxk0301/scripts/blob/master/backUp/gitSync.md)，安装[pull插件](https://github.com/apps/pull)，并确认此项目已在pull插件的作用下（参考文中1-d）。
+2. 确保.github/pull.yml文件正常存在，yml内上游作者填写正确(此项目已填好，无需更改)。
+3. 确保pull.yml里面是`mergeMethod: hardreset`(默认就是hardreset)。
+4. ENJOY!上游更改三小时左右就会自动发起同步。
+
+##### 方案B - 保留自己分支的修改
+
+> 上游变动后pull插件会自动发起pr，但如果有冲突需要自行**手动**确认。
+> 如果上游更新涉及workflow里的文件内容改动，需要自行**手动**确认。
+
+1. 参考[这里](https://github.com/lxk0301/scripts/blob/master/backUp/gitSync.md)，安装[pull插件](https://github.com/apps/pull)，并确认此项目已在pull插件的作用下（参考文中1-d）。
+2. 确保.github/pull.yml文件正常存在，yml内上游作者填写正确(此项目已填好，无需更改)。
+3. 将pull.yml里面的`mergeMethod: hardreset`修改为`mergeMethod: merge`保存。
+4. ENJOY!上游更改三小时左右就会自动发起同步。
 
