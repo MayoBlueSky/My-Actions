@@ -1,6 +1,6 @@
 /****
  *
- * @description 腾讯视频好莱坞会员V力值签到，支持两次签到：一次正常签到，一次手机签到。和领取任务奖励。
+ * @description 腾讯视频好莱坞会员V力值签到，手机签到和领取任务及奖励。
  * @author BlueSkyClouds
  * @create_at 2020-10-24
  */
@@ -39,11 +39,18 @@ function txVideoSignIn(headers) {
                 }
             } else if (data.match(/checkin_score/)) {
                 msg = data.match(/checkin_score": (.+?),"msg/)[1]
-                if(SEND_KEY){
-                    console.log("腾讯视频会员签到", "", date.getMonth() + 1 + "月" + date.getDate() + "日, 签到成功，签到分数：" + msg + "分 🎉")
+                //通过分数判断是否重复签到
+                if(msg = '0'){
+                    msg = '签到失败，重复签到'
                 }else{
-                    notify.sendNotify("腾讯视频会员签到", "腾讯视频会员签到" + "" + "签到成功，签到分数：" + msg + "分 🎉");
-                    console.log("腾讯视频会员签到", "", date.getMonth() + 1 + "月" + date.getDate() + "日, 签到成功，签到分数：" + msg + "分 🎉")
+                    msg = "签到成功，签到分数：" + msg  + "分 🎉"
+                }
+                //判断是否为Cookie失效时才提醒
+                if(SEND_KEY){
+                    console.log("腾讯视频会员签到", "", date.getMonth() + 1 + "月" + date.getDate() + "日, " + msg )
+                }else{
+                    notify.sendNotify("腾讯视频会员签到", "腾讯视频会员签到" + ""  + msg);
+                    console.log("腾讯视频会员签到", "", date.getMonth() + 1 + "月" + date.getDate() + "日, " + msg )
                 }
                 //签到成功才执行任务签到
                 txVideoDownTask1()
@@ -69,7 +76,7 @@ function txVideoCheckin(headers) {
             console.log("腾讯视频会员签到", "签到请求失败 ‼️‼️", error)
         } else {
             //console.log(data)
-           if (data.match(/Unauthorized/)) {
+            if (data.match(/Unauthorized/)) {
                 $.msg("腾讯视频会员签到", "", "签到失败, Cookie失效 ‼️‼️")
             } else {
                 $.msg("腾讯视频会员签到", "", date.getMonth() + 1 + "月" + date.getDate() + "日, 签到成功 🎉")
@@ -102,6 +109,7 @@ function txVideoDownTask1(headers) {
         }
     })
 }
+
 //赠送任务签到请求
 function txVideoDownTask2(headers) {
     $.get({
