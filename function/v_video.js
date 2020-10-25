@@ -55,7 +55,7 @@ function getAuth(c = _cookie) {
 }
 
 /**
- * @description 刷新每天跟新cookie参数
+ * @description 刷新每天更新cookie参数
  * @returns
  */
 function refCookie(url = ref_url) {
@@ -83,7 +83,7 @@ function txVideoSignIn(headers) {
         } else {
             if (data.match(/Account Verify Error/)) {
                 if(SEND_KEY){
-                    notify.sendNotify("腾讯视频会员签到", "腾讯视频会员签到" + ' ' + "签到失败, Cookie失效 ‼️‼️");
+                    notify.sendNotify("腾讯视频会员签到", "签到失败, Cookie失效 ‼️‼️");
                     console.log("腾讯视频会员签到", "", "签到失败, Cookie失效 ‼️‼️")
                 }else{
                     console.log("腾讯视频会员签到", "", "签到失败, Cookie失效 ‼️‼️")
@@ -100,7 +100,7 @@ function txVideoSignIn(headers) {
                 if(SEND_KEY){
                     console.log("腾讯视频会员签到", "", date.getMonth() + 1 + "月" + date.getDate() + "日, " + msg )
                 }else{
-                    notify.sendNotify("腾讯视频会员签到", "腾讯视频会员签到" + ""  + msg);
+                    notify.sendNotify("腾讯视频会员签到", msg);
                     console.log("腾讯视频会员签到", "", date.getMonth() + 1 + "月" + date.getDate() + "日, " + msg )
                 }
                 //签到成功才执行任务签到
