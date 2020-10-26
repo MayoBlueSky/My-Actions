@@ -15,7 +15,7 @@
 1. 右上角fork本仓库
 2. 点击Settings -> Secrets -> 点击绿色按钮 (如无绿色按钮说明已激活。直接到第四步。)
 3. 新增 new secret 并设置 Secrets:
-4. 点击Actions并选择你要签到的项目后点击Run workflow
+5. 双击右上角自己仓库Star触发，如有不使用项目请[禁用部分项目](#取消自动运行部分项目)
 
 **本项目需要设置的 Secrets:**
 
