@@ -47,10 +47,12 @@ function parseSet(c_list) {
 function getAuth(c = _cookie) {
     const needParams = ["tvfe_boss_uuid","video_guid","video_platform","pgv_pvid","pgv_info","pgv_pvi","pgv_si","_qpsvr_localtk","RK","ptcz","ptui_loginuin","main_login","vqq_access_token","vqq_appid","vqq_openid","vqq_vuserid","vqq_vusession"]
     const obj = {}
-    c.split('; ').forEach(t=>{
-        const [key, val] = t.split(/\=(.*)$/,2)
-        needParams.indexOf(key) !=-1 && ( obj[key] = val)
-    })
+    if(c){
+        c.split('; ').forEach(t=>{
+            const [key, val] = t.split(/\=(.*)$/,2)
+            needParams.indexOf(key) !=-1 && ( obj[key] = val)
+        })
+    }
     return obj
 }
 
@@ -91,7 +93,7 @@ function txVideoSignIn(headers) {
             } else if (data.match(/checkin_score/)) {
                 msg = data.match(/checkin_score": (.+?),"msg/)[1]
                 //通过分数判断是否重复签到
-                if(msg = '0'){
+                if(msg == '0'){
                     msg = '签到失败，重复签到 ‼️‼️'
                 }else{
                     msg = "签到成功，签到分数：" + msg  + "分 🎉"
@@ -104,36 +106,11 @@ function txVideoSignIn(headers) {
                     console.log("腾讯视频会员签到", "", date.getMonth() + 1 + "月" + date.getDate() + "日, " + msg )
                 }
                 //签到成功才执行任务签到
-                txVideoDownTask1()
-                txVideoDownTask2()
-                txVideoDownTask3()
-                txVideoDownTask4()
+                exports.misson()
             } else {
                 console.log("腾讯视频会员签到", "", "脚本待更新 ‼️‼️")
             }
         }
-    })
-}
-//已弃用的签到项目
-function txVideoCheckin(headers) {
-    $.get({
-        url: `https://v.qq.com/x/bu/mobile_checkin`,
-        headers: {
-            Cookie: _cookie ,
-        }
-    }, function(error, response, data) {
-        if (error) {
-            $.log(error);
-            console.log("腾讯视频会员签到", "签到请求失败 ‼️‼️", error)
-        } else {
-            //console.log(data)
-            if (data.match(/Unauthorized/)) {
-                $.msg("腾讯视频会员签到", "", "签到失败, Cookie失效 ‼️‼️")
-            } else {
-                $.msg("腾讯视频会员签到", "", date.getMonth() + 1 + "月" + date.getDate() + "日, 签到成功 🎉")
-            }
-        }
-        $.done();
     })
 }
 
@@ -180,6 +157,7 @@ function txVideoDownTask2(headers) {
 }
 
 //弹幕任务签到请求
+//https://vip.video.qq.com/fcgi-bin/comm_cgi?name=spp_MissionFaHuo&cmd=4&task_id=3
 function txVideoDownTask3(headers) {
     $.get({
         url: `https://vip.video.qq.com/fcgi-bin/comm_cgi?name=spp_MissionFaHuo&cmd=4&task_id=3&_=1582368319252&callback=Zepto1582368297765`, headers
@@ -220,9 +198,22 @@ function txVideoDownTask4(headers) {
         }
     })
 }
+//主程序入口
 exports.main = () => new Promise(
     (resovle, reject) => refCookie()
         .then(params=>Promise.all([ txVideoSignIn(params)])
+            .then(e=>resovle())
+            .catch(e=>reject())
+        ).catch(e=>{
+            //如果有错误自行取消下面这行注释
+            //console.log(e)
+            console.log('腾讯视频签到通知-Cookie已失效')
+        })
+)
+//任务领取
+exports.misson = () => new Promise(
+    (resovle, reject) => refCookie()
+        .then(params=>Promise.all([ txVideoDownTask1(params), txVideoDownTask2(params), txVideoDownTask3(params), txVideoDownTask4(params)])
             .then(e=>resovle())
             .catch(e=>reject())
         ).catch(e=>{
