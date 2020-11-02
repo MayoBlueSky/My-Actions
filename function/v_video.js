@@ -2,7 +2,7 @@
  *
  * @description 腾讯视频好莱坞会员V力值签到，手机签到和领取任务及奖励。
  * @author BlueSkyClouds
- * @create_at 2020-10-30
+ * @create_at 2020-11-02
  */
 
 const $ = new Env('腾讯视频会员签到');
@@ -12,9 +12,7 @@ const _cookie = process.env.V_COOKIE
 const SEND_KEY = process.env.SEND_KEY
 const auth = getAuth()
 const axios = require('axios')
-
 var date = new Date()
-
 const headers = {
     'Referer': 'https://v.qq.com',
     'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.204 Safari/537.36',
@@ -60,8 +58,14 @@ function parseSet(c_list) {
  * @returns obj
  */
 function getAuth(c = _cookie) {
-    const needParams = ["tvfe_boss_uuid","video_guid","video_platform","pgv_pvid","pgv_info","pgv_pvi","pgv_si","_qpsvr_localtk","RK","ptcz","ptui_loginuin","main_login","vqq_access_token","vqq_appid","vqq_openid","vqq_vuserid","vqq_vusession"]
-    const obj = {}
+    let needParams = [""]
+    //适配微信登录
+    if (_cookie.includes("main_login=wx")) {
+        needParams = ["tvfe_boss_uuid","video_guid","video_platform","pgv_pvid","pgv_info","pgv_pvi","pgv_si","_qpsvr_localtk","RK","ptcz","ptui_loginuin","main_login","access_token","appid","openid","vuserid","vusession"]
+    } else {
+        needParams = ["tvfe_boss_uuid","video_guid","video_platform","pgv_pvid","pgv_info","pgv_pvi","pgv_si","_qpsvr_localtk","RK","ptcz","ptui_loginuin","main_login","vqq_access_token","vqq_appid","vqq_openid","vqq_vuserid","vqq_vusession"]
+    }
+   const obj = {}
     if(c){
         c.split('; ').forEach(t=>{
             const [key, val] = t.split(/\=(.*)$/,2)
@@ -78,8 +82,14 @@ function getAuth(c = _cookie) {
 function refCookie(url = ref_url) {
     return new Promise((resovle, reject)=>{
         axios({ url, headers }).then(e =>{
+            const { vusession } = parseSet(e.headers['set-cookie'])
             const { vqq_vusession } = parseSet(e.headers['set-cookie'])
-            auth['vqq_vusession'] = vqq_vusession
+            //微信和QQ参数不同
+            if (vusession) {
+                auth['vusession'] = vusession
+            } else {
+                auth['vqq_vusession'] = vqq_vusession
+            }
             // 刷新cookie后去签到
             resovle({
                 ...headers, Cookie: Object.keys(auth).map(i => i + '=' + auth[i]).join('; '),
@@ -145,6 +155,8 @@ function txVideoSignIn(headers) {
                     notify.sendNotify("腾讯视频会员签到", msg);
                     console.log("腾讯视频会员签到", "", date.getMonth() + 1 + "月" + date.getDate() + "日, " + msg )
                 }
+            } else if (data.match(/Not VIP/)) {
+                    console.log("腾讯视频会员签到", "", "非会员无法签到" )
             } else {
                 console.log("腾讯视频会员签到", "", "脚本待更新 ‼️‼️")
                 //输出日志查找原因
