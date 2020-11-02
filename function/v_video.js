@@ -60,10 +60,12 @@ function parseSet(c_list) {
 function getAuth(c = _cookie) {
     let needParams = [""]
     //适配微信登录
-    if (_cookie.includes("main_login=wx")) {
-        needParams = ["tvfe_boss_uuid","video_guid","video_platform","pgv_pvid","pgv_info","pgv_pvi","pgv_si","_qpsvr_localtk","RK","ptcz","ptui_loginuin","main_login","access_token","appid","openid","vuserid","vusession"]
-    } else {
-        needParams = ["tvfe_boss_uuid","video_guid","video_platform","pgv_pvid","pgv_info","pgv_pvi","pgv_si","_qpsvr_localtk","RK","ptcz","ptui_loginuin","main_login","vqq_access_token","vqq_appid","vqq_openid","vqq_vuserid","vqq_vusession"]
+    if(_cookie){
+        if (_cookie.includes("main_login=wx")) {
+            needParams = ["tvfe_boss_uuid","video_guid","video_platform","pgv_pvid","pgv_info","pgv_pvi","pgv_si","_qpsvr_localtk","RK","ptcz","ptui_loginuin","main_login","access_token","appid","openid","vuserid","vusession"]
+        } else {
+            needParams = ["tvfe_boss_uuid","video_guid","video_platform","pgv_pvid","pgv_info","pgv_pvi","pgv_si","_qpsvr_localtk","RK","ptcz","ptui_loginuin","main_login","vqq_access_token","vqq_appid","vqq_openid","vqq_vuserid","vqq_vusession"]
+        }
     }
    const obj = {}
     if(c){
@@ -147,6 +149,7 @@ function txVideoSignIn(headers) {
                     msg = "签到成功，签到分数：" + msg  + "分 🎉"
                 }
                 //签到成功才执行任务签到
+                console.log("腾讯视频会员签到", "", "以下任务仅领取,需要手动完成,如没有完成请无视" )
                 Collect_task()
                 //判断是否为Cookie失效时才提醒
                 if(SEND_KEY){
