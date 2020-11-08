@@ -108,16 +108,17 @@ function ref_url_ver(url = ref_url,_cookie) {
     $.get({
         url, headers
     }, function(error, response, data) {
+        console.log(data)
         if (error) {
             $.log(error);
             console.log("腾讯视频会员签到", "验证ref_url请求失败 ‼️‼️", error)
         } else {
             if (data.match(/nick/)) { //通过验证获取QQ昵称参数来判断是否正确
                 console.log("验证成功，执行主程序")
-                //console.log(data)
                 exports.main()
             } else {
                 console.log("验证失败,无法获取个人资料")
+                exports.main()
 
             }
         }
