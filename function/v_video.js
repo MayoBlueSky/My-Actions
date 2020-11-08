@@ -108,7 +108,7 @@ function ref_url_ver(url = ref_url,_cookie) {
     $.get({
         url, headers
     }, function(error, response, data) {
-        console.log(data)
+        //console.log(data)
         if (error) {
             $.log(error);
             console.log("腾讯视频会员签到", "验证ref_url请求失败 ‼️‼️", error)
@@ -117,9 +117,12 @@ function ref_url_ver(url = ref_url,_cookie) {
                 console.log("验证成功，执行主程序")
                 exports.main()
             } else {
-                console.log("验证失败,无法获取个人资料")
-                exports.main()
-
+                console.log("验证ref_url失败,无法获取个人资料 Cookie失效 ‼️‼️")
+                //判断是否为Cookie失效时才提醒
+                if(SEND_KEY){
+                }else{
+                    notify.sendNotify("腾讯视频会员签到", '验证ref_url失败,无法获取个人资料 Cookie失效 ‼️‼️');
+                }
             }
         }
     })
