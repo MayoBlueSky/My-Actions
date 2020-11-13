@@ -67,7 +67,7 @@ function getAuth(c = _cookie) {
             needParams = ["tvfe_boss_uuid","video_guid","video_platform","pgv_pvid","pgv_info","pgv_pvi","pgv_si","_qpsvr_localtk","RK","ptcz","ptui_loginuin","main_login","vqq_access_token","vqq_appid","vqq_openid","vqq_vuserid","vqq_vusession"]
         }
     }
-   const obj = {}
+    const obj = {}
     if(c){
         c.split('; ').forEach(t=>{
             const [key, val] = t.split(/\=(.*)$/,2)
@@ -108,13 +108,13 @@ function ref_url_ver(url = ref_url,_cookie) {
     $.get({
         url, headers
     }, function(error, response, data) {
+        //console.log(data)
         if (error) {
             $.log(error);
             console.log("腾讯视频会员签到", "验证ref_url请求失败 ‼️‼️", error)
         } else {
             if (data.match(/nick/)) { //通过验证获取QQ昵称参数来判断是否正确
                 console.log("验证成功，执行主程序")
-                //console.log(data)
                 exports.main()
             } else {
                 console.log("验证ref_url失败,无法获取个人资料 Cookie失效 ‼️‼️")
@@ -159,7 +159,7 @@ function txVideoSignIn(headers) {
                     console.log("腾讯视频会员签到", "", date.getMonth() + 1 + "月" + date.getDate() + "日, " + msg )
                 }
             } else if (data.match(/Not VIP/)) {
-                    console.log("腾讯视频会员签到", "", "非会员无法签到" )
+                console.log("腾讯视频会员签到", "", "非会员无法签到" )
             } else {
                 console.log("腾讯视频会员签到", "", "脚本待更新 ‼️‼️")
                 //输出日志查找原因
