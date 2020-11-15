@@ -110,8 +110,7 @@ function sign() {
                 await balance();
             } else {}
             console.log(notice);
-            if(SEND_KEY){
-            }else{
+            if(!SEND_KEY){
                 notify.sendNotify("V2ex自动签到", notice);
             }
         } catch (err) {

@@ -1,13 +1,13 @@
 ![BlueskyClouds’s github stats](https://github-readme-stats.vercel.app/api?username=BlueskyClouds&show_icons=true&theme=merko)
-# My-Actions
-个人收集并适配Github Actions的各类签到大杂烩
-<p align="center">
-    <img alt="Version" src="https://img.shields.io/badge/release-0.0.2-blue"/>
-    <a href="https://github.com/BlueSkyClouds">
-        <img alt="Author" src="https://img.shields.io/badge/author-BlueSkyClouds-blueviolet"/>
-    </a>
-</p>
+<h1 align="center">My-Actions</h1>
+<img src="https://img.shields.io/github/issues/BlueskyClouds/My-Actions?color=green">
+<img src="https://img.shields.io/github/stars/BlueskyClouds/My-Actions?color=yellow">
+<img src="https://img.shields.io/github/forks/BlueskyClouds/My-Actions?color=orange">
+<img src="https://img.shields.io/github/license/BlueskyClouds/My-Actions?color=ff69b4">
+<img src="https://img.shields.io/github/languages/code-size/BlueskyClouds/My-Actions?color=blueviolet">
+</div>
 
+个人收集并适配Github Actions的各类签到大杂烩
 
 ### 本项目已可以实现自动同步上游更改！[具体点击](#自动同步)
 
