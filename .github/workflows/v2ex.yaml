@@ -1,9 +1,9 @@
-name: 中国电信签到
+name: V2ex签到
 
 on:
     workflow_dispatch:
     schedule:
-        - cron: "30 0 * * *"
+        - cron: "5 16 * * *"
     watch:
         types: [started]
 
@@ -20,11 +20,11 @@ jobs:
             - name: npm install
               run: |
                   npm install
-            - name: "运行【中国电信签到】"
+            - name: "运行【V2ex自动签到】"
               run: |
-                  node function/10000.js
+                  node function/v2ex.js
               env:
-                  TELECOM_MOBILE: ${{ secrets.TELECOM_MOBILE }}
+                  V2EXCK: ${{ secrets.V2EXCK }}
                   SEND_KEY: ${{ secrets.SEND_KEY }}
                   PUSH_KEY: ${{ secrets.PUSH_KEY }}
                   BARK_PUSH: ${{ secrets.BARK_PUSH }}
@@ -33,4 +33,4 @@ jobs:
                   BARK_SOUND: ${{ secrets.BARK_SOUND }}
                   DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
                   DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
-#最后推送 2020年11月14日
+#最后推送 2020年11月15日
