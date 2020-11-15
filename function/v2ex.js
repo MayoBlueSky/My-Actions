@@ -32,6 +32,10 @@ function check() {
                 console.log("cookie失效");
                 ckstatus = 0;
                 notice += "cookie失效";
+                if(SEND_KEY){
+                    notify.sendNotify("V2ex自动签到", notice);
+                    return;
+                }
             } else {
                 reg = /每日登录奖励已领取/;
                 if (reg.test(res.data)) {
@@ -109,7 +113,6 @@ function sign() {
             if(SEND_KEY){
             }else{
                 notify.sendNotify("V2ex自动签到", notice);
-                console.log("V2ex自动签到", notice)
             }
         } catch (err) {
             console.log(err);
