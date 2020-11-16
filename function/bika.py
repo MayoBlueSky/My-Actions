@@ -5,6 +5,7 @@ import random
 import string
 import sys
 import time
+import os
 
 username = os.environ['BIKA_USER']
 password = os.environ['BIKA_PASS']
