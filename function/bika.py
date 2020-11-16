@@ -1,3 +1,4 @@
+import requests
 import hashlib
 import hmac
 import json
@@ -79,7 +80,7 @@ if __name__ == '__main__':
     if result["status"] == "ok":
         print("打卡成功, 最后一次打卡: %s" % result["punchInLastDay"])
     else:
-        print("Already punch-in")
+        print("重复签到 - Already punch-in")
         msg = '重复签到'
 
 # Server酱
