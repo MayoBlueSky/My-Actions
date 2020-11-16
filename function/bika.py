@@ -6,8 +6,8 @@ import string
 import sys
 import time
 
-username=os.environ['BIKA_USER']
-password=os.environ['BIKA_PASS']
+username = os.environ['BIKA_USER']
+password = os.environ['BIKA_PASS']
 serverJ = os.environ['push_key']
 
 msg = ''
