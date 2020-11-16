@@ -72,7 +72,7 @@ def punch_in(token: string):
 
 
 if __name__ == '__main__':
-    current_token = sign_in(os.environ['BIKA_USER'], os.environ['BIKA_PASS'])
+    current_token = sign_in(email=os.environ['BIKA_USER'], password=os.environ['BIKA_PASS'])
     punch_in_response = punch_in(current_token)
     result = punch_in_response["data"]["res"]
     if result["status"] == "ok":
