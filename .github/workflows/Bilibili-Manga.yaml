@@ -28,5 +28,5 @@ jobs:
               env:
                   BILI_USER: ${{ secrets.BILI_USER }}
                   BILI_PASS: ${{ secrets.BILI_PASS }}
-                  push_key: ${{ secrets.PUSH_KEY }}
+                  PUSH_KEY: ${{ secrets.PUSH_KEY }}
 #最后推送 2020年11月14日
