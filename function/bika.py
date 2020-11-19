@@ -13,7 +13,7 @@ from http import client
 
 sendNotify = sendNotify()
 
-SEND_KEY = ""
+SEND_KEY = os.environ['SEND_KEY']
 
 msg = ''
 
