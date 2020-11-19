@@ -4,12 +4,16 @@ import hmac
 import json
 import random
 import string
-import sys
 import time
 import os
+import sys;
+sys.path.append("My-Actions/function/")
+from sendNotify import *
 from http import client
 
-serverJ = os.environ['PUSH_KEY']
+sendNotify = sendNotify()
+
+SEND_KEY = ""
 
 msg = ''
 
@@ -58,6 +62,10 @@ def send_request(path: string, method: string, body: string = None, token: strin
     response = connection.getresponse().read().decode("utf-8")
     json_object = json.loads(response)
     if json_object["code"] != 200:
+        if SEND_KEY != '':
+            sendNotify.send(title = u"哔咔漫画自动打哔咔", msg = "登录失败 账号或密码错误")
+            print(json_object["message"])
+        exit(0)
         raise RuntimeError(json_object["message"])
     return json_object
 
@@ -85,13 +93,5 @@ if __name__ == '__main__':
         print("重复签到 - Already punch-in")
         msg = '重复签到'
 
-# Server酱
-if serverJ != "":
-    api = "https://sc.ftqq.com/"+ serverJ + ".send"
-    title = u"哔咔漫画自动打哔咔"
-    content = msg
-    data = {
-        "text":title,
-        "desp":content
-    }
-    req = requests.post(api,data = data)
+sendNotify.send(title = u"哔咔漫画自动打哔咔", msg = msg)
+

@@ -28,9 +28,6 @@ if (process.env.V_REF_URL) {
     } else {
         console.log("V_REF_URL值填写错误")
     }
-    if(process.env.V_COOKIE.indexOf('main_login=') = -1 ) {
-        console.log("Cookie填写错误")
-    }
     //验证V_REF_URL和cookie是否填写正确
     ref_url_ver()
 } else {
@@ -124,7 +121,7 @@ function ref_url_ver(url = ref_url,_cookie) {
                 exports.main()
             } else {
                 console.log("验证ref_url失败,无法获取个人资料 ref_url或Cookie失效 ‼️‼️")
-                notify.sendNotify("腾讯视频会员签到", '验证ref_url失败,无法获取个人资料 Cookie失效 ‼️‼️');
+                notify.sendNotify("腾讯视频会员签到", '验证ref_url失败,无法获取个人资料 ref_url或Cookie失效 ‼️‼️');
             }
         }
     })
