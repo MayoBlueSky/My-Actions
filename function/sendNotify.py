@@ -28,12 +28,12 @@ class sendNotify:
     #注：此处设置github action用户填写到Settings-Secrets里面(Name输入TG_USER_ID)
     TG_USER_ID = '';
 
-    #=======================================钉钉机器人通知设置区域===========================================
-    #此处填你钉钉 bot 的webhook，例如：5a544165465465645d0f31dca676e7bd07415asdasd
-    #注：此处设置github action用户填写到Settings-Secrets里面(Name输入DD_BOT_TOKEN)
-    DD_BOT_TOKEN = '';
-    #密钥，机器人安全设置页面，加签一栏下面显示的SEC开头的字符串
-    DD_BOT_SECRET = '';
+#     #=======================================钉钉机器人通知设置区域===========================================
+#     #此处填你钉钉 bot 的webhook，例如：5a544165465465645d0f31dca676e7bd07415asdasd
+#     #注：此处设置github action用户填写到Settings-Secrets里面(Name输入DD_BOT_TOKEN)
+#     DD_BOT_TOKEN = '';
+#     #密钥，机器人安全设置页面，加签一栏下面显示的SEC开头的字符串
+#     DD_BOT_SECRET = '';
 
     # # Server酱
     if os.environ['PUSH_KEY'] != "":
@@ -56,11 +56,11 @@ class sendNotify:
     if os.environ['TG_USER_ID'] != "":
         TG_USER_ID = os.environ['TG_USER_ID']
 
-    # # #钉钉机器人
-    if os.environ['DD_BOT_TOKEN'] != "":
-        DD_BOT_TOKEN = os.environ['DD_BOT_TOKEN']
-        if os.environ['DD_BOT_SECRET'] != "":
-            DD_BOT_SECRET = os.environ['DD_BOT_SECRET']
+#     # # #钉钉机器人
+#     if os.environ['DD_BOT_TOKEN'] != "":
+#         DD_BOT_TOKEN = os.environ['DD_BOT_TOKEN']
+#         if os.environ['DD_BOT_SECRET'] != "":
+#             DD_BOT_SECRET = os.environ['DD_BOT_SECRET']
 
     def serverNotify(self, text, desp):
         if sendNotify.SCKEY != '':
