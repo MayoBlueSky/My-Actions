@@ -95,6 +95,7 @@ async function signbars(bars) {
                     $.logErr(e, resp)
                 } finally {
                     $.log(`❕ 百度贴吧:【${bar.name}】签到完成!`)
+                    $.msg(`❕ 百度贴吧:【${bar.name}】签到完成!`)
                     resove()
                 }
             })

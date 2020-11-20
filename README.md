@@ -32,7 +32,7 @@
 
 | 名称     | 内容           |   说明  |
 | -------- | -------------|   ----- |
-| `IQIYI_COOKIE`          |   爱奇艺authcookie    |爱奇艺cookie中 P00001的值 详情[文字教程](https://www.bilibili.com/read/cv7437179) [视频教程](https://www.bilibili.com/video/BV1B541157DE) 电脑版有效期三个月|
+| `IQIYI_COOKIE`          |   爱奇艺authcookie    |P00001的值 详情[文字教程](https://www.bilibili.com/read/cv7437179) [视频教程](https://www.bilibili.com/video/BV1B541157DE) 电脑版有效期三个月|
 | `BILI_USER`             |   哔哩哔哩账号   |B站账号|
 | `BILI_PASS`             |   哔哩哔哩密码   |B站密码|
 | `BIKA_USER`             |   哔咔漫画用户名   |记住是登录用户名而不是邮箱|
