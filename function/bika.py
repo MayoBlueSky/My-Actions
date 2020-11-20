@@ -93,5 +93,6 @@ if __name__ == '__main__':
         print("重复签到 - Already punch-in")
         msg = '重复签到'
 
-sendNotify.send(title = u"哔咔漫画自动打哔咔", msg = msg)
+if SEND_KEY == '':
+    sendNotify.send(title = u"哔咔漫画自动打哔咔", msg = msg)
 

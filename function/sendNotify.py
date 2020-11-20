@@ -1,9 +1,6 @@
 import requests
 import json
-import sys
-import time
 import os
-from http import client
 from urllib import parse
 
 class sendNotify:
@@ -28,18 +25,18 @@ class sendNotify:
     #注：此处设置github action用户填写到Settings-Secrets里面(Name输入TG_USER_ID)
     TG_USER_ID = '';
 
-#     #=======================================钉钉机器人通知设置区域===========================================
-#     #此处填你钉钉 bot 的webhook，例如：5a544165465465645d0f31dca676e7bd07415asdasd
-#     #注：此处设置github action用户填写到Settings-Secrets里面(Name输入DD_BOT_TOKEN)
-#     DD_BOT_TOKEN = '';
-#     #密钥，机器人安全设置页面，加签一栏下面显示的SEC开头的字符串
-#     DD_BOT_SECRET = '';
+    #=======================================钉钉机器人通知设置区域===========================================
+    #此处填你钉钉 bot 的webhook，例如：5a544165465465645d0f31dca676e7bd07415asdasd
+    #注：此处设置github action用户填写到Settings-Secrets里面(Name输入DD_BOT_TOKEN)
+    DD_BOT_TOKEN = '';
+    #密钥，机器人安全设置页面，加签一栏下面显示的SEC开头的字符串
+    DD_BOT_SECRET = '';
 
-    # # Server酱
+    #Server酱
     if os.environ['PUSH_KEY'] != "":
         SCKEY = os.environ['PUSH_KEY']
 
-    # # #Bark App
+    #Bark App
     if os.environ['BARK_PUSH'] != "":
         if os.environ['BARK_PUSH'].find("https") != -1 or os.environ['BARK_PUSH'].find("http") != -1:
             BARK_PUSH = os.environ['PUSH_KEY']
@@ -50,17 +47,17 @@ class sendNotify:
     elif BARK_PUSH != "" or BARK_PUSH.find("https") != -1 or BARK_PUSH.find("http") != -1:
         BARK_PUSH = "https://api.day.app/" + BARK_PUSH
 
-    # # #telegram
+    #telegram
     if os.environ['TG_BOT_TOKEN'] != "":
         TG_BOT_TOKEN = os.environ['TG_BOT_TOKEN']
     if os.environ['TG_USER_ID'] != "":
         TG_USER_ID = os.environ['TG_USER_ID']
 
-#     # # #钉钉机器人
-#     if os.environ['DD_BOT_TOKEN'] != "":
-#         DD_BOT_TOKEN = os.environ['DD_BOT_TOKEN']
-#         if os.environ['DD_BOT_SECRET'] != "":
-#             DD_BOT_SECRET = os.environ['DD_BOT_SECRET']
+    #钉钉机器人
+    #     if os.environ['DD_BOT_TOKEN'] != "":
+    #         DD_BOT_TOKEN = os.environ['DD_BOT_TOKEN']
+    #         if os.environ['DD_BOT_SECRET'] != "":
+    #             DD_BOT_SECRET = os.environ['DD_BOT_SECRET']
 
     def serverNotify(self, text, desp):
         if sendNotify.SCKEY != '':
@@ -119,12 +116,12 @@ class sendNotify:
             pass
 
     def send(self, **kwargs):
-            send = sendNotify()
-            title = kwargs.get("title", "")
-            msg = kwargs.get("msg", "")
-            send.serverNotify(title,msg)
-            send.BarkNotify(title,msg)
-            send.tgBotNotify(title,msg)
+        send = sendNotify()
+        title = kwargs.get("title", "")
+        msg = kwargs.get("msg", "")
+        send.serverNotify(title,msg)
+        send.BarkNotify(title,msg)
+        send.tgBotNotify(title,msg)
 
 # if __name__ == "__main__":
 #     send(title = '这是标题',msg = '这是内容')
