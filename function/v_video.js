@@ -137,12 +137,8 @@ function txVideoSignIn(headers) {
             console.log("腾讯视频会员签到", "签到请求失败 ‼️‼️", error)
         } else {
             if (data.match(/Account Verify Error/)) {
-                if(SEND_KEY){
-                    notify.sendNotify("腾讯视频会员签到", "签到失败, Cookie失效 ‼️‼️");
-                    console.log("腾讯视频会员签到", "", "签到失败, Cookie失效 ‼️‼️")
-                }else{
-                    console.log("腾讯视频会员签到", "", "签到失败, Cookie失效 ‼️‼️")
-                }
+                notify.sendNotify("腾讯视频会员签到", "签到失败, Cookie失效 ‼️‼️");
+                console.log("腾讯视频会员签到", "", "签到失败, Cookie失效 ‼️‼️")
             } else if (data.match(/checkin_score/)) {
                 msg = data.match(/checkin_score": (.+?),"msg/)[1]
                 //通过分数判断是否重复签到
