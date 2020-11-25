@@ -65,4 +65,5 @@ print("哔哩哔哩银瓜子兑换硬币 start>>>")
 print(b.silver_to_coin())
 
 # print(msg)
-sendNotify.send(title = u"哔哩哔哩漫画签到",msg = msg)
+if SEND_KEY == '':
+    sendNotify.send(title = u"哔哩哔哩漫画签到",msg = msg)
