@@ -16,7 +16,7 @@ const bduss = process.env.BDUSS
 $.CFG_isOrderBars = 'false' // 1: 经验排序, 2: 连签排序
 $.CFG_maxShowBars = 100 //每次通知数量
 $.CFG_maxSignBars = 5 // 每次并发执行多少个任务
-$.CFG_signWaitTime = 2000 // 每次并发间隔时间 (毫秒)
+$.CFG_signWaitTime = 5000 // 每次并发间隔时间 (毫秒)
 
 var COOKIE = "Cookie", BDUSS = "BDUSS", TBS = 'tbs', PAGE_NO = 'page_no', ONE = '1', TIMESTAMP = "timestamp", DATA = 'data', FID = 'fid', SIGN_KEY = 'tiebaclient!!!', UTF8 = "utf-8", SIGN = "sign", KW = "kw";
 //var bduss = ''
@@ -217,7 +217,7 @@ function showmsg() {
         let tiebasubt = '百度贴吧: '
         if (allbarCnt == allsignCnt) tiebasubt += '成功'
         else if (allbarCnt == curfailCnt) tiebasubt += '失败'
-        else tiebasubt += '部分'
+        else tiebasubt += '部分签到成功'
         let zhidaosubt = '百度知道: '
         if ($.zhidao.isSignSuc && $.zhidao.signNo === 0) zhidaosubt += '成功'
         else if ($.zhidao.isSignSuc && $.zhidao.signNo === 2) zhidaosubt += '重复'
@@ -245,7 +245,7 @@ function showmsg() {
                 $.desc = [..._descinfo, '', ...$.desc].join('\n')
                 $.msg($.name, $.subt, $.desc)
                 if(!SEND_KEY){
-                    notify.sendNotify("百度签到", $.name + $.subt + $.desc);
+                    notify.sendNotify("百度签到：", $.name + $.subt + $.desc);
                 }
                 $.desc = []
             }
