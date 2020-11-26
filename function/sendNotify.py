@@ -54,10 +54,10 @@ class sendNotify:
         TG_USER_ID = os.environ['TG_USER_ID']
 
     #钉钉机器人
-    #     if os.environ['DD_BOT_TOKEN'] != "":
-    #         DD_BOT_TOKEN = os.environ['DD_BOT_TOKEN']
-    #         if os.environ['DD_BOT_SECRET'] != "":
-    #             DD_BOT_SECRET = os.environ['DD_BOT_SECRET']
+    if os.environ['DD_BOT_TOKEN'] != "":
+        DD_BOT_TOKEN = os.environ['DD_BOT_TOKEN']
+    if os.environ['DD_BOT_SECRET'] != "":
+        DD_BOT_SECRET = os.environ['DD_BOT_SECRET']
 
     def serverNotify(self, text, desp):
         if sendNotify.SCKEY != '':
@@ -115,6 +115,27 @@ class sendNotify:
             print('\n您未提供Bark的APP推送BARK_PUSH，取消Bark推送消息通知\n')
             pass
 
+    def dingNotify(self, text, desp):
+        if sendNotify.DD_BOT_TOKEN != '':
+            url = 'https://oapi.dingtalk.com/robot/send?access_token='+sendNotify.DD_BOT_TOKEN
+            data = {
+                "msgtype": "text",
+                "text": {
+                    'content': text+desp
+                }
+            }
+            headers = {
+                'Content-Type': 'application/json;charset=utf-8'
+            }
+            response = requests.post(url=url, data=json.dumps(data), headers=headers).text
+            if json.loads(response)['errcode'] == 0:
+                print('\n钉钉发送通知消息成功\n')
+            else:
+                print('\n发送通知失败！！\n')
+        else:
+            print('\n您未提供钉钉的有关数据，取消钉钉推送消息通知\n')
+            pass
+
     def send(self, **kwargs):
         send = sendNotify()
         title = kwargs.get("title", "")
@@ -122,6 +143,7 @@ class sendNotify:
         send.serverNotify(title,msg)
         send.BarkNotify(title,msg)
         send.tgBotNotify(title,msg)
+        send.dingNotify(title,msg)
 
 # if __name__ == "__main__":
 #     send(title = '这是标题',msg = '这是内容')
