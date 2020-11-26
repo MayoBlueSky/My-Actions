@@ -1,4 +1,8 @@
 import requests
+import time
+import hmac
+import hashlib
+import base64
 import json
 import os
 from urllib import parse
@@ -56,8 +60,8 @@ class sendNotify:
     #钉钉机器人
     if os.environ['DD_BOT_TOKEN'] != "":
         DD_BOT_TOKEN = os.environ['DD_BOT_TOKEN']
-    # if os.environ['DD_BOT_SECRET'] != "":
-    #     DD_BOT_SECRET = os.environ['DD_BOT_SECRET']
+    if os.environ['DD_BOT_SECRET'] != "":
+        DD_BOT_SECRET = os.environ['DD_BOT_SECRET']
 
     def serverNotify(self, text, desp):
         if sendNotify.SCKEY != '':
@@ -127,6 +131,15 @@ class sendNotify:
             headers = {
                 'Content-Type': 'application/json;charset=utf-8'
             }
+            if sendNotify.DD_BOT_SECRET != '':
+                timestamp = long(round(time.time() * 1000))
+                secret_enc = bytes(secret).encode('utf-8')
+                string_to_sign = '{}\n{}'.format(timestamp, secret)
+                string_to_sign_enc = bytes(string_to_sign).encode('utf-8')
+                hmac_code = hmac.new(secret_enc, string_to_sign_enc, digestmod=hashlib.sha256).digest()
+                sign = urllib.quote_plus(base64.b64encode(hmac_code))
+                url = 'https://oapi.dingtalk.com/robot/send?access_token='+sendNotify.DD_BOT_TOKEN+'&timestamp='+timestamp+'&sign='+sign
+
             response = requests.post(url=url, data=json.dumps(data), headers=headers).text
             if json.loads(response)['errcode'] == 0:
                 print('\n钉钉发送通知消息成功\n')
