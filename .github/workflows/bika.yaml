@@ -18,7 +18,7 @@ jobs:
             - name: "Set up Python"
               uses: actions/setup-python@v1
               with:
-                python-version: 3.7
+                python-version: 3.8
 
             - name: "安装依赖包"
               run: pip install -r ./requirements.txt
@@ -34,4 +34,6 @@ jobs:
                   TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
                   TG_USER_ID: ${{ secrets.TG_USER_ID }}
                   BARK_SOUND: ${{ secrets.BARK_SOUND }}
-#最后推送 2020年11月25日
+                  DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
+                  DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
+#最后推送 2020年11月26日
