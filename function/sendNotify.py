@@ -56,8 +56,8 @@ class sendNotify:
     #钉钉机器人
     if os.environ['DD_BOT_TOKEN'] != "":
         DD_BOT_TOKEN = os.environ['DD_BOT_TOKEN']
-    if os.environ['DD_BOT_SECRET'] != "":
-        DD_BOT_SECRET = os.environ['DD_BOT_SECRET']
+    # if os.environ['DD_BOT_SECRET'] != "":
+    #     DD_BOT_SECRET = os.environ['DD_BOT_SECRET']
 
     def serverNotify(self, text, desp):
         if sendNotify.SCKEY != '':
