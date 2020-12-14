@@ -168,7 +168,7 @@ function txVideoSignIn(headers) {
 //下载任务签到请求
 function txVideoDownTask1(headers) {
     $.get({
-        url: `https://vip.video.qq.com/fcgi-bin/comm_cgi?name=spp_MissionFaHuo&cmd=4&task_id=7`, headers
+        url: `https://vip.video.qq.com/fcgi-bin/comm_cgi?name=spp_MissionFaHuo&cmd=4&task_id=7&_=${ parseInt(Math.random()*1000) }`, headers
     }, function(error, response, data) {
         if (error) {
             $.log(error);
@@ -190,7 +190,7 @@ function txVideoDownTask1(headers) {
 //赠送任务签到请求
 function txVideoDownTask2(headers) {
     $.get({
-        url: `https://vip.video.qq.com/fcgi-bin/comm_cgi?name=spp_MissionFaHuo&cmd=4&task_id=6`, headers
+        url: `https://vip.video.qq.com/fcgi-bin/comm_cgi?name=spp_MissionFaHuo&cmd=4&task_id=6&_=${ parseInt(Math.random()*1000) }`, headers
     }, function(error, response, data) {
         if (error) {
             $.log(error);
@@ -212,7 +212,7 @@ function txVideoDownTask2(headers) {
 //弹幕任务签到请求
 function txVideoDownTask3(headers) {
     $.get({
-        url: `https://vip.video.qq.com/fcgi-bin/comm_cgi?name=spp_MissionFaHuo&cmd=4&task_id=3`, headers
+        url: `https://vip.video.qq.com/fcgi-bin/comm_cgi?name=spp_MissionFaHuo&cmd=4&task_id=3&_=${ parseInt(Math.random()*1000) }`, headers
     }, function(error, response, data) {
         if (error) {
             $.log(error);
@@ -234,7 +234,7 @@ function txVideoDownTask3(headers) {
 //观看60分钟任务签到请求
 function txVideoDownTask4(headers) {
     $.get({
-        url: `https://vip.video.qq.com/fcgi-bin/comm_cgi?name=spp_MissionFaHuo&cmd=4&task_id=1`, headers
+        url: `https://vip.video.qq.com/fcgi-bin/comm_cgi?name=spp_MissionFaHuo&cmd=4&task_id=1&_=${ parseInt(Math.random()*1000) }`, headers
     }, function(error, response, data) {
         if (error) {
             $.log(error);
