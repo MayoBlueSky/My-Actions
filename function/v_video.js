@@ -33,6 +33,7 @@ if (process.env.V_REF_URL) {
 } else {
     //无意义输出方便调试
     console.log("V_REF_URL值未填写 取消运行")
+    //ref_url_ver()
 }
 
 /**
@@ -256,7 +257,13 @@ function txVideoDownTask4(headers) {
 //主程序入口
 exports.main = () => new Promise(
     (resovle, reject) => refCookie()
-        .then(params=>Promise.all([ txVideoSignIn(params), txVideoDownTask1(params), txVideoDownTask2(params), txVideoDownTask3(params), txVideoDownTask4(params)])
+        .then(params=>Promise.all([
+            txVideoSignIn(params),
+            setTimeout(() => {txVideoDownTask1(params)},1000),
+            setTimeout(() => {txVideoDownTask2(params)},2000),
+            setTimeout(() => {txVideoDownTask3(params)},3000),
+            setTimeout(() => {txVideoDownTask4(params)},4000)
+            ])
             .then(e=>resovle())
             .catch(e=>reject())
         ).catch(e=>{
