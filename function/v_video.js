@@ -256,7 +256,7 @@ function txVideoDownTask4(headers) {
 //主程序入口
 exports.main = () => new Promise(
     (resovle, reject) => refCookie()
-        .then(params=>Promise.all([ txVideoSignIn(params)], txVideoDownTask1(params)], txVideoDownTask2(params)], txVideoDownTask3(params)], txVideoDownTask4(params)])
+        .then(params=>Promise.all([ txVideoSignIn(params), txVideoDownTask1(params), txVideoDownTask2(params), txVideoDownTask3(params), txVideoDownTask4(params)])
             .then(e=>resovle())
             .catch(e=>reject())
         ).catch(e=>{
