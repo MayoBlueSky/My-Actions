@@ -147,9 +147,6 @@ function txVideoSignIn(headers) {
                 }else{
                     msg = "签到成功，签到分数：" + msg  + "分 🎉"
                 }
-                //签到成功才执行任务签到
-                console.log("腾讯视频会员签到", "", "以下任务仅领取,需要手动完成,如没有完成请无视" )
-                setTimeout(Collect_task,2000)
                 //判断是否为Cookie失效时才提醒
                 if(SEND_KEY){
                     console.log("腾讯视频会员签到", "", date.getMonth() + 1 + "月" + date.getDate() + "日, " + msg )
@@ -256,23 +253,10 @@ function txVideoDownTask4(headers) {
     })
 }
 
-//任务领取
-function Collect_task() {
-    refCookie().then(data => {
-        this.provinces = data
-        txVideoDownTask1(data)
-        txVideoDownTask2(data)
-        txVideoDownTask3(data)
-        txVideoDownTask4(data)
-    }).catch(e=>{
-        console.log(e)
-    })
-}
-
 //主程序入口
 exports.main = () => new Promise(
     (resovle, reject) => refCookie()
-        .then(params=>Promise.all([ txVideoSignIn(params)])
+        .then(params=>Promise.all([ txVideoSignIn(params)], txVideoDownTask1(params)], txVideoDownTask2(params)], txVideoDownTask3(params)], txVideoDownTask4(params)])
             .then(e=>resovle())
             .catch(e=>reject())
         ).catch(e=>{
