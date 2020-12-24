@@ -42,12 +42,11 @@
 | `TELECOM_MOBILE`        |   中国电信手机号         |只需要手机号 单账号 `多账号将会暴露手机号` 自行考虑,多账号使用`,`分割 部分地区或手机号暂无法签到，自行测试使用|
 | `V2EXCK`                |   V2EX的Cookie         |V2EX的Cookie|
 | `BDUSS`                 |   百度BDUSS         |BDUSS值切勿使用双击复制 (结尾有一个`符号`双击复制可能无法复制完整)|
-| `SEND_KEY`              |   推送开关            |如果你想只在COOKIE失效时发送推送信息,就加一个这个,参数值随便写就行|
-
 ##### 推送通知环境变量(目前提供`微信server酱`、`pushplus(推送加)`、`iOS Bark APP`、`telegram机器人`、`钉钉机器人`、`企业微信机器人`、`iGot`、`QQ酷推`等通知方式)
 
 | Name                    |   归属   | 属性   | 说明                                                         |
 | :---------------------: | :----------: | --------- | ------------------------------------------------------------ |
+| `SEND_KEY`              |   推送开关        | 非必须 | 仅在Cookie失效时发送推送,值随意|
 | `PUSH_KEY`              |   微信server酱推送   | 非必须 | server酱的微信通知[官方文档](http://sc.ftqq.com/3.version) |
 | `BARK_PUSH`             |   [BARK推送](https://apps.apple.com/us/app/bark-customed-notifications/id1403753865)   | 非必须 | IOS用户下载BARK这个APP,填写内容是app提供的`设备码`，例如：https://api.day.app/123 ，那么此处的设备码就是`123`，再不懂看 [这个图](https://github.com/lxk0301/jd_scripts/tree/master/icon/bark.jpg)（注：支持自建填完整链接即可） |
 | `BARK_SOUND`            |   [BARK推送](https://apps.apple.com/us/app/bark-customed-notifications/id1403753865)   | 非必须 | bark推送声音设置，例如`choo`,具体值请在`bark`-`推送铃声`-`查看所有铃声` |
