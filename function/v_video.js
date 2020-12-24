@@ -2,7 +2,7 @@
  *
  * @description 腾讯视频好莱坞会员V力值签到，手机签到和领取任务及奖励。
  * @author BlueSkyClouds
- * @create_at 2020-11-02
+ * @create_at 2020-12-25
  */
 
 const $ = new Env('腾讯视频会员签到');
@@ -166,6 +166,31 @@ function txVideoSignIn(headers) {
     })
 }
 
+// 签到2
+function txVideoCheckin(headers){
+    $.get({
+        url: `http://v.qq.com/x/bu/mobile_checkin?isDarkMode=0&uiType=REGULAR`,headers
+    }, function(error, response, data) {
+        if (error) {
+            $.log(error);
+            console.log("腾讯视频会员二次签到", "签到请求失败 ‼️‼️", error)
+        } else {
+            if (data.match(/Unauthorized/)) {
+                notify.sendNotify("腾讯视频会员签到", "二次签到失败, Cookie失效 ‼️‼️");
+                console.log("腾讯视频会员签到", "", "二次签到失败, Cookie失效 ‼️‼️")
+            } else if (data.match(/isMultiple/)) {
+                msg = "签到成功，签到分数：" + data.match('isMultiple" />\s+(.*?)\s+<')[1] + "分 🎉"
+                console.log("腾讯视频会员二次签到", "", date.getMonth() + 1 + "月" + date.getDate() + "日, " + msg )
+            } else {
+                console.log("腾讯视频会员二次签到", "", "待定 ‼️‼️")
+                //输出日志查找原因
+                console.log(data)
+            }
+        }
+    })
+}
+
+
 //下载任务签到请求
 function txVideoDownTask1(headers) {
     $.get({
@@ -259,6 +284,7 @@ exports.main = () => new Promise(
     (resovle, reject) => refCookie()
         .then(params=>Promise.all([
             txVideoSignIn(params),
+            txVideoCheckin(params),
             setTimeout(() => {txVideoDownTask1(params)},1000),
             setTimeout(() => {txVideoDownTask2(params)},2000),
             setTimeout(() => {txVideoDownTask3(params)},3000),
