@@ -180,11 +180,11 @@ function txVideoCheckin(headers){
                 console.log("腾讯视频会员签到", "", "二次签到失败, Cookie失效 ‼️‼️")
             } else if (data.match(/isMultiple/)) {
                 msg = "签到成功，签到分数：" + data.match('isMultiple" />\s+(.*?)\s+<')[1] + "分 🎉"
-                console.log("腾讯视频会员二次签到", "", date.getMonth() + 1 + "月" + date.getDate() + "日, " + msg )
+                console.log("腾讯视频会员二次签到", "", date.getMonth() + 1 + "月" + date.getDate() + "日, " + "二次签到成功" )
             } else {
-                console.log("腾讯视频会员二次签到", "", "待定 ‼️‼️")
+                console.log("腾讯视频会员二次签到", "", "签到失败，请复制链接在app内私信发送后手动打开一次 ‼️‼http://v.qq.com/x/bu/mobile_checkin?isDarkMode=0&uiType=REGULAR️")
                 //输出日志查找原因
-                console.log(data)
+                //console.log(data)
             }
         }
     })
