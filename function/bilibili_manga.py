@@ -11,6 +11,11 @@ day = ""
 
 sendNotify = sendNotify()
 SEND_KEY = os.environ['SEND_KEY']
+
+if os.environ['BILI_USER'] == "" and os.environ['BILI_PASS'] == "":
+    print("未填写哔哩哔哩账号密码取消运行")
+    exit(0)
+
 # 尝试登陆
 b = Bilibili()
 login = b.login(username=os.environ['BILI_USER'], password=os.environ['BILI_PASS'])
