@@ -298,7 +298,6 @@ function sendNotify() {
         notify.sendNotify("腾讯视频会员签到", notice)
         //console.log("腾讯视频会员签到", "", notice )
     }
-    console.log(notice)
 }
 
 //主程序入口
