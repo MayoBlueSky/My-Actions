@@ -205,7 +205,7 @@ function txVideoDownTask1(headers) {
             } else {
                 //console.log("腾讯视频会员下载任务签到", "", "签到失败, 任务未完成 ‼️‼️")
                 console.log("腾讯视频会员下载任务签到", "", data)
-                notice += "腾讯视频会员下载任务签到：" + data + "\n"
+                notice += "腾讯视频会员下载任务签到：" + data.match(/msg":"(.*?)"/)[1] + "\n"
             }
         }
     })
@@ -230,7 +230,7 @@ function txVideoDownTask2(headers) {
             } else {
                 //console.log("腾讯视频会员赠送任务签到", "", "签到失败, 任务未完成 ‼️‼️")
                 console.log("腾讯视频会员赠送任务签到", "", data)
-                notice += "腾讯视频会员赠送任务签到：" + data + "\n"
+                notice += "腾讯视频会员赠送任务签到：" + data.match(/msg":"(.*?)"/)[1] + "\n"
             }
         }
     })
@@ -255,7 +255,7 @@ function txVideoDownTask3(headers) {
             } else {
                 //console.log("腾讯视频会员弹幕任务签到", "", "签到失败, 任务未完成 ‼️‼️")
                 console.log("腾讯视频会员弹幕任务签到", "", data)
-                notice += "腾讯视频会员弹幕任务签到：" + data + "\n"
+                notice += "腾讯视频会员弹幕任务签到：" + data.match(/msg":"(.*?)"/)[1] + "\n"
             }
         }
     })
@@ -280,7 +280,7 @@ function txVideoDownTask4(headers) {
             } else {
                 //console.log("腾讯视频会员观看任务签到", "", "签到失败, 任务未完成 ‼️‼️")
                 console.log("腾讯视频会员观看任务签到", "", data)
-                notice += "腾讯视频会员观看任务签到：" + data + "\n"
+                notice += "腾讯视频会员观看任务签到：" + data.match(/msg":"(.*?)"/)[1] + "\n"
             }
         }
     })
@@ -298,6 +298,7 @@ function sendNotify() {
         notify.sendNotify("腾讯视频会员签到", notice)
         //console.log("腾讯视频会员签到", "", notice )
     }
+    console.log(notice)
 }
 
 //主程序入口
@@ -310,7 +311,7 @@ exports.main = () => new Promise(
             setTimeout(() => {txVideoDownTask2(params)},2000),
             setTimeout(() => {txVideoDownTask3(params)},3000),
             setTimeout(() => {txVideoDownTask4(params)},4000),
-            setTimeout(() => {sendNotify()},5000)
+            setTimeout(() => {sendNotify()},8000)
             ])
             .then(e=>resovle())
             .catch(e=>reject())
