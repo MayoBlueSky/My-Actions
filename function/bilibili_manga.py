@@ -12,6 +12,7 @@ day = ""
 sendNotify = sendNotify()
 SEND_KEY = os.environ['SEND_KEY']
 
+# 未填写参数取消运行
 if os.environ['BILI_USER'] == "" or os.environ['BILI_PASS'] == "":
     print("未填写哔哩哔哩账号密码取消运行")
     exit(0)
