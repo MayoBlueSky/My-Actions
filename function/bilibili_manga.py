@@ -22,9 +22,8 @@ b = Bilibili()
 login = b.login(username=os.environ['BILI_USER'], password=os.environ['BILI_PASS'])
 print(login)
 if login == False:
-    if SEND_KEY != '':
-        sendNotify.send(title = u"哔哩哔哩漫画签到", msg = "登录失败 账号或密码错误")
-        exit(0)
+    sendNotify.send(title = u"哔哩哔哩漫画签到", msg = "登录失败 账号或密码错误")
+    exit(0)
 # 获取 Cookie
 cookie_str = ""
 cookies = b.get_cookies()
