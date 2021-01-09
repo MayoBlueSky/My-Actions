@@ -2,7 +2,7 @@
  *
  * @description 腾讯视频好莱坞会员V力值签到，手机签到和领取任务及奖励。
  * @author BlueSkyClouds
- * @create_at 2020-12-25
+ * @create_at 2021-01-10
  */
 
 const $ = new Env('腾讯视频会员签到');
@@ -140,7 +140,7 @@ function txVideoSignIn(headers) {
         } else {
             if (data.match(/Account Verify Error/)) {
                 notice += "腾讯视频会员签到：签到失败-Cookie失效 ‼️‼️"+ "\n"
-                console.log("腾讯视频会员签到", "", "签到失败, Cookie失效 ‼️‼️")
+                console.log("腾讯视频会员签到：签到失败, Cookie失效 ‼️‼️")
             } else if (data.match(/checkin_score/)) {
                 msg = data.match(/checkin_score": (.+?),"msg/)[1]
                 //通过分数判断是否重复签到
@@ -150,10 +150,10 @@ function txVideoSignIn(headers) {
                     notice += "腾讯视频会员手机端签到成功：签到分数：" + msg + "分 🎉"+ "\n"
                 }
             } else if (data.match(/Not VIP/)) {
-                notice += "非会员无法签到"
-                console.log("腾讯视频会员签到", "", "非会员无法签到" )
+                notice += "腾讯视频会员签到：非会员无法签到"
+                console.log("腾讯视频会员签到：非会员无法签到" )
             } else {
-                console.log("腾讯视频会员签到", "", "脚本待更新 ‼️‼️")
+                console.log("腾讯视频会员签到：脚本待更新 ‼️‼️")
                 //输出日志查找原因
                 console.log(data)
             }
@@ -172,12 +172,12 @@ function txVideoCheckin(headers){
         } else {
             if (data.match(/Unauthorized/)) {
                 notice += "腾讯视频会员二次签到失败：Cookie失效 ‼️‼️"+ "\n"
-                console.log("腾讯视频会员签到", "", "二次签到失败, Cookie失效 ‼️‼️")
+                console.log("腾讯视频会员签到：二次签到失败, Cookie失效 ‼️‼️")
             } else if (data.match(/isMultiple/)) {
-                console.log("腾讯视频会员二次签到", "", timeFormat(UTC8) + "二次签到成功" )
-                notice += "腾讯视频会员二次签到成功"+ "\n"
+                console.log("腾讯视频会员二次签到：", timeFormat(UTC8) + "二次签到成功" )
+                notice += "腾讯视频会员二次签到成功" + "\n"
             } else {
-                console.log("腾讯视频会员二次签到", "", "签到失败，请复制链接在app内私信发送后手动打开一次 http://v.qq.com/x/bu/mobile_checkin?isDarkMode=0&uiType=REGULAR️")
+                console.log("腾讯视频会员二次签到：签到失败，请复制链接在app内私信发送后手动打开一次 http://v.qq.com/x/bu/mobile_checkin?isDarkMode=0&uiType=REGULAR️")
                 notice += "腾讯视频会员二次签到失败：请复制链接在app内私信发送后手动打开一次 http://v.qq.com/x/bu/mobile_checkin?isDarkMode=0&uiType=REGULAR️"+ "\n"
                 //输出日志查找原因
                 //console.log(data)
@@ -196,15 +196,15 @@ function txVideoDownTask1(headers) {
             console.log("腾讯视频会员签到", "下载任务签到请求 ‼️‼️", error)
         } else {
             if (data.match(/已发过货/)) {
-                console.log("腾讯视频会员下载任务签到", "", "签到失败, 请勿重复领取任务 ‼️‼️")
-                notice += "腾讯视频会员下载任务签到：", "", "签到失败, 请勿重复领取任务 ‼️‼️" + "\n"
+                console.log("腾讯视频会员下载任务签到：签到失败, 请勿重复领取任务 ‼️‼️")
+                notice += "腾讯视频会员下载任务签到：签到失败, 请勿重复领取任务 ‼️‼️" + "\n"
             } else if (data.match(/score/)) {
                 msg = data.match(/score":(.*?)}/)[1]
-                console.log("腾讯视频会员下载任务签到", "", "签到成功，签到分数：" + msg + "分 🎉")
-                notice += "腾讯视频会员下载任务签到：", "", "签到成功，签到分数：" + msg + "分 🎉" + "\n"
+                console.log("腾讯视频会员下载任务签到：签到成功，签到分数：" + msg + "分 🎉")
+                notice += "腾讯视频会员下载任务签到：签到成功，签到分数：" + msg + "分 🎉" + "\n"
             } else {
                 //console.log("腾讯视频会员下载任务签到", "", "签到失败, 任务未完成 ‼️‼️")
-                console.log("腾讯视频会员下载任务签到", "", data)
+                console.log("腾讯视频会员下载任务签到", data)
                 notice += "腾讯视频会员下载任务签到：" + data.match(/msg":"(.*?)"/)[1] + "\n"
             }
         }
@@ -221,15 +221,15 @@ function txVideoDownTask2(headers) {
             console.log("腾讯视频会员签到", "赠送任务签到请求 ‼️‼️", error)
         } else {
             if (data.match(/已发过货/)) {
-                console.log("腾讯视频会员赠送任务签到", "", "签到失败, 请勿重复领取任务 ‼️‼️")
-                notice += "腾讯视频会员赠送任务签到：", "", "签到失败, 请勿重复领取任务 ‼️‼️" + "\n"
+                console.log("腾讯视频会员赠送任务签到：签到失败, 请勿重复领取任务 ‼️‼️")
+                notice += "腾讯视频会员赠送任务签到：签到失败, 请勿重复领取任务 ‼️‼️" + "\n"
             } else if (data.match(/score/)) {
                 msg = data.match(/score":(.*?)}/)[1]
-                console.log("腾讯视频会员赠送任务签到", "", "签到成功，签到分数：" + msg + "分 🎉")
-                notice += "腾讯视频会员赠送任务签到：", "", "签到成功，签到分数：" + msg + "分 🎉" + "\n"
+                console.log("腾讯视频会员赠送任务签到：签到成功，签到分数：" + msg + "分 🎉")
+                notice += "腾讯视频会员赠送任务签到：签到成功，签到分数：" + msg + "分 🎉" + "\n"
             } else {
                 //console.log("腾讯视频会员赠送任务签到", "", "签到失败, 任务未完成 ‼️‼️")
-                console.log("腾讯视频会员赠送任务签到", "", data)
+                console.log("腾讯视频会员赠送任务签到", data)
                 notice += "腾讯视频会员赠送任务签到：" + data.match(/msg":"(.*?)"/)[1] + "\n"
             }
         }
@@ -246,12 +246,12 @@ function txVideoDownTask3(headers) {
             console.log("腾讯视频会员签到", "弹幕任务签到请求 ‼️‼️", error)
         } else {
             if (data.match(/已发过货/)) {
-                console.log("腾讯视频会员弹幕任务签到", "", "签到失败, 请勿重复领取任务 ‼️‼️")
-                notice += "腾讯视频会员弹幕任务签到：", "", "签到失败, 请勿重复领取任务 ‼️‼️" + "\n"
+                console.log("腾讯视频会员弹幕任务签到：签到失败, 请勿重复领取任务 ‼️‼️")
+                notice += "腾讯视频会员弹幕任务签到：签到失败, 请勿重复领取任务 ‼️‼️" + "\n"
             } else if (data.match(/score/)) {
                 msg = data.match(/score":(.*?)}/)[1]
-                console.log("腾讯视频会员弹幕任务签到", "", "签到成功，签到分数：" + msg + "分 🎉")
-                notice += "腾讯视频会员弹幕任务签到：", "", "签到成功，签到分数：" + msg + "分 🎉" + "\n"
+                console.log("腾讯视频会员弹幕任务签到：签到成功，签到分数：" + msg + "分 🎉")
+                notice += "腾讯视频会员弹幕任务签到：签到成功，签到分数：" + msg + "分 🎉" + "\n"
             } else {
                 //console.log("腾讯视频会员弹幕任务签到", "", "签到失败, 任务未完成 ‼️‼️")
                 console.log("腾讯视频会员弹幕任务签到", "", data)
@@ -271,15 +271,15 @@ function txVideoDownTask4(headers) {
             console.log("腾讯视频会员签到", "观看任务签到请求 ‼️‼️", error)
         } else {
             if (data.match(/已发过货/)) {
-                console.log("腾讯视频会员观看任务签到", "", "签到失败, 请勿重复领取任务 ‼️‼️")
-                notice += "腾讯视频会员观看任务签到：", "", "签到失败, 请勿重复领取任务 ‼️‼️" + "\n"
+                console.log("腾讯视频会员观看任务签到：签到失败, 请勿重复领取任务 ‼️‼️")
+                notice += "腾讯视频会员观看任务签到：签到失败, 请勿重复领取任务 ‼️‼️" + "\n"
             } else if (data.match(/score/)) {
                 msg = data.match(/score":(.*?)}/)[1]
-                console.log("腾讯视频会员观看任务签到", "", "签到成功，签到分数：" + msg + "分 🎉")
-                notice += "腾讯视频会员观看任务签到：", "", "签到成功，签到分数：" + msg + "分 🎉" + "\n"
+                console.log("腾讯视频会员观看任务签到：签到成功，签到分数：" + msg + "分 🎉")
+                notice += "腾讯视频会员观看任务签到：签到成功，签到分数：" + msg + "分 🎉" + "\n"
             } else {
                 //console.log("腾讯视频会员观看任务签到", "", "签到失败, 任务未完成 ‼️‼️")
-                console.log("腾讯视频会员观看任务签到", "", data)
+                console.log("腾讯视频会员观看任务签到：", data)
                 notice += "腾讯视频会员观看任务签到：" + data.match(/msg":"(.*?)"/)[1] + "\n"
             }
         }
@@ -296,7 +296,7 @@ function sendNotify() {
         }
     }else{
         notify.sendNotify("腾讯视频会员签到", notice)
-        //console.log("腾讯视频会员签到", "", notice )
+        //console.log("腾讯视频会员签到" + notice )
     }
 }
 
