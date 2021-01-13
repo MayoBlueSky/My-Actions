@@ -5,7 +5,7 @@ import hashlib
 import base64
 import json
 import os
-from urllib import parse
+import urllib.parse
 
 class sendNotify:
     #=======================================微信server酱通知设置区域===========================================
