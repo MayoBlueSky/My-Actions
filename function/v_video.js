@@ -67,6 +67,8 @@ function getAuth(c = _cookie) {
     if(_cookie){
         if (_cookie.includes("main_login=wx")) {
             needParams = ["tvfe_boss_uuid","video_guid","video_platform","pgv_pvid","pgv_info","pgv_pvi","pgv_si","_qpsvr_localtk","RK","ptcz","ptui_loginuin","main_login","access_token","appid","openid","vuserid","vusession"]
+            notice += "腾讯视频会员任务领取：微信登录可能无法领取任务,签到正常，可能是Cookie更新出现问题。待排查。" + "\n"
+            console.log("腾讯视频会员任务领取：微信登录可能无法领取任务,签到正常，可能是Cookie更新出现问题。待排查。")
         } else if (_cookie.includes("main_login=qq")){
             needParams = ["tvfe_boss_uuid","video_guid","video_platform","pgv_pvid","pgv_info","pgv_pvi","pgv_si","_qpsvr_localtk","RK","ptcz","ptui_loginuin","main_login","vqq_access_token","vqq_appid","vqq_openid","vqq_vuserid","vqq_vusession"]
         } else {
