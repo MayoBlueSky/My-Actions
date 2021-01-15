@@ -167,8 +167,8 @@ class sendNotify:
     def coolpush(self, text, desp):
         if sendNotify.QQ_SKEY != '':
             url = "https://push.xuthus.cc/" + sendNotify.QQ_MODE + "/" + sendNotify.QQ_SKEY
-            data = {'text': text, 'desp': desp}
-            response = requests.post(url, data)
+            data = {"c": desp, "t": text}
+            response = requests.post(url=url, data=data)
             datas = json.loads(response)
 
             if datas['code'] == 200:
