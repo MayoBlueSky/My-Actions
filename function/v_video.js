@@ -92,9 +92,11 @@ function refCookie(url = ref_url) {
         axios({ url, headers }).then(e =>{
             const { vusession } = parseSet(e.headers['set-cookie'])
             const { vqq_vusession } = parseSet(e.headers['set-cookie'])
-            //微信和QQ参数不同
+            const { access_token } = parseSet(e.headers['set-cookie'])
+            //微信多一个access_token
             if (vusession) {
                 auth['vusession'] = vusession
+                auth['access_token'] = access_token
             } else {
                 auth['vqq_vusession'] = vqq_vusession
             }
