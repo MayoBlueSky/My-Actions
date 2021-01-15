@@ -21,6 +21,10 @@ $.CFG_signWaitTime = 5000 // 每次并发间隔时间 (毫秒)
 //var bduss = ''
 var headerInfo = Object.assign(`BDUSS=${bduss}`);
 
+if (!bduss) {
+    console.log("未填写百度Cookie取消运行");
+    process.exit(0);
+}
 
 !(async () => {
     await tieba()
@@ -40,10 +44,7 @@ function tieba() {
                 // 处理异常
                 if (_data.no !== 0) {
                     $.log(`获取清单失败! 原因: ${_data.error}`)
-                    if(SEND_KEY){
-                        notify.sendNotify("百度签到", `登录失败 Cookie已过期  ${_data.error}`);
-                        process.exit(0);
-                    }
+                    notify.sendNotify("百度签到", `登录失败 Cookie已过期  ${_data.error}`);
                     process.exit(0);
                 }
                 // 组装数据

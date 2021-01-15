@@ -116,7 +116,6 @@ function ref_url_ver(url = ref_url,_cookie) {
     $.get({
         url, headers
     }, function(error, response, data) {
-        //console.log(data)
         if (error) {
             $.log(error);
             console.log("腾讯视频会员签到", "验证ref_url请求失败 ‼️‼️", error)
