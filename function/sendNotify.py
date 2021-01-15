@@ -168,7 +168,7 @@ class sendNotify:
         # 暂时不使用。
         if sendNotify.QQ_SKEY != '':
             url = "https://push.xuthus.cc/" + sendNotify.QQ_MODE + "/" + sendNotify.QQ_SKEY
-            data = "text": {'content': text+desp}
+            data = {'text': text, 'desp': desp}
             response = json.dumps(requests.post(url, data).json(),ensure_ascii=False)
             datas = json.loads(response)
 
