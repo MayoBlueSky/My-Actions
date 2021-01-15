@@ -1,4 +1,4 @@
-name: 哔哩哔哩漫画签到
+name: 哔哩哔哩签到
 
 on:
     workflow_dispatch:
@@ -23,8 +23,8 @@ jobs:
             - name: "安装依赖包"
               run: pip install -r ./requirements.txt
 
-            - name: "运行 哔哩哔哩漫画签到"
-              run: python3 function/bilibili_manga.py
+            - name: "运行 哔哩哔哩签到"
+              run: python3 function/bilibili.py
               env:
                   BILI_USER: ${{ secrets.BILI_USER }}
                   BILI_PASS: ${{ secrets.BILI_PASS }}
@@ -36,4 +36,4 @@ jobs:
                   BARK_SOUND: ${{ secrets.BARK_SOUND }}
                   DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
                   DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
-#最后推送 2021年1月9日
+#最后推送 2021年1月15日
