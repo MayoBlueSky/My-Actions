@@ -241,16 +241,16 @@ class BiliBiliCheckIn(object):
         bilibili_cookie = self.bilibili_cookie_list
         bili_jct = b.get_csrf()
 
-        if(os.environ['BILI_NUM']) == '':
+        if os.environ['BILI_NUM'] == "":
             coin_num = 0 # 投币数量
         else:
             coin_num = os.environ['BILI_NUM']
 
-        if(os.environ['BILI_TYPE']) == '':
+        if os.environ['BILI_TYPE'] == "":
             coin_type = 1 # 投币方式 默认为 1 ；1: 为关注用户列表视频投币 0: 为随机投币。如果关注用户发布的视频不足配置的投币数，则剩余部分使用随机投币
         else:
-            coin_type\
-                = os.environ['BILI_TYPE']
+            coin_type = os.environ['BILI_TYPE']
+
         silver2coin = True #是否开启银瓜子换硬币，默认为 True 开启
         session = requests.session()
         requests.utils.add_dict_to_cookiejar(session.cookies, bilibili_cookie)
