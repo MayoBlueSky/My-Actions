@@ -190,6 +190,7 @@ class sendNotify:
         send.BarkNotify(title,msg)
         send.tgBotNotify(title,msg)
         send.dingNotify(title,msg)
+        send.coolpush(title,msg)
 
 # if __name__ == "__main__":
 #     send(title = '这是标题',msg = '这是内容')
