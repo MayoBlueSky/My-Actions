@@ -182,7 +182,7 @@ function txVideoCheckin(headers){
                 notice += "腾讯视频会员二次签到：二次签到成功" + "\n"
             } else {
                 console.log("腾讯视频会员二次签到：签到失败，请复制链接在app内私信发送后手动打开一次 http://v.qq.com/x/bu/mobile_checkin?isDarkMode=0&uiType=REGULAR️")
-                console.log("腾讯视频会员二次签到：https://cdn.jsdelivr.net/gh/BlueskyClouds/BlueskyClouds.github.io@master/2021/01/15/img/v_2sign.jpg")
+                console.log("腾讯视频会员二次签到相关教程：https://cdn.jsdelivr.net/gh/BlueskyClouds/BlueskyClouds.github.io@master/2021/01/15/img/v_2sign.jpg")
                 notice += "腾讯视频会员二次签到失败：请复制链接在app内私信发送后手动打开一次 http://v.qq.com/x/bu/mobile_checkin?isDarkMode=0&uiType=REGULAR️"+ "\n" + "相关教程https://cdn.jsdelivr.net/gh/BlueskyClouds/BlueskyClouds.github.io@master/2021/01/15/img/v_2sign.jpg" + "\n"
                 //输出日志查找原因
                 //console.log(data)
@@ -315,7 +315,7 @@ exports.main = () => new Promise(
             setTimeout(() => {txVideoDownTask2(params)},2000),
             setTimeout(() => {txVideoDownTask3(params)},3000),
             setTimeout(() => {txVideoDownTask4(params)},4000),
-            setTimeout(() => {sendNotify()},8000)
+            setTimeout(() => {sendNotify()},10000)
             ])
             .then(e=>resovle())
             .catch(e=>reject())
