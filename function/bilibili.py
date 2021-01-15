@@ -345,7 +345,7 @@ class BiliBiliCheckIn(object):
             )
             print(msg)
             if SEND_KEY == '':
-                sendNotify.send(title = u"哔哩哔哩漫画签到",msg = msg)
+                sendNotify.send(title = u"哔哩哔哩签到",msg = msg)
             msg_list.append(msg)
         return msg_list
 
