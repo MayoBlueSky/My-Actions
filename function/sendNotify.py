@@ -168,7 +168,8 @@ class sendNotify:
         if sendNotify.QQ_SKEY != '':
             url = "https://push.xuthus.cc/" + sendNotify.QQ_MODE + "/" + sendNotify.QQ_SKEY
             data = {"c": desp, "t": text}
-            response = requests.post(url=url, data=data)
+            headers = {'content-type': 'charset=utf8'}
+            response = json.dumps(requests.post(url=url, data=data, headers = headers).json(),ensure_ascii=False)
             datas = json.loads(response)
 
             if datas['code'] == 200:
