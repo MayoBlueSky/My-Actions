@@ -165,7 +165,6 @@ class sendNotify:
             pass
 
     def coolpush(self, text, desp):
-        # 暂时不使用。
         if sendNotify.QQ_SKEY != '':
             url = "https://push.xuthus.cc/" + sendNotify.QQ_MODE + "/" + sendNotify.QQ_SKEY
             data = {'text': text, 'desp': desp}
