@@ -10,11 +10,6 @@ import requests
 sendNotify = sendNotify()
 SEND_KEY = os.environ['SEND_KEY']
 
-# 未填写参数取消运行
-if os.environ['BILI_USER'] == "" or os.environ['BILI_PASS'] == "":
-    print("未填写哔哩哔哩账号或密码取消运行")
-    exit(0)
-
 class BiliBiliCheckIn(object):
     # 待测试，需要大会员账号测试领取福利
     def __init__(self, bilibili_cookie_list):
@@ -245,8 +240,17 @@ class BiliBiliCheckIn(object):
         msg_list = []
         bilibili_cookie = self.bilibili_cookie_list
         bili_jct = b.get_csrf()
-        coin_num = 0 # 投币数量
-        coin_type = 1 # 投币方式 默认为 0 ；1: 为关注用户列表视频投币 0: 为随机投币。如果关注用户发布的视频不足配置的投币数，则剩余部分使用随机投币
+
+        if(os.environ['BILI_NUM']) == '':
+            coin_num = 0 # 投币数量
+        else:
+            coin_num = os.environ['BILI_NUM']
+
+        if(os.environ['BILI_TYPE']) == '':
+            coin_type = 1 # 投币方式 默认为 1 ；1: 为关注用户列表视频投币 0: 为随机投币。如果关注用户发布的视频不足配置的投币数，则剩余部分使用随机投币
+        else:
+            coin_type\
+                = os.environ['BILI_TYPE']
         silver2coin = True #是否开启银瓜子换硬币，默认为 True 开启
         session = requests.session()
         requests.utils.add_dict_to_cookiejar(session.cookies, bilibili_cookie)
@@ -351,8 +355,14 @@ class BiliBiliCheckIn(object):
 
 
 if __name__ == "__main__":
+    # 未填写参数取消运行
+    if os.environ['BILI_USER'] == "" or os.environ['BILI_PASS'] == "":
+        print("未填写哔哩哔哩账号或密码取消运行")
+        exit(0)
+
     b = Bilibili()
     login = b.login(username=os.environ['BILI_USER'], password=os.environ['BILI_PASS'])
+
     if login == False:
         sendNotify.send(title = u"哔哩哔哩签到", msg = "登录失败 账号或密码错误")
         exit(0)
