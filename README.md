@@ -35,9 +35,9 @@
 | `IQIYI_COOKIE`          |   爱奇艺authcookie    |P00001的值 详情[文字教程](https://www.bilibili.com/read/cv7437179) [视频教程](https://www.bilibili.com/video/BV1B541157DE) 电脑版有效期三个月|
 | `BILI_USER`             |   哔哩哔哩账号   |B站账号|
 | `BILI_PASS`             |   哔哩哔哩密码   |B站密码|
-| `BILI_NUM`              |   哔哩哔哩每日投币数量   |每日投币数量`可不填`默认0|
-| `BILI_TYPE`             |   哔哩哔哩每日投币方式   |投币方式`可不填`默认1,只给关注的人投币 0则随机投币|
-| `BIKA_USER`             |   哔咔漫画用户名   |记住是登录用户名而不是邮箱|
+| `BILI_NUM`              |   哔哩哔哩每日投币数量   |每日投币数量`可不填`默认0 不投币|
+| `BILI_TYPE`             |   哔哩哔哩每日投币方式   |投币方式`可不填`默认1,只给关注的人投币 0 则随机投币|
+| `BIKA_USER`             |   哔咔漫画用户名   |哔咔漫画用户名|
 | `BIKA_PASS`             |   哔咔漫画密码   |哔咔漫画密码|
 | `V_REF_URL`             |   腾讯视频Request URL |电脑端搜索auth_refresh复制整段Request url[图片教程](https://cdn.jsdelivr.net/gh/BlueskyClouds/BlueskyClouds.github.io/2020/11/1/img/v_1.jpg)|
 | `V_COOKIE`              |   腾讯视频Cookie   |电脑端搜索auth_refresh复制Cookie[图片教程](https://cdn.jsdelivr.net/gh/BlueskyClouds/BlueskyClouds.github.io/2020/11/1/img/v_2.jpg)|
