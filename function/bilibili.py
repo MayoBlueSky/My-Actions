@@ -244,12 +244,12 @@ class BiliBiliCheckIn(object):
         if os.environ['BILI_NUM'] == "":
             coin_num = 0 # 投币数量
         else:
-            coin_num = os.environ['BILI_NUM']
+            coin_num = int(os.environ['BILI_NUM'])
 
         if os.environ['BILI_TYPE'] == "":
             coin_type = 1 # 投币方式 默认为 1 ；1: 为关注用户列表视频投币 0: 为随机投币。如果关注用户发布的视频不足配置的投币数，则剩余部分使用随机投币
         else:
-            coin_type = os.environ['BILI_TYPE']
+            coin_type = int(os.environ['BILI_TYPE'])
 
         silver2coin = True #是否开启银瓜子换硬币，默认为 True 开启
         session = requests.session()
