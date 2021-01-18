@@ -95,7 +95,7 @@ class sendNotify:
 
     def BarkNotify(self, text, desp):
         if sendNotify.BARK_PUSH != '':
-            url = sendNotify.BARK_PUSH + '/' + parse.quote(text) + '/' + parse.quote(desp) + '?sound=' + sendNotify.BARK_SOUND
+            url = sendNotify.BARK_PUSH + '/' + urllib.parse.quote(text) + '/' + urllib.parse.quote(desp) + '?sound=' + sendNotify.BARK_SOUND
             headers = {'Content-type': "application/x-www-form-urlencoded"}
             response = json.dumps(requests.get(url,headers=headers).json(),ensure_ascii=False)
             data = json.loads(response)
