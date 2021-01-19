@@ -364,7 +364,7 @@ if __name__ == "__main__":
     login = b.login(username=os.environ['BILI_USER'], password=os.environ['BILI_PASS'])
 
     if login == False:
-        sendNotify.send(title = u"哔哩哔哩签到", msg = "登录失败 账号或密码错误")
+        sendNotify.send(title = u"哔哩哔哩签到", msg = "登录失败 账号或密码错误，详情前往Github查看")
         exit(0)
     _bilibili_cookie_list = b.get_cookies()
     BiliBiliCheckIn(bilibili_cookie_list=_bilibili_cookie_list).main()
