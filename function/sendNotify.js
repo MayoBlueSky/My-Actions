@@ -156,7 +156,7 @@ function serverNotify(text, desp, timeout = 2100) {
       //微信server酱推送通知一个\n不会换行，需要两个\n才能换行，故做此替换
       desp = desp.replace(/[\n\r]/g, '\n\n');
       const options = {
-        url: `https://sc.ftqq.com/${SCKEY}.send`,
+        url: `http://sc.ftqq.com/${SCKEY}.send`,
         body: `text=${text}&desp=${desp}`,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
