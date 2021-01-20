@@ -14,7 +14,7 @@ const SEND_KEY = process.env.SEND_KEY
 const bduss = process.env.BDUSS
 
 $.CFG_isOrderBars = 'false' // 1: 经验排序, 2: 连签排序
-$.CFG_maxShowBars = 100 //每次通知数量
+$.CFG_maxShowBars = 50 //每次通知数量
 $.CFG_maxSignBars = 5 // 每次并发执行多少个任务
 $.CFG_signWaitTime = 5000 // 每次并发间隔时间 (毫秒)
 
