@@ -92,7 +92,7 @@ def main():
             sio.write('已完成任务: {}项\n\n'.format(resp['data']['taskNum']))
         else:
             desp = sio.getvalue()
-            sendNotify.send(title = desp,msg = nowtime)
+            sendNotify.send(title = "Wps签到信息",msg = desp)
             print(desp)
             return desp
         b1 = docer_webpage_clockin(item['sid'])
@@ -155,7 +155,7 @@ def main():
         else:
             wps_massing_info(item['sid'],1)
     desp = sio.getvalue()
-    sendNotify.send(title = desp,msg = nowtime)
+    sendNotify.send(title = "Wps签到集结",msg = desp)
     print(desp)
     return desp
 
@@ -544,7 +544,7 @@ def wps_massing(*args):
         else:
             wps_massing_info(item['sid'],1)
     desp = sio.getvalue()
-    sendNotify.send(title = desp,msg = nowtime)
+    sendNotify.send(title = "Wps签到集结",msg = desp)
     print(desp)
     return desp
 
