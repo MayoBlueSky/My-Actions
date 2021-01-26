@@ -358,9 +358,8 @@ class BiliBiliCheckIn(object):
 if __name__ == "__main__":
     # 未填写参数取消运行
     if os.environ['BILI_USER'] == "" or os.environ['BILI_PASS'] == "":
-        print("未填写哔哩哔哩账号或密码尝试使用COOKIE登录")
         if os.environ['BILI_COOKIE'] == "":
-            print("未填写哔哩哔哩COOKIE取消运行")
+            print("未填写哔哩哔哩账号密码或COOKIE取消运行")
             exit(0)
 
     if BILI_COOKIE == "":
