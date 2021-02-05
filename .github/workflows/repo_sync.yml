@@ -1,4 +1,4 @@
-name: sync-Actions
+name: 自动同步-Actions
 on:
   schedule:
     - cron: '1 0,15 * * *'
