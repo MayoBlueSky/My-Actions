@@ -553,6 +553,7 @@ def wps_massing_group(sid):
     massing_url = 'https://zt.wps.cn/2020/massing/api'
     r = s.post(massing_url, headers={'sid': sid})
     resp = json.loads(r.text)
+    print(resp)
     code = ''
     if resp['result'] == "error" and resp['msg'] == "up to limit":
         sio.write("今日集结次数已达到上限,请明日再来\n\n")
