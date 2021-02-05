@@ -141,21 +141,8 @@ def main():
         else:
             sio.write("邀请失败: 用户ID错误, 请检查用户sid\n\n")
 
-    sio.write("\n\n          ==========wps会员群集结==========\n\n")
-    for item in sid:
-        sio.write("---为{}会员进行群集结---↓\n\n".format(item['name']))
-        time = wps_massing_info(item['sid'],0)
-        if time < 3:
-            code = wps_massing_group(item['sid'])
-            if code:
-                k = wps_massing_join(code, invite_sid)
-                if k < 5:
-                    sio.write("当前集结{}人, 未达到集结要求!!!\n\n".format(k))
-            wps_massing_info(item['sid'],1)
-        else:
-            wps_massing_info(item['sid'],1)
     desp = sio.getvalue()
-    sendNotify.send(title = "Wps签到集结",msg = desp)
+    sendNotify.send(title = "Wps签到邀请",msg = desp)
     print(desp)
     return desp
 
@@ -522,101 +509,6 @@ def wps_miniprogram_invite(sid: list, invite_userid: int) -> None:
                 sio.write("邀请对象ID={}, 状态码: {},\n\n  请求信息{}\n\n".format(str(index+1).zfill(2), r.status_code, r.text[:25]))
     return k
 
-# wps会员群集结
-# 活动地址: WPS会员公众号-福利签到-打卡免费领会员-群集结
-# 奖励: 集结成功3次,获得6天会员+10M空间
-# 运行方法: 获取sid,填入,就可以了
-# 注意: 不要手动开团
-#      最好换4个自己小号的sid,默认的可能用的人多就没次数了
-def wps_massing(*args):
-    sid = data['wps_checkin']
-    sio.write("\n\n          ==========wps会员群集结==========\n\n")
-    for item in sid:
-        sio.write("---为{}会员进行群集结---↓\n\n".format(item['name']))
-        time = wps_massing_info(item['sid'],0)
-        if time < 3:
-            code = wps_massing_group(item['sid'])
-            if code:
-                k = wps_massing_join(code, invite_sid)
-                if k < 5:
-                    sio.write("当前集结{}人, 未达到集结要求!!!\n\n".format(k))
-            wps_massing_info(item['sid'],1)
-        else:
-            wps_massing_info(item['sid'],1)
-    desp = sio.getvalue()
-    sendNotify.send(title = "Wps签到集结",msg = desp)
-    print(desp)
-    return desp
-
-#wps会员群集结开团
-def wps_massing_group(sid):
-    massing_url = 'https://zt.wps.cn/2020/massing/api'
-    r = s.post(massing_url, headers={'sid': sid})
-    resp = json.loads(r.text)
-    print(resp)
-    code = ''
-    if resp['result'] == "error" and resp['msg'] == "up to limit":
-        sio.write("今日集结次数已达到上限,请明日再来\n\n")
-    elif resp['data'] and resp['data']['code']:
-        code = resp['data']['code']
-        sio.write("开团成功, code: " + code +'\n\n')
-    else:
-        r1 = s.get(massing_url, headers={'sid': sid})
-        resp1 = json.loads(r1.text)
-        if 'latest_record' in resp1['data']:
-            code = resp1['data']['latest_record']['code']
-            sio.write("开团成功, code: " + code +'\n\n')
-        else:
-            sio.write(resp['msg'] +'\n\n')
-    return code
-
-#wps会员群集结参团
-def wps_massing_join(code, sid):
-    massing_url = 'https://zt.wps.cn/2020/massing/api'
-    k = 1
-    for index, i in enumerate(sid):
-        if k < mass_limit:
-            headers = {
-                'sid': i
-            }
-            r = s.post(massing_url, data = {'code':code}, headers = headers)
-            if r.status_code == 200:
-                try:
-                    resp = json.loads(r.text)
-                    if resp['result'] == 'error':
-                        sio.write("参团对象ID={}, Result: {}\n\n".format(str(index+1).zfill(2),resp['msg']))
-                    elif resp['result'] == 'ok':
-                        sio.write("参团对象ID={}, Result: {}\n\n".format(str(index+1).zfill(2),resp['result']))
-                        k += 1
-                except:
-                    resp = r.text[:25]
-                    sio.write("参团对象ID={}, Result: ID已失效\n\n".format(str(index+1).zfill(2)))
-            else:
-                sio.write("参团对象ID={}, 状态码: {},\n\n  请求信息: {}\n\n".format(str(index+1).zfill(2), r.status_code, r.text[:25]))
-        else:
-            break
-    return k
-
-#wps会员群集结信息
-def wps_massing_info(sid,c):
-    massing_url = 'https://zt.wps.cn/2020/massing/api'
-    r = s.get(massing_url, headers={'sid': sid})
-    resp = json.loads(r.text)
-    time = 0
-    if resp['result'] == "ok" and resp['data'] and resp['data']['reward']:
-        reward = resp['data']['reward']
-        time = reward['time']
-        if time != 0 and c == 1:
-            sio.write('今日集结'+ str(reward['time']) +'次,共集结'+ str(reward['total_time']) +'次;\n\n获得'+ str(reward['member']) +'天会员,'+ str(reward['drive']) +'M空间\n\n')
-        if 'latest_record' in resp['data'] and c == 1:
-            create_time = resp['data']['latest_record']['create_time']
-            ts2str_url = 'https://api.a76yyyy.cn/time?function=timestamp2str'
-            r1 = s.post(ts2str_url, data = {'params1':str(int(create_time)+1800)})
-            resp1 = json.loads(r1.text)
-            sio.write("当前集结中, 下次开团时间:" + resp1['data'] + '\n\n')
-    else:
-        sio.write("sid已失效,请重新获取sid\n\n")
-    return time
 
 def main_handler(event, context):
     return main()
