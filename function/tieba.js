@@ -74,12 +74,10 @@ async function signbars(bars) {
     let _signbarCnt = 0
    
     bars.filter((bar) => !bar.isSign).forEach((bar) => _signbarCnt++)
-      
     // 跳出指定不签到的贴吧
-    if ( jump == $.bars.name) {    
+    if ( jump == $.bars.name) {
         return true;
     }
-                
     for (let bar of bars.filter((bar) => !bar.isSign) ) {
         const signbarAct = (resove) => {
             const url = { url: 'https://tieba.baidu.com/sign/add', headers: { Cookie: headerInfo } }
@@ -103,11 +101,11 @@ async function signbars(bars) {
                     $.logErr(e, resp)
                 } finally {
                     for (var i = 0; i < jump.length; i++) {
-                        if ( jump[i] == bar.name) {    
-                            return true; 
+                        if ( jump[i] == bar.name) {
+                            return true;
                         }
                     }
-                    
+
                     $.log(`❕ 百度贴吧:【${bar.name}】签到完成!`)
                     $.msg(`❕ 百度贴吧:【${bar.name}】签到完成!`)
                     resove()
@@ -118,8 +116,8 @@ async function signbars(bars) {
         if (signbarActs.length === $.CFG_maxSignBars || _signbarCnt === _curbarIdx) {
             // 跳出指定不签到的贴吧
             for (var i = 0; i < jump.length; i++) {
-                if ( jump[i] == bar.name) {    
-                    return true; 
+                if ( jump[i] == bar.name) {
+                    return true;
                 }
             }
             $.log('', `⏳ 正在发起 ${signbarActs.length} 个签到任务!`)
@@ -140,6 +138,9 @@ function getbars(bars) {
             url.headers['User-Agent'] = 'User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 13_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1 Mobile/15E148 Safari/604.1'
             $.get(url, (err, resp, data) => {
                 try {
+                    if(!isJSON_test(data)){
+                        return false;
+                    }
                     const _signinfo = JSON.parse(data).data.sign_user_info
                     bar.signRank = _signinfo.rank
                     bar.contsignCnt = _signinfo.sign_keep
@@ -272,6 +273,20 @@ function showmsg() {
         })
         resolve()
     })
+}
+
+function isJSON_test(str) {
+    if (typeof str == 'string') {
+        try {
+            var obj=JSON.parse(str);
+            //console.log('转换成功：'+obj);
+            return true;
+        } catch(e) {
+            //console.log('error：'+str+'!!!'+e);
+            return false;
+        }
+    }
+    //console.log('It is not a string!')
 }
 
 // prettier-ignore
