@@ -12,6 +12,7 @@ const $ = new Env('百度签到')
 const notify = $.isNode() ? require('./sendNotify') : '';
 const SEND_KEY = process.env.SEND_KEY
 const bduss = process.env.BDUSS
+const jump = process.env.JUMP
 
 $.CFG_isOrderBars = 'false' // 1: 经验排序, 2: 连签排序
 $.CFG_maxShowBars = 50 //每次通知数量
@@ -71,8 +72,15 @@ async function signbars(bars) {
     // 处理`未签`数据
     let _curbarIdx = 1
     let _signbarCnt = 0
+   
     bars.filter((bar) => !bar.isSign).forEach((bar) => _signbarCnt++)
-    for (let bar of bars.filter((bar) => !bar.isSign)) {
+      
+    // 跳出指定不签到的贴吧
+    if ( jump == $.bars.name) {    
+        return true;
+    }
+                
+    for (let bar of bars.filter((bar) => !bar.isSign) ) {
         const signbarAct = (resove) => {
             const url = { url: 'https://tieba.baidu.com/sign/add', headers: { Cookie: headerInfo } }
             url.headers['Host'] = 'tieba.baidu.com'
@@ -94,6 +102,12 @@ async function signbars(bars) {
                     bar.signMsg = err !== null ? error : e
                     $.logErr(e, resp)
                 } finally {
+                    for (var i = 0; i < jump.length; i++) {
+                        if ( jump[i] == bar.name) {    
+                            return true; 
+                        }
+                    }
+                    
                     $.log(`❕ 百度贴吧:【${bar.name}】签到完成!`)
                     $.msg(`❕ 百度贴吧:【${bar.name}】签到完成!`)
                     resove()
@@ -102,6 +116,12 @@ async function signbars(bars) {
         }
         signbarActs.push(new Promise(signbarAct))
         if (signbarActs.length === $.CFG_maxSignBars || _signbarCnt === _curbarIdx) {
+            // 跳出指定不签到的贴吧
+            for (var i = 0; i < jump.length; i++) {
+                if ( jump[i] == bar.name) {    
+                    return true; 
+                }
+            }
             $.log('', `⏳ 正在发起 ${signbarActs.length} 个签到任务!`)
             await Promise.all(signbarActs)
             await $.wait($.CFG_signWaitTime)
