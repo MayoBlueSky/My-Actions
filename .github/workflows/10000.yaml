@@ -3,7 +3,8 @@ name: 中国电信签到
 on:
     workflow_dispatch:
     schedule:
-        - cron: "30 0 * * *"
+        - cron: "0 */8 * * *"
+#电信经常签到不成功所以让他每八小时执行一下,一天三次
     watch:
         types: [started]
 
@@ -42,4 +43,3 @@ jobs:
                   BARK_SOUND: ${{ secrets.BARK_SOUND }}
                   DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
                   DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
-#最后推送 2021年1月20日
