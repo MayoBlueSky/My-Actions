@@ -46,6 +46,7 @@
 | `TELECOM_MOBILE`        |   中国电信手机号         |只需要手机号 单账号 `多账号将会暴露手机号` 自行考虑,多账号使用`,`分割 部分地区或手机号暂无法签到，自行测试使用|
 | `V2EXCK`                |   V2EX的Cookie         |V2EX的Cookie|
 | `BDUSS`                 |   百度BDUSS         |BDUSS值切勿使用双击复制 (结尾有一个`符号`双击复制可能无法复制完整)|
+| `PAT`                   |   GithubToken    |利用Github Actions自动同步上游仓库[PAT获取教程](https://www.jianshu.com/p/bb82b3ad1d11)
 ##### 推送通知环境变量(目前提供`微信server酱`、`pushplus(推送加)`、`iOS Bark APP`、`telegram机器人`、`钉钉机器人`、`企业微信机器人`、`iGot`、`QQ酷推`等通知方式)
 
 | Name                    |   归属   | 属性   | 说明                                                         |
