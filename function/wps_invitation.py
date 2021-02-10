@@ -47,7 +47,7 @@ invite_limit = 10
 mass_limit = 5
 # 这13个账号被邀请,且参与WPS会员群集结,如群集结失败, 请修改以下sid, 修改时注意保留双引号
 invite_sid = [
-            "V02SC1mOHS0RiUBxeoA8NTliH2h2NGc00a803c35002693584d",
+        "V02SC1mOHS0RiUBxeoA8NTliH2h2NGc00a803c35002693584d",
         "V02StVuaNcoKrZ3BuvJQ1FcFS_xnG2k00af250d4002664c02f",
         "V02SWIvKWYijG6Rggo4m0xvDKj1m7ew00a8e26d3002508b828",
         "V02Sr3nJ9IicoHWfeyQLiXgvrRpje6E00a240b890023270f97",
