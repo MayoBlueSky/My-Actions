@@ -25,6 +25,7 @@ jobs:
                   node function/tieba.js
               env:
                   BDUSS: ${{ secrets.BDUSS }}
+                  JUMP: ${{ secrets.BDUSS-JUMP }}
                   SEND_KEY: ${{ secrets.SEND_KEY }}
                   PUSH_KEY: ${{ secrets.PUSH_KEY }}
                   BARK_PUSH: ${{ secrets.BARK_PUSH }}
