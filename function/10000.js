@@ -61,13 +61,8 @@ async function start() {
         content = fs.readFileSync(path, "utf8");
     }
 
-    if(SEND_KEY) {
-        if (content.includes("签到成功") | content.includes("已签")) {
-            console.log("电信签到-" + content)
-        }else{
-            await notify.sendNotify("中国电信签到-" + timeFormat(UTC8), content);
-            console.log("中国电信签到-" + content)
-        }
+    if (content.includes("签到成功") | content.includes("已签到")) {
+        console.log("电信签到-" + content)
     }else{
         await notify.sendNotify("中国电信签到-" + timeFormat(UTC8), content);
         console.log("中国电信签到-" + content)
