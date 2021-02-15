@@ -132,10 +132,13 @@ async function sendNotify(text, desp, params = {}) {
   //提供7种通知
   await Promise.all([
     serverNotify(text, desp),//微信server酱
+    serverNotify("Server酱升级通知", "由于server推送升级，使用本项目 My-Actions 将在18号使用升级 请在18号后使用新的SendKey 替换旧的即可"), //更新通知
     pushPlusNotify(text, desp)//pushplus(推送加)
   ])
   //由于上述两种微信通知需点击进去才能查看到详情，故text(标题内容)携带了账号序号以及昵称信息，方便不点击也可知道是哪个京东哪个活动
-  text = text.match(/.*?(?=\s?-)/g) ? text.match(/.*?(?=\s?-)/g)[0] : text;
+  if(text != null){
+    text = text.match(/.*?(?=\s?-)/g) ? text.match(/.*?(?=\s?-)/g)[0] : text;
+  }
   await Promise.all([
     BarkNotify(text, desp, params),//iOS Bark APP
     tgBotNotify(text, desp),//telegram 机器人
@@ -151,9 +154,11 @@ function serverNotify(text, desp, timeout = 2100) {
   return  new Promise(resolve => {
     if (SCKEY) {
       //微信server酱推送通知一个\n不会换行，需要两个\n才能换行，故做此替换
-      desp = desp.replace(/[\n\r]/g, '\n\n');
+      if(desp != null){
+        desp = desp.replace(/[\n\r]/g, '\n\n');
+      }
       const options = {
-        url: `https://sctapi.ftqq.com/${SCKEY}.send`,
+        url: `http://sc.ftqq.com/${SCKEY}.send`,
         body: `text=${text}&desp=${desp}`,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
