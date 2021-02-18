@@ -132,7 +132,6 @@ async function sendNotify(text, desp, params = {}) {
   //提供7种通知
   await Promise.all([
     serverNotify(text, desp),//微信server酱
-    serverNotify("My-Actions 项目通知", "由于server推送升级，使用本项目 My-Actions" + "\n" + "https://github.com/BlueskyClouds/My-Actions" + "\n" + " 将在18号使用升级 请在18号后使用新的SendKey 替换旧的即可"), //更新通知
     pushPlusNotify(text, desp)//pushplus(推送加)
   ])
   //由于上述两种微信通知需点击进去才能查看到详情，故text(标题内容)携带了账号序号以及昵称信息，方便不点击也可知道是哪个京东哪个活动
@@ -158,7 +157,7 @@ function serverNotify(text, desp, timeout = 2100) {
         desp = desp.replace(/[\n\r]/g, '\n\n');
       }
       const options = {
-        url: `http://sc.ftqq.com/${SCKEY}.send`,
+        url: `https://sctapi.ftqq.com/${SCKEY}.send`,
         body: `text=${text}&desp=${desp}`,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'

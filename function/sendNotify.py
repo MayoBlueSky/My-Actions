@@ -79,7 +79,7 @@ class sendNotify:
 
     def serverNotify(self, text, desp):
         if sendNotify.SCKEY != '':
-            url = 'http://sc.ftqq.com/'+ sendNotify.SCKEY + '.send'
+            url = 'https://sctapi.ftqq.com/'+ sendNotify.SCKEY + '.send'
             response = json.dumps(requests.post(url, data={'text': text, 'desp': desp.replace("\n", "\n\n")}).json(),ensure_ascii=False)
             data = json.loads(response)
             ##print(data)
@@ -188,7 +188,6 @@ class sendNotify:
         title = kwargs.get("title", "")
         msg = kwargs.get("msg", "")
         send.serverNotify(title,msg)
-        send.serverNotify("My-Actions 项目通知", "由于server推送升级，使用本项目 My-Actions" + "\n" + "https://github.com/BlueskyClouds/My-Actions" + "\n" + " 将在18号使用升级 请在18号后使用新的SendKey 替换旧的即可")
         send.BarkNotify(title,msg)
         send.tgBotNotify(title,msg)
         send.dingNotify(title,msg)
