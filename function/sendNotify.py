@@ -80,7 +80,7 @@ class sendNotify:
     def serverNotify(self, text, desp):
         if sendNotify.SCKEY != '':
             url = 'https://sctapi.ftqq.com/'+ sendNotify.SCKEY + '.send'
-            if "\n" in desp.text:
+            if "\n" in desp:
                 desp =  desp.replace("\n", "\n\n")
             data = {
                 'text': text,
@@ -88,12 +88,11 @@ class sendNotify:
             }
             response = json.dumps(requests.post(url, data).json(),ensure_ascii=False)
             datas = json.loads(response)
-            ##print(datas)
+            #print(datas)
             if datas['code'] == 0:
                 print('\nserver酱发送通知消息成功\n')
             elif datas['code'] == 40001:
                 print('\nPUSH_KEY 错误\n')
-                print(unicode(datas['message'], 'unicode_escape'))
             else:
                 print('\n发送通知调用API失败！！\n')
         else:

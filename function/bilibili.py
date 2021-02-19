@@ -240,6 +240,7 @@ class BiliBiliCheckIn(object):
         return data_list
 
     def main(self):
+        print("111")
         msg_list = []
         bilibili_cookie = self.bilibili_cookie_list
         bili_jct = bilibili_cookie.get("bili_jct")
