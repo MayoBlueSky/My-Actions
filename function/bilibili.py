@@ -240,7 +240,6 @@ class BiliBiliCheckIn(object):
         return data_list
 
     def main(self):
-        print("111")
         msg_list = []
         bilibili_cookie = self.bilibili_cookie_list
         bili_jct = bilibili_cookie.get("bili_jct")
@@ -308,20 +307,20 @@ class BiliBiliCheckIn(object):
                 report_msg = f"观看《{title}》300秒"
             else:
                 report_msg = f"任务失败"
-                print(report_msg)
+            print(report_msg)
             share_ret = self.share_task(session=session, bili_jct=bili_jct, aid=aid)
             if share_ret.get("code") == 0:
                 share_msg = f"分享《{title}》成功"
             else:
                 share_msg = f"分享失败"
-                print(share_msg)
+            print(share_msg)
             if silver2coin:
                 silver2coin_ret = self.silver2coin(session=session, bili_jct=bili_jct)
                 if silver2coin_ret["code"] == 0:
                     silver2coin_msg = f"成功将银瓜子兑换为1个硬币"
                 else:
                     silver2coin_msg = silver2coin_ret["msg"]
-                print(silver2coin_msg)
+            print(silver2coin_msg)
             else:
                 silver2coin_msg = f"未开启银瓜子兑换硬币功能"
             live_stats = self.live_status(session=session)
@@ -344,6 +343,7 @@ class BiliBiliCheckIn(object):
             if SEND_KEY == '':
                 sendNotify.send(title = u"哔哩哔哩签到",msg = msg)
             msg_list.append(msg)
+            print(msg_list)
         return msg_list
 
 
