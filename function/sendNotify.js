@@ -170,7 +170,8 @@ function serverNotify(text, desp, timeout = 2100) {
               console.log('发送通知调用API失败！！\n')
               console.log(err);
             } else {
-              data = JSON.parse(data);
+              result = JSON.parse(result);
+              data = result.data;
               if (data.errno === 0) {
                 console.log('server酱发送通知消息成功\n')
               } else if (data.errno === 1024) {
