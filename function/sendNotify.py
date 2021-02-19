@@ -81,11 +81,12 @@ class sendNotify:
         if sendNotify.SCKEY != '':
             url = 'https://sctapi.ftqq.com/'+ sendNotify.SCKEY + '.send'
             response = json.dumps(requests.post(url, data={'text': text, 'desp': desp.replace("\n", "\n\n")}).json(),ensure_ascii=False)
-            data = json.loads(response)
+            result = json.loads(response)
+            data = result.get('data')
             ##print(data)
-            if data['errno'] == 0:
+            if data.get('errno') == 0:
                 print('\nserver酱发送通知消息成功\n')
-            elif data['errno'] == 1024:
+            elif data.get('errno') == 1024:
                 print('\nPUSH_KEY 错误\n')
             else:
                 print('\n发送通知调用API失败！！\n')
