@@ -20,6 +20,7 @@ class BiliBiliCheckIn(object):
     def get_nav(session):
         url = "https://api.bilibili.com/x/web-interface/nav"
         ret = session.get(url=url).json()
+        # print(ret) #取消本段输出
         uname = ret.get("data", {}).get("uname")
         uid = ret.get("data", {}).get("mid")
         is_login = ret.get("data", {}).get("isLogin")
@@ -49,7 +50,6 @@ class BiliBiliCheckIn(object):
                 msg = f'签到失败，信息为: {ret["message"]}'
         except Exception as e:
             msg = f"签到异常，原因为{str(e)}"
-            print(msg)
         return msg
 
     @staticmethod
@@ -67,10 +67,8 @@ class BiliBiliCheckIn(object):
                 msg = "今天已经签到过了"
             else:
                 msg = f'签到失败，信息为({ret["msg"]})'
-                print(msg)
         except Exception as e:
             msg = f"签到异常,原因为: {str(e)}"
-            print(msg)
         return msg
 
     @staticmethod
@@ -266,14 +264,19 @@ class BiliBiliCheckIn(object):
         )
         success_count = 0
         uname, uid, is_login, coin, vip_type, current_exp = self.get_nav(session=session)
+        # print(uname, uid, is_login, coin, vip_type, current_exp)
         if is_login:
             manhua_msg = self.manga_sign(session=session)
+            print(manhua_msg)
             live_msg = self.live_sign(session=session)
+            print(live_msg)
             aid_list = self.get_region(session=session)
             reward_ret = self.reward(session=session)
+            # print(reward_ret) # 取消本段输出
             coins_av_count = reward_ret.get("data", {}).get("coins_av") // 10
             coin_num = coin_num - coins_av_count
             coin_num = coin_num if coin_num < coin else coin
+            print(coin_num)
             if coin_type == 1 and coin_num:
                 following_list = self.get_followings(session=session, uid=uid)
                 for following in following_list.get("data", {}).get("list"):
@@ -282,6 +285,9 @@ class BiliBiliCheckIn(object):
                         aid_list += self.space_arc_search(session=session, uid=mid)
             if coin_num > 0:
                 for aid in aid_list[::-1]:
+                    # print(f'成功给{aid.get("title")}投一个币')
+                    # coin_num -= 1
+                    # success_count += 1
                     ret = self.coin_add(session=session, aid=aid.get("aid"), bili_jct=bili_jct)
                     if ret["code"] == 0:
                         coin_num -= 1
@@ -297,8 +303,10 @@ class BiliBiliCheckIn(object):
                     if coin_num <= 0:
                         break
                 coin_msg = f"今日成功投币{success_count + coins_av_count}/{coin_num}个"
+                print(coin_msg)
             else:
                 coin_msg = f"今日成功投币{coins_av_count}/{coin_type}个"
+                print(coin_msg)
             aid = aid_list[0].get("aid")
             cid = aid_list[0].get("cid")
             title = aid_list[0].get("title")
@@ -325,6 +333,7 @@ class BiliBiliCheckIn(object):
                 silver2coin_msg = f"未开启银瓜子兑换硬币功能"
             live_stats = self.live_status(session=session)
             uname, uid, is_login, new_coin, vip_type, new_current_exp = self.get_nav(session=session)
+            # print(uname, uid, is_login, new_coin, vip_type, new_current_exp)
             reward_ret = self.reward(session=session)
             login = reward_ret.get("data", {}).get("login")
             watch_av = reward_ret.get("data", {}).get("watch_av")
@@ -340,7 +349,7 @@ class BiliBiliCheckIn(object):
                 f"按当前速度升级还需: {update_data}天\n{live_stats}"
             )
             print(msg)
-            if SEND_KEY != '':
+            if SEND_KEY == '':
                 sendNotify.send(title = u"哔哩哔哩签到",msg = msg)
             msg_list.append(msg)
         return msg_list
