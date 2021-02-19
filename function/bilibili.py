@@ -339,10 +339,10 @@ class BiliBiliCheckIn(object):
                 f"银瓜子兑换硬币: {silver2coin_msg}\n今日获得经验: {today_exp}\n当前经验: {new_current_exp}\n"
                 f"按当前速度升级还需: {update_data}天\n{live_stats}"
             )
+            print(msg)
             if SEND_KEY == '':
                 sendNotify.send(title = u"哔哩哔哩签到",msg = msg)
             msg_list.append(msg)
-            print(msg)
         return msg_list
 
 
