@@ -320,7 +320,7 @@ class BiliBiliCheckIn(object):
                     silver2coin_msg = f"成功将银瓜子兑换为1个硬币"
                 else:
                     silver2coin_msg = silver2coin_ret["msg"]
-            print(silver2coin_msg)
+                print(silver2coin_msg)
             else:
                 silver2coin_msg = f"未开启银瓜子兑换硬币功能"
             live_stats = self.live_status(session=session)
@@ -343,7 +343,6 @@ class BiliBiliCheckIn(object):
             if SEND_KEY == '':
                 sendNotify.send(title = u"哔哩哔哩签到",msg = msg)
             msg_list.append(msg)
-            print(msg_list)
         return msg_list
 
 
