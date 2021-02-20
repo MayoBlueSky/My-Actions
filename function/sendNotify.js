@@ -47,8 +47,13 @@ let DD_BOT_SECRET = '';
 let QYWX_KEY = '';
 
 // =======================================企业微信应用消息通知设置区域===========================================
-//此处填你企业微信应用消息的 值(详见文档 https://work.weixin.qq.com/api/doc/90000/90135/90236)，依次填上corpid的值,corpsecret的值,touser的值,agentid的值，素材库图片id（见https://github.com/LXK9301/jd_scripts/issues/519) 注意用,号隔开，例如：wwcff56746d9adwers,B-791548lnzXBE6_BWfxdf3kSTMJr9vFEPKAbh6WERQ,mingcheng,1000001,2COXgjH2UIfERF2zxrtUOKgQ9XklUqMdGSWLBoW_lSDAdafat
-//增加一个选择推送消息类型，用图文消息直接填写素材库图片id的值，用卡片消息就填写0(就是数字零)
+//此处填你企业微信应用消息的值(详见文档 https://work.weixin.qq.com/api/doc/90000/90135/90236)
+//依次填入 corpid,corpsecret,touser,agentid,消息类型
+//注意用,号隔开(英文输入法的逗号)，例如：wwcff56746d9adwers,B-791548lnzXBE6_BWfxdf3kSTMJr9vFEPKAbh6WERQ,mingcheng,1000001,2COXgjH2UIfERF2zxrtUOKgQ9XklUqMdGSWLBoW_lSDAdafat
+//可选推送消息类型:
+// - 卡片消息: 0 (数字零)
+// - 文字消息: 1 (数字一)
+// - 图文消息: 素材库图片id, 可查看此教程(http://note.youdao.com/s/HMiudGkb)
 //(环境变量名 QYWX_AM)
 let QYWX_AM = '';
 
@@ -129,15 +134,13 @@ if (process.env.PUSH_PLUS_USER) {
 
 
 async function sendNotify(text, desp, params = {}) {
-  //提供7种通知
+  //提供6种通知
   await Promise.all([
     serverNotify(text, desp),//微信server酱
     pushPlusNotify(text, desp)//pushplus(推送加)
   ])
   //由于上述两种微信通知需点击进去才能查看到详情，故text(标题内容)携带了账号序号以及昵称信息，方便不点击也可知道是哪个京东哪个活动
-  if(text != null){
-    text = text.match(/.*?(?=\s?-)/g) ? text.match(/.*?(?=\s?-)/g)[0] : text;
-  }
+  text = text.match(/.*?(?=\s?-)/g) ? text.match(/.*?(?=\s?-)/g)[0] : text;
   await Promise.all([
     BarkNotify(text, desp, params),//iOS Bark APP
     tgBotNotify(text, desp),//telegram 机器人
@@ -145,7 +148,7 @@ async function sendNotify(text, desp, params = {}) {
     qywxBotNotify(text, desp), //企业微信机器人
     qywxamNotify(text, desp), //企业微信应用消息推送
     iGotNotify(text, desp, params),//iGot
-    CoolPush(text, desp)//QQ酷推
+    //CoolPush(text, desp)//QQ酷推
   ])
 }
 
@@ -157,7 +160,7 @@ function serverNotify(text, desp, timeout = 2100) {
         desp = desp.replace(/[\n\r]/g, '\n\n');
       }
       const options = {
-        url: `https://sctapi.ftqq.com/${SCKEY}.send`,
+        url: SCKEY.includes('SCT') ? `https://sctapi.ftqq.com/${SCKEY}.send` : `https://sc.ftqq.com/${SCKEY}.send`,
         body: `text=${text}&desp=${desp}`,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -170,9 +173,9 @@ function serverNotify(text, desp, timeout = 2100) {
               console.log('发送通知调用API失败！！\n')
               console.log(err);
             } else {
-              result = JSON.parse(result);
-              data = result.data;
-              if (data.errno === 0) {
+              data = JSON.parse(data);
+              //server酱和Server酱·Turbo版的返回json格式不太一样
+              if (data.errno === 0 || data.data.errno === 0 ) {
                 console.log('server酱发送通知消息成功\n')
               } else if (data.errno === 1024) {
                 // 一分钟内发送相同的内容会触发
@@ -204,6 +207,12 @@ function CoolPush(text, desp) {
           'Content-Type': 'application/json'
         }
       }
+
+      // 已知敏感词
+      text = text.replace(/京豆/g, "豆豆");
+      desp = desp.replace(/京豆/g, "");
+      desp = desp.replace(/🐶/g, "");
+      desp = desp.replace(/红包/g, "H包");
 
       switch (QQ_MODE) {
         case "email":
@@ -244,8 +253,10 @@ function CoolPush(text, desp) {
               console.log(`酷推发送${pushMode(QQ_MODE)}通知消息成功\n`)
             } else if (data.code === 400) {
               console.log(`QQ酷推(Cool Push)发送${pushMode(QQ_MODE)}推送失败：${data.msg}\n`)
+            } else if (data.code === 503) {
+              console.log(`QQ酷推出错，${data.message}：${data.data}\n`)
             }else{
-              console.log(`酷推推送异常: ${data.msg}`);
+              console.log(`酷推推送异常: ${JSON.stringify(data)}`);
             }
           }
         } catch (e) {
@@ -453,75 +464,108 @@ function qywxBotNotify(text, desp) {
   });
 }
 
+function ChangeUserId(desp) {
+  const QYWX_AM_AY = QYWX_AM.split(',');
+  if (QYWX_AM_AY[2]) {
+    const userIdTmp = QYWX_AM_AY[2].split("|");
+    let userId = "";
+    for (let i = 0; i < userIdTmp.length; i++) {
+      const count = "账号" + (i + 1);
+      const count2 = "签到号 " + (i + 1);
+      if (desp.match(count) || desp.match(count2)) {
+        userId = userIdTmp[i];
+      }
+    }
+    if (!userId) userId = QYWX_AM_AY[2];
+    return userId;
+  } else {
+    return "@all";
+  }
+}
+
 function qywxamNotify(text, desp) {
   return new Promise(resolve => {
     if (QYWX_AM) {
-      var QYWX_AM_AY = QYWX_AM.split(',');
+      const QYWX_AM_AY = QYWX_AM.split(',');
       const options_accesstoken = {
         url: `https://qyapi.weixin.qq.com/cgi-bin/gettoken`,
         json: {
-          corpid:`${QYWX_AM_AY[0]}`,
-          corpsecret:`${QYWX_AM_AY[1]}`,
+          corpid: `${QYWX_AM_AY[0]}`,
+          corpsecret: `${QYWX_AM_AY[1]}`,
         },
         headers: {
           'Content-Type': 'application/json',
         },
       };
       $.post(options_accesstoken, (err, resp, data) => {
-        html=desp.replace(/\n/g,"<br/>")
+        html = desp.replace(/\n/g, "<br/>")
         var json = JSON.parse(data);
         accesstoken = json.access_token;
-        const options_textcard = {
+        let options;
+
+        switch (QYWX_AM_AY[4]) {
+          case '0':
+            options = {
+              msgtype: 'textcard',
+              textcard: {
+                title: `${text}`,
+                description: `${desp}`,
+                url: '127.0.0.1',
+                btntxt: '更多'
+              }
+            }
+            break;
+
+          case '1':
+            options = {
+              msgtype: 'text',
+              text: {
+                content: `${text}\n\n${desp}`
+              }
+            }
+            break;
+
+          default:
+            options = {
+              msgtype: 'mpnews',
+              mpnews: {
+                articles: [
+                  {
+                    title: `${text}`,
+                    thumb_media_id: `${QYWX_AM_AY[4]}`,
+                    author: `智能助手`,
+                    content_source_url: ``,
+                    content: `${html}`,
+                    digest: `${desp}`
+                  }
+                ]
+              }
+            }
+        }
+        ;
+
+        options = {
           url: `https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=${accesstoken}`,
           json: {
-            touser:`${QYWX_AM_AY[2]}`,
-            agentid:`${QYWX_AM_AY[3]}`,
-            msgtype: 'textcard',
-            textcard: {
-              title: `${text}`,
-              description: `${desp}`,
-              url: '127.0.0.1',
-              btntxt: '更多'
-            },
-            safe:'0',
+            touser: `${ChangeUserId(desp)}`,
+            agentid: `${QYWX_AM_AY[3]}`,
+            safe: '0',
+            ...options
           },
           headers: {
             'Content-Type': 'application/json',
           },
-        };
-        const options_mpnews = {
-          url: `https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=${accesstoken}`,
-          json: {
-            touser:`${QYWX_AM_AY[2]}`,
-            agentid:`${QYWX_AM_AY[3]}`,
-            msgtype: 'mpnews',
-            mpnews: {
-              articles: [
-                {
-                  title: `${text}`,
-                  thumb_media_id: `${QYWX_AM_AY[4]}`,
-                  author : `智能助手` ,
-                  content_source_url: ``,
-                  content : `${html}`,
-                  digest: `${desp}`
-                }
-              ]
-            },
-            safe:'0',
-          },
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        };
-        $.post((QYWX_AM_AY[4]==0)?options_textcard:options_mpnews, (err, resp, data) => {
+        }
+
+        $.post(options, (err, resp, data) => {
           try {
             if (err) {
-              console.log('企业微信应用消息发送通知消息失败！！\n');
+              console.log('成员ID:' + ChangeUserId(desp) + '企业微信应用消息发送通知消息失败！！\n');
               console.log(err);
             } else {
               data = JSON.parse(data);
               if (data.errcode === 0) {
-                console.log('企业微信应用消息发送通知消息完成。\n');
+                console.log('成员ID:' + ChangeUserId(desp) + '企业微信应用消息发送通知消息完成。\n');
               } else {
                 console.log(`${data.errmsg}\n`);
               }
