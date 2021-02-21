@@ -140,7 +140,6 @@ def main():
         sio.write("---为{}邀请---↓\n\n".format(item['name']))
         if type(resp['data']['userid']) == int:
             wps_miniprogram_invite(invite_sid, resp['data']['userid'])
-            time.sleep(5)
         else:
             sio.write("邀请失败: 用户ID错误, 请检查用户sid\n\n")
 
@@ -494,6 +493,7 @@ def wps_miniprogram_invite(sid: list, invite_userid: int) -> None:
     invite_url = 'http://zt.wps.cn/2018/clock_in/api/invite'
     k = 0
     for index, i in enumerate(sid):
+        time.sleep(5)
         if k < invite_limit:
             headers = {
                 'sid': i
