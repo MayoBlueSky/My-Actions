@@ -1,8 +1,8 @@
 /*
- * @Author: LXK9301 https://github.com/LXK9301
+ * @Author: lxk0301 https://gitee.com/lxk0301
  * @Date: 2020-08-19 16:12:40
- * @Last Modified by: LXK9301
- * @Last Modified time: 2021-1-7 17:52:54
+ * @Last Modified by: lxk0301
+ * @Last Modified time: 2021-2-27 17:52:54
  */
 const querystring = require("querystring");
 const $ = new Env();
@@ -10,14 +10,6 @@ const $ = new Env();
 //此处填你申请的SCKEY.
 //(环境变量名 PUSH_KEY)
 let SCKEY = '';
-
-
-// =======================================QQ酷推通知设置区域===========================================
-//此处填你申请的SKEY(具体详见文档 https://cp.xuthus.cc/)
-//(环境变量名 QQ_SKEY)
-let QQ_SKEY = '';
-//此处填写私聊或群组推送，默认私聊(send[私聊]、group[群聊]、wx[个微]、ww[企微]、email[邮件])
-let QQ_MODE = 'send';
 
 // =======================================Bark App通知设置区域===========================================
 //此处填你BarkAPP的信息(IP/设备码，例如：https://api.day.app/XXXXXXXX)
@@ -47,14 +39,15 @@ let DD_BOT_SECRET = '';
 let QYWX_KEY = '';
 
 // =======================================企业微信应用消息通知设置区域===========================================
-//此处填你企业微信应用消息的值(详见文档 https://work.weixin.qq.com/api/doc/90000/90135/90236)
-//依次填入 corpid,corpsecret,touser,agentid,消息类型
-//注意用,号隔开(英文输入法的逗号)，例如：wwcff56746d9adwers,B-791548lnzXBE6_BWfxdf3kSTMJr9vFEPKAbh6WERQ,mingcheng,1000001,2COXgjH2UIfERF2zxrtUOKgQ9XklUqMdGSWLBoW_lSDAdafat
-//可选推送消息类型:
-// - 卡片消息: 0 (数字零)
-// - 文字消息: 1 (数字一)
-// - 图文消息: 素材库图片id, 可查看此教程(http://note.youdao.com/s/HMiudGkb)
-//(环境变量名 QYWX_AM)
+/*
+此处填你企业微信应用消息的值(详见文档 https://work.weixin.qq.com/api/doc/90000/90135/90236)
+环境变量名 QYWX_AM依次填入 corpid,corpsecret,touser(注:多个成员ID使用|隔开),agentid,消息类型(选填,不填默认文本消息类型)
+注意用,号隔开(英文输入法的逗号)，例如：wwcff56746d9adwers,B-791548lnzXBE6_BWfxdf3kSTMJr9vFEPKAbh6WERQ,mingcheng,1000001,2COXgjH2UIfERF2zxrtUOKgQ9XklUqMdGSWLBoW_lSDAdafat
+可选推送消息类型(推荐使用图文消息（mpnews）):
+- 文本卡片消息: 0 (数字零)
+- 文本消息: 1 (数字一)
+- 图文消息（mpnews）: 素材库图片id, 可查看此教程(http://note.youdao.com/s/HMiudGkb)或者(https://note.youdao.com/ynoteshare1/index.html?id=1a0c8aff284ad28cbd011b29b3ad0191&type=note)
+*/
 let QYWX_AM = '';
 
 // =======================================iGot聚合推送通知设置区域===========================================
@@ -472,7 +465,7 @@ function ChangeUserId(desp) {
     for (let i = 0; i < userIdTmp.length; i++) {
       const count = "账号" + (i + 1);
       const count2 = "签到号 " + (i + 1);
-      if (desp.match(count) || desp.match(count2)) {
+      if (desp.match(count2)) {
         userId = userIdTmp[i];
       }
     }
@@ -510,7 +503,7 @@ function qywxamNotify(text, desp) {
               textcard: {
                 title: `${text}`,
                 description: `${desp}`,
-                url: '127.0.0.1',
+                url: 'https://github.com/lxk0301/jd_scripts',
                 btntxt: '更多'
               }
             }
@@ -541,9 +534,16 @@ function qywxamNotify(text, desp) {
                 ]
               }
             }
+        };
+        if (!QYWX_AM_AY[4]) {
+          //如不提供第四个参数,则默认进行文本消息类型推送
+          options = {
+            msgtype: 'text',
+            text: {
+              content: `${text}\n\n${desp}`
+            }
+          }
         }
-        ;
-
         options = {
           url: `https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=${accesstoken}`,
           json: {

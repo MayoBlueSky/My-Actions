@@ -28,8 +28,6 @@ jobs:
                   SEND_KEY: ${{ secrets.SEND_KEY }}
                   PUSH_KEY: ${{ secrets.PUSH_KEY }}
                   BARK_PUSH: ${{ secrets.BARK_PUSH }}
-                  QQ_SKEY: ${{ secrets.QQ_SKEY}}
-                  QQ_MODE: ${{ secrets.QQ_MODE}}
                   PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN}}
                   PUSH_PLUS_USER: ${{ secrets.PUSH_PLUS_USER}}
                   QYWX_KEY: ${{ secrets.QYWX_KEY}}
