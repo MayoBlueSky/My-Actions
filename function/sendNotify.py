@@ -39,9 +39,9 @@ class sendNotify:
     #=======================================QQ酷推通知设置区域===========================================
     #此处填你申请的SKEY(具体详见文档 https://cp.xuthus.cc/)
     #注：此处设置github action用户填写到Settings-Secrets里面(Name输入QQ_SKEY)
-    QQ_SKEY = '';
-    #此处填写私聊或群组推送，默认私聊(send或group或者wx)
-    QQ_MODE = 'send';
+    # QQ_SKEY = '';
+    # #此处填写私聊或群组推送，默认私聊(send或group或者wx)
+    # QQ_MODE = 'send';
 
     #Server酱
     if os.environ['PUSH_KEY'] != "":
@@ -71,10 +71,10 @@ class sendNotify:
         DD_BOT_SECRET = os.environ['DD_BOT_SECRET']
 
     #QQ酷推
-    if os.environ['QQ_SKEY'] != "":
-        QQ_SKEY = os.environ['QQ_SKEY']
-    if os.environ['QQ_MODE'] != "":
-        QQ_MODE = os.environ['QQ_MODE']
+    # if os.environ['QQ_SKEY'] != "":
+    #     QQ_SKEY = os.environ['QQ_SKEY']
+    # if os.environ['QQ_MODE'] != "":
+    #     QQ_MODE = os.environ['QQ_MODE']
 
 
     def serverNotify(self, text, desp):
@@ -170,24 +170,24 @@ class sendNotify:
             print('\n您未提供钉钉的有关数据，取消钉钉推送消息通知\n')
             pass
 
-    def coolpush(self, text, desp):
-        if sendNotify.QQ_SKEY != '':
-            url = "https://push.xuthus.cc/" + sendNotify.QQ_MODE + "/" + sendNotify.QQ_SKEY
-            params = {"c": desp, "t": text}
-            headers = {'content-type': 'charset=utf8'}
-            response = json.dumps(requests.post(url=url, params=params, headers=headers).json(),ensure_ascii=False)
-            datas = json.loads(response)
-
-            if datas['code'] == 200:
-                print('\nQQ推送发送通知消息成功\n')
-            elif datas['code'] == 500:
-                print('\nQQ推送QQ_SKEY错误\n')
-            else:
-                print('\n发送通知调用API失败！！\n')
-
-        else:
-            print('\n您未提供酷推的SKEY，取消QQ推送消息通知\n')
-            pass
+    # def coolpush(self, text, desp):
+    #     if sendNotify.QQ_SKEY != '':
+    #         url = "https://push.xuthus.cc/" + sendNotify.QQ_MODE + "/" + sendNotify.QQ_SKEY
+    #         params = {"c": desp, "t": text}
+    #         headers = {'content-type': 'charset=utf8'}
+    #         response = json.dumps(requests.post(url=url, params=params, headers=headers).json(),ensure_ascii=False)
+    #         datas = json.loads(response)
+    #
+    #         if datas['code'] == 200:
+    #             print('\nQQ推送发送通知消息成功\n')
+    #         elif datas['code'] == 500:
+    #             print('\nQQ推送QQ_SKEY错误\n')
+    #         else:
+    #             print('\n发送通知调用API失败！！\n')
+    #
+    #     else:
+    #         print('\n您未提供酷推的SKEY，取消QQ推送消息通知\n')
+    #         pass
 
     def send(self, **kwargs):
         send = sendNotify()
@@ -197,7 +197,7 @@ class sendNotify:
         send.BarkNotify(title,msg)
         send.tgBotNotify(title,msg)
         send.dingNotify(title,msg)
-        send.coolpush(title,msg)
+        # send.coolpush(title,msg)
 
 # if __name__ == "__main__":
 #     send(title = '这是标题',msg = '这是内容')
