@@ -5,6 +5,8 @@ on:
   workflow_dispatch:
   watch:
     types: started
+  repository_dispatch:
+    types: 同步仓库
 jobs:
   repo-sync:
     env:

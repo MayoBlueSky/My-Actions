@@ -108,7 +108,7 @@ class sendNotify:
             #print(data)
             if data['code'] == 400:
                 print('\n找不到 Key 对应的 DeviceToken\n')
-            elif data['errno'] == 200:
+            elif data['code'] == 200:
                 print('\nBark APP发送通知消息成功\n')
             else:
                 print('\n发送通知调用API失败！！\n')
