@@ -43,6 +43,13 @@ class sendNotify:
     # #此处填写私聊或群组推送，默认私聊(send或group或者wx)
     # QQ_MODE = 'send';
 
+    #=======================================push+设置区域=======================================
+    #官方文档：https://www.pushplus.plus/
+    #PUSH_PLUS_TOKEN：微信扫码登录后一对一推送或一对多推送下面的token(您的Token)，不提供PUSH_PLUS_USER则默认为一对一推送
+    PUSH_PLUS_TOKEN = '';
+    #PUSH_PLUS_USER： 一对多推送的“群组编码”（一对多推送下面->您的群组(如无则新建)->群组编码，如果您是创建群组人。也需点击“查看二维码”扫描绑定，否则不能接受群组消息推送）
+    PUSH_PLUS_USER = '';
+
     #Server酱
     if os.environ['PUSH_KEY'] != "":
         SCKEY = os.environ['PUSH_KEY']
@@ -76,6 +83,11 @@ class sendNotify:
     # if os.environ['QQ_MODE'] != "":
     #     QQ_MODE = os.environ['QQ_MODE']
 
+    #push+
+    if os.environ['PUSH_PLUS_TOKEN'] != "":
+        PUSH_PLUS_TOKEN = os.environ['PUSH_PLUS_TOKEN']
+    if os.environ['PUSH_PLUS_USER'] != "":
+        PUSH_PLUS_USER = os.environ['PUSH_PLUS_USER']
 
     def serverNotify(self, text, desp):
         if sendNotify.SCKEY != '':
@@ -111,7 +123,7 @@ class sendNotify:
             elif data['code'] == 200:
                 print('\nBark APP发送通知消息成功\n')
             else:
-                print('\n发送通知调用API失败！！\n')
+                print('\nBark APP发送通知调用API失败！！\n')
                 print(data)
         else:
             print('\n您未提供Bark的APP推送BARK_PUSH，取消Bark推送消息通知\n')
@@ -133,7 +145,7 @@ class sendNotify:
             elif data['error_code'] == 401:
                 print('\nTelegram bot token 填写错误。\n')
             else:
-                print('\n发送通知调用API失败！！\n')
+                print('\nTelegram bot发送通知调用API失败！！\n')
                 print(data)
         else:
             print('\n您未提供Bark的APP推送BARK_PUSH，取消Bark推送消息通知\n')
@@ -165,7 +177,7 @@ class sendNotify:
             if json.loads(response)['errcode'] == 0:
                 print('\n钉钉发送通知消息成功\n')
             else:
-                print('\n发送通知失败！！\n')
+                print('\n钉钉发送通知失败！！\n')
         else:
             print('\n您未提供钉钉的有关数据，取消钉钉推送消息通知\n')
             pass
@@ -188,6 +200,35 @@ class sendNotify:
     #     else:
     #         print('\n您未提供酷推的SKEY，取消QQ推送消息通知\n')
     #         pass
+    def pushNotify(self, text, desp):
+        if sendNotify.PUSH_PLUS_TOKEN != '':
+            url = 'http://www.pushplus.plus/send'
+            data = {
+                "token":sendNotify.PUSH_PLUS_TOKEN,
+                "title":text,
+                "content":desp
+            }
+            if sendNotify.PUSH_PLUS_USER != '':
+                data = {
+                "token":sendNotify.PUSH_PLUS_TOKEN,
+                "title":text,
+                "content":desp,
+                "topic":sendNotify.PUSH_PLUS_USER,
+                "template":"html"
+                }
+            body=json.dumps(data).encode(encoding='utf-8')
+            headers = {'Content-Type':'application/json'}
+            response = json.dumps(requests.post(url,data=body,headers=headers).json(),ensure_ascii=False)
+            datas = json.loads(response)
+            if datas['code'] == 200:
+                print('\npush+发送通知消息成功\n')
+            if datas['code'] == 600:
+                print('\nPUSH_PLUS_TOKEN 错误\n')
+            else:
+                print('\npush+发送通知调用API失败！！\n')
+        else:
+            print('\n您未提供push+的PUSH_PLUS_TOKEN，取消push+推送消息通知\n')
+            pass
 
     def send(self, **kwargs):
         send = sendNotify()
@@ -197,6 +238,7 @@ class sendNotify:
         send.BarkNotify(title,msg)
         send.tgBotNotify(title,msg)
         send.dingNotify(title,msg)
+        send.pushNotify(title,msg)
         # send.coolpush(title,msg)
 
 # if __name__ == "__main__":

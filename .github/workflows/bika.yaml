@@ -31,6 +31,8 @@ jobs:
                   SEND_KEY: ${{ secrets.SEND_KEY }}
                   PUSH_KEY: ${{ secrets.PUSH_KEY }}
                   BARK_PUSH: ${{ secrets.BARK_PUSH }}
+                  PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN}}
+                  PUSH_PLUS_USER: ${{ secrets.PUSH_PLUS_USER}}
                   TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
                   TG_USER_ID: ${{ secrets.TG_USER_ID }}
                   BARK_SOUND: ${{ secrets.BARK_SOUND }}
