@@ -128,7 +128,7 @@ if (process.env.PUSH_PLUS_USER) {
 
 async function sendNotify(text, desp, params = {}) {
   //提供6种通知
-  desp += `\npushplus近期将更换通道，https://www.pushplus.plus/请近期更换\n本消息截止3-20`;
+  //desp += `\n`;
   await Promise.all([
     serverNotify(text, desp),//微信server酱
     pushPlusNotify(text, desp)//pushplus(推送加)
