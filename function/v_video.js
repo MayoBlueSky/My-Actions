@@ -310,7 +310,7 @@ exports.main = () => new Promise(
     (resovle, reject) => refCookie()
         .then(params=>Promise.all([
             txVideoSignIn(params),
-            txVideoCheckin(params),
+            //txVideoCheckin(params),
             setTimeout(() => {txVideoDownTask1(params)},1000),
             setTimeout(() => {txVideoDownTask2(params)},2000),
             setTimeout(() => {txVideoDownTask3(params)},3000),
