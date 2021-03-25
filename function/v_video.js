@@ -40,8 +40,8 @@ if (process.env.V_REF_URL) {
 
 /**
  * @description 封装一个解析setCookie的方法
- * @param {*} val
  * @returns obj
+ * @param c_list
  */
 function parseSet(c_list) {
     let obj = {}
@@ -77,7 +77,7 @@ function getAuth(c = _cookie) {
     if(c){
         c.split('; ').forEach(t=>{
             const [key, val] = t.split(/\=(.*)$/,2)
-            needParams.indexOf(key) !=-1 && ( obj[key] = val)
+            needParams.indexOf(key) !==-1 && ( obj[key] = val)
         })
     }
     return obj
