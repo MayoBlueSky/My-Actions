@@ -7,7 +7,7 @@ import string
 import time
 import os
 import sys;
-sys.path.append("My-Actions/function/")
+sys.path.append("..")
 from sendNotify import *
 from http import client
 

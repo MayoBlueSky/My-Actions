@@ -4,7 +4,7 @@ import requests
 import time
 import json
 import sys
-sys.path.append("My-Actions/function/")
+sys.path.append("..")
 import pytz
 import datetime
 import re
