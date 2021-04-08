@@ -36,16 +36,14 @@ function check() {
                     return;
                 }
             } else {
-                console.log(`请求daily result: \n${res.data}\n`);
-                reg = /领取 X 铜币/;
+                reg = /每日登录奖励已领取/;
                 if (reg.test(res.data)) {
-                    reg = /redeem\?once=(.*?)'/;
-                    once = res.data.match(reg)[1];
-                    notice += "获取成功 once:${once}"
-                    console.log(`获取成功 once:${once}`);
-                } else {
                     notice += "今天已经签到过啦\n";
                     signstatus = 1;
+                } else {
+                    reg = /redeem\?once=(.*?)'/;
+                    once = res.data.match(reg)[1];
+                    console.log(`获取成功 once:${once}`);
                 }
             }
         } catch (err) {
