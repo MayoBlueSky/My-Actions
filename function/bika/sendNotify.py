@@ -45,7 +45,7 @@ class sendNotify:
     # 此处填你企业微信应用消息的 值(详见文档 https://work.weixin.qq.com/api/doc/90000/90135/90236)，依次填上corpid的值,corpsecret的值,touser的值,agentid的值，素材库图片id（见https://github.com/lxk0301/jd_scripts/issues/519) 注意用,号隔开，例如：wwcff56746d9adwers,B-791548lnzXBE6_BWfxdf3kSTMJr9vFEPKAbh6WERQ,mingcheng,1000001,2COXgjH2UIfERF2zxrtUOKgQ9XklUqMdGSWLBoW_lSDAdafat
     # 增加一个选择推送消息类型，用图文消息直接填写素材库图片id的值，用卡片消息就填写0(就是数字零)
     # 注：此处设置github action用户填写到Settings-Secrets里面(Name输入QYWX_AM)
-    QYWX_AM = '';
+    #QYWX_AM = '';
 
     #=======================================QQ酷推通知设置区域===========================================
     #此处填你申请的SKEY(具体详见文档 https://cp.xuthus.cc/)
@@ -95,10 +95,10 @@ class sendNotify:
     #     QQ_MODE = os.environ['QQ_MODE']
 
     #企业微信
-    if os.environ['QYWX_KEY'] != "":
-        QQ_SKEY = os.environ['QYWX_KEY']
-    if os.environ['QYWX_AM'] != "":
-        QQ_MODE = os.environ['QYWX_AM']
+    # if os.environ['QYWX_KEY'] != "":
+    #     QQ_SKEY = os.environ['QYWX_KEY']
+    # if os.environ['QYWX_AM'] != "":
+    #     QQ_MODE = os.environ['QYWX_AM']
 
     #push+
     if os.environ['PUSH_PLUS_TOKEN'] != "":
