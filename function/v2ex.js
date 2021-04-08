@@ -66,7 +66,7 @@ function daily() {
                 notice += "签到成功\n";
                 signstatus = 1;
             } else {
-                notice += "签到失败\n";
+                notice += "签到失败Cookie疑似失效\n";
                 if(SEND_KEY){
                     notify.sendNotify("V2ex自动签到", notice);
                     return;
@@ -108,7 +108,7 @@ function sign() {
                 await daily();
                 await balance();
                 if (signstatus === 0) {
-                    console.log("签到失败")
+                    console.log("签到失败Cookie疑似失效")
                 }
             }
             console.log(notice);
