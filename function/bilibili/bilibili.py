@@ -4,7 +4,6 @@ import os
 import sys;
 sys.path.append("My-Actions/function/bilibili/")
 from bilibiliapi import *
-sys.path.append("..")
 from sendNotify import *
 import requests
 

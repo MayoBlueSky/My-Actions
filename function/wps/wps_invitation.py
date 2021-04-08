@@ -9,7 +9,7 @@ import datetime
 import re
 import os
 from io import StringIO
-sys.path.append("My-Actions/function/")
+sys.path.append("My-Actions/function/wps")
 from sendNotify import *
 
 # Python版本 3.6, 该脚本仅供分享交流和学习, 不允许用于任何非法途径, 否则后果自负, 作者对此不承担任何责任
