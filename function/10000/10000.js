@@ -7,7 +7,7 @@ const fs = require('fs')
 const download = require('download')
 
 const $ = new Env('中国电信签到');
-const notify = $.isNode() ? require('./sendNotify') : '';
+const notify = $.isNode() ? require('../sendNotify') : '';
 // 公共变量
 const KEY = process.env.TELECOM_MOBILE
 const SEND_KEY = process.env.SEND_KEY

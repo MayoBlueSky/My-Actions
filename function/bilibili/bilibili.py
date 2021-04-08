@@ -2,8 +2,9 @@
 import json
 import os
 import sys;
-sys.path.append("My-Actions/function/")
+sys.path.append("My-Actions/function/bilibili/")
 from bilibiliapi import *
+sys.path.append("My-Actions/function/")
 from sendNotify import *
 import requests
 
