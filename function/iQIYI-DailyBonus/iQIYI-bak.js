@@ -95,7 +95,6 @@ function login() {
       }
     }
     $nobyda.get(URL, function(error, response, data) {
-      console.log(data)
       const Details = LogDetails ? data ? `response:\n${data}` : '' : ''
       if (!error && data.match(/\"text\":\"\d.+?\u5230\u671f\"/)) {
         $nobyda.expire = data.match(/\"text\":\"(\d.+?\u5230\u671f)\"/)[1]
