@@ -63,7 +63,7 @@ hostname= ifac*.iqiyi.com
 
 var LogDetails = false; // 响应日志
 
-var out = 5000; // 超时 (毫秒) 如填写, 则不少于3000
+var out = 15000; // 超时 (毫秒) 如填写, 则不少于3000
 
 var $nobyda = nobyda();
 
@@ -96,6 +96,7 @@ function login() {
     }
     $nobyda.get(URL, function(error, response, data) {
       const Details = LogDetails ? data ? `response:\n${data}` : '' : ''
+      console.log(data)
       if (!error && data.match(/\"text\":\"\d.+?\u5230\u671f\"/)) {
         $nobyda.expire = data.match(/\"text\":\"(\d.+?\u5230\u671f)\"/)[1]
         console.log(`爱奇艺-查询成功: ${$nobyda.expire} ${Details}`)
