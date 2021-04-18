@@ -8,21 +8,21 @@ const download = require('download')
 const $ = new Env('爱奇艺会员签到');
 const notify = $.isNode() ? require('../sendNotify') : '';
 // 公共变量
-const KEY = process.env.iQIYI_COOKIE
+const KEY = "process.env.iQIYI_COOKIE"
 const SEND_KEY = process.env.SEND_KEY
 const UTC8 = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
 
 async function downFile () {
-    const url = 'https://raw.githubusercontent.com/NobyDa/Script/master/iQIYI-DailyBonus/iQIYI.js'
+    const url = 'https://raw.githubusercontent.com/BlueSkyClouds/My-Actions/master/function/iQIYI-DailyBonus/iQIYI-bak.js'
     await download(url, './')
 }
 
 async function changeFiele () {
-    let content = await fs.readFileSync('./iQIYI.js', 'utf8')
+    let content = await fs.readFileSync('./iQIYI-bak.js', 'utf8')
     content = content.replace(/var cookie = ''/, `var cookie = '${KEY}'`)
     content = content.replace(/var out = 0/, `var out = 5000`)
     content = content.replace("${msg ? Details : `response:\\n${data}`}`)", "${msg ? Details : `response:\\n${data}`}`)" + "\n" + "            console.log(data)" + "\n" + "            s = s + 500" + "\n" + "            if(s <= 4500){" + "\n" + "                await Lottery(s)" + "\n" + "            }")
-    await fs.writeFileSync( './iQIYI.js', content, 'utf8')
+    await fs.writeFileSync( './iQIYI-bak.js', content, 'utf8')
 }
 
 async function deleteFile(path) {
@@ -47,7 +47,7 @@ async function start() {
     await changeFiele();
     console.log('替换变量完毕')
     // 执行
-    await exec("node iQIYI.js >> result.txt");
+    await exec("node iQIYI-bak.js >> result.txt");
     console.log('执行完毕')
     const path = "./result.txt";
     let content = "";
