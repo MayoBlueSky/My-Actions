@@ -63,7 +63,7 @@ hostname= ifac*.iqiyi.com
 
 var LogDetails = false; // 响应日志
 
-var out = 0; // 超时 (毫秒) 如填写, 则不少于3000
+var out = 5000; // 超时 (毫秒) 如填写, 则不少于3000
 
 var $nobyda = nobyda();
 
@@ -123,8 +123,8 @@ function Checkin() {
         }
         const obj = JSON.parse(data)
         const Details = LogDetails ? `response:\n${data}` : ''
-        if (obj.msg == "成功") {
-          if (obj.data.signInfo.code == "A00000") {
+        if (obj.msg === "成功") {
+          if (obj.data.signInfo.code === "A00000") {
             var AwardName = obj.data.signInfo.data.rewards[0].name;
             var quantity = obj.data.signInfo.data.rewards[0].value;
             var continued = obj.data.signInfo.data.continueSignDaysSum;
@@ -161,7 +161,7 @@ function Lottery(s) {
           const obj = JSON.parse(data);
           const Details = LogDetails ? `response:\n${data}` : ''
           $nobyda.last = data.match(/(机会|已经)用完/) ? true : false
-          if (obj.awardName && obj.code == 0) {
+          if (obj.awardName && obj.code === 0) {
             $nobyda.data += !$nobyda.last ? `\n抽奖成功: ${obj.awardName.replace(/《.+》/, "未中奖")} 🎉` : `\n抽奖失败: 今日已抽奖 ⚠️`
             console.log(`爱奇艺-抽奖明细: ${obj.awardName.replace(/《.+》/, "未中奖")} 🎉 (${$nobyda.times}) ${Details}`)
           } else if (data.match(/\"errorReason\"/)) {

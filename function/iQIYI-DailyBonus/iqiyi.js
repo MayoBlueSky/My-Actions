@@ -20,8 +20,6 @@ async function downFile () {
 async function changeFiele () {
     let content = await fs.readFileSync('./iQIYI-bak.js', 'utf8')
     content = content.replace(/var cookie = ''/, `var cookie = '${KEY}'`)
-    content = content.replace(/var out = 0/, `var out = 5000`)
-    content = content.replace("${msg ? Details : `response:\\n${data}`}`)", "${msg ? Details : `response:\\n${data}`}`)" + "\n" + "            console.log(data)" + "\n" + "            s = s + 500" + "\n" + "            if(s <= 4500){" + "\n" + "                await Lottery(s)" + "\n" + "            }")
     await fs.writeFileSync( './iQIYI-bak.js', content, 'utf8')
 }
 
