@@ -95,6 +95,7 @@ function login() {
       }
     }
     $nobyda.get(URL, function(error, response, data) {
+      console.log(data)
       const Details = LogDetails ? data ? `response:\n${data}` : '' : ''
       if (!error && data.match(/\"text\":\"\d.+?\u5230\u671f\"/)) {
         $nobyda.expire = data.match(/\"text\":\"(\d.+?\u5230\u671f)\"/)[1]
@@ -118,6 +119,7 @@ function Checkin() {
         $nobyda.data = "签到失败: 接口请求出错 ‼️"
         console.log(`爱奇艺-${$nobyda.data} ${error}`)
       } else {
+        console.log(data)
         if(isJSON_test(data)){
           console.log(data)
         }
@@ -158,6 +160,7 @@ function Lottery(s) {
           console.log(`爱奇艺-抽奖失败: 接口请求出错 ‼️ ${error} (${$nobyda.times})`)
           //$nobyda.notify("爱奇艺", "", $nobyda.data)
         } else {
+          console.log(data)
           const obj = JSON.parse(data);
           const Details = LogDetails ? `response:\n${data}` : ''
           $nobyda.last = data.match(/(机会|已经)用完/) ? true : false
