@@ -118,6 +118,9 @@ function Checkin() {
         $nobyda.data = "签到失败: 接口请求出错 ‼️"
         console.log(`爱奇艺-${$nobyda.data} ${error}`)
       } else {
+        if(!isJSON_test(data)){
+          return false;
+        }
         const obj = JSON.parse(data)
         const Details = LogDetails ? `response:\n${data}` : ''
         if (obj.msg === "成功") {
@@ -316,3 +319,18 @@ function nobyda() {
     done
   }
 };
+
+function isJSON_test(str) {
+    if (typeof str == 'string') {
+        try {
+            var obj=JSON.parse(str);
+            //console.log('转换成功：'+obj);
+            return true;
+        } catch(e) {
+            console.log('no json');
+            console.log('error：'+str+'!!!'+e);
+            return false;
+        }
+    }
+    //console.log('It is not a string!')
+}
