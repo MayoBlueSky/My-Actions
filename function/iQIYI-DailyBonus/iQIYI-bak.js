@@ -63,7 +63,7 @@ hostname= ifac*.iqiyi.com
 
 var LogDetails = false; // 响应日志
 
-var out = 9000; // 超时 (毫秒) 如填写, 则不少于3000
+var out = 10000; // 超时 (毫秒) 如填写, 则不少于3000
 
 var $nobyda = nobyda();
 
@@ -118,10 +118,6 @@ function Checkin() {
         $nobyda.data = "签到失败: 接口请求出错 ‼️"
         console.log(`爱奇艺-${$nobyda.data} ${error}`)
       } else {
-        console.log(data)
-        if(isJSON_test(data)){
-          console.log(data)
-        }
         const obj = JSON.parse(data)
         const Details = LogDetails ? `response:\n${data}` : ''
         if (obj.msg === "成功") {
@@ -159,7 +155,6 @@ function Lottery(s) {
           console.log(`爱奇艺-抽奖失败: 接口请求出错 ‼️ ${error} (${$nobyda.times})`)
           //$nobyda.notify("爱奇艺", "", $nobyda.data)
         } else {
-          console.log(data)
           const obj = JSON.parse(data);
           const Details = LogDetails ? `response:\n${data}` : ''
           $nobyda.last = data.match(/(机会|已经)用完/) ? true : false
@@ -170,6 +165,11 @@ function Lottery(s) {
             msg = data.match(/msg=.+?\)/) ? data.match(/msg=(.+?)\)/)[1].replace(/用户(未登录|不存在)/, "Cookie无效") : ""
             $nobyda.data += `\n抽奖失败: ${msg || `未知错误`} ⚠️`
             console.log(`爱奇艺-抽奖失败: ${msg || `未知错误`} ⚠️ (${$nobyda.times}) ${msg ? Details : `response:\n${data}`}`)
+            console.log(data)
+            s = s + 500;
+            if(s <= 4500){
+              await Lottery(s)
+            }
           } else {
             $nobyda.data += "\n抽奖错误: 已输出日志 ⚠️"
             console.log(`爱奇艺-抽奖失败: \n${data} (${$nobyda.times})`)
@@ -194,7 +194,7 @@ function GetCookie() {
   var iQIYI = CKA || CKB || null
   var RA = $nobyda.read("CookieQY")
   if (iQIYI) {
-    if (RA != iQIYI[2]) {
+    if (RA !== iQIYI[2]) {
       var OldTime = $nobyda.read("CookieQYTime")
       if (!$nobyda.write(iQIYI[2], "CookieQY")) {
         $nobyda.notify(`${RA?`更新`:`首次写入`}爱奇艺签到Cookie失败‼️`, "", "")
@@ -316,17 +316,3 @@ function nobyda() {
     done
   }
 };
-
-function isJSON_test(str) {
-    if (typeof str == 'string') {
-        try {
-            var obj=JSON.parse(str);
-            //console.log('转换成功：'+obj);
-            return true;
-        } catch(e) {
-            console.log('error：'+str+'!!!'+e);
-            return false;
-        }
-    }
-    //console.log('It is not a string!')
-}
