@@ -39,5 +39,5 @@ jobs:
           BARK_SOUND: ${{ secrets.BARK_SOUND }}
           DD_BOT_TOKEN: ${{ secrets.DD_BOT_TOKEN }}
           DD_BOT_SECRET: ${{ secrets.DD_BOT_SECRET }}
-          QYWX_PY_AM: ${{ secrets.QYWX_PY_AM }}
+          QYWX_AM: ${{ secrets.QYWX_AM}}
 #最后推送 2021年4月22日

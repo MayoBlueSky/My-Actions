@@ -46,7 +46,7 @@ class sendNotify:
     # 第一个值是企业id，第二个值是secret，第三个值@all(或者成员id)，第四个值是AgentID 中间以逗号隔开
     # 详情查看https://note.youdao.com/ynoteshare1/index.html?id=351e08a72378206f9dd64d2281e9b83b&type=note#/
     # B-791548lnzXBE6_BWfxdf3kSTMJr9vFEPKAbh6WERQ,mingcheng,1000001,2COXgjH2UIfERF2zxrtUOKgQ9XklUqMdGSWLBoW_lSDAdafat
-    QYWX_PY_AM = ''
+    QYWX_AM = ''
 
     # =======================================QQ酷推通知设置区域===========================================
     # 此处填你申请的SKEY(具体详见文档 https://cp.xuthus.cc/)
@@ -98,8 +98,8 @@ class sendNotify:
     # 企业微信
     # if os.environ['QYWX_KEY'] != "":
     #     QQ_SKEY = os.environ['QYWX_KEY']
-    if os.environ['QYWX_PY_AM'] != "":
-        QYWX_PY_AM = os.environ['QYWX_PY_AM']
+    if os.environ['QYWX_AM'] != "":
+        QYWX_AM = os.environ['QYWX_AM']
 
     # push+
     if os.environ['PUSH_PLUS_TOKEN'] != "":
@@ -252,10 +252,10 @@ class sendNotify:
 
     # 企业微信推送
     def sendWechat(self, desp):
-        if sendNotify.QYWX_PY_AM != '':
+        if sendNotify.QYWX_AM != '':
             # 获得access_token
             url = 'https://qyapi.weixin.qq.com/cgi-bin/gettoken'
-            token_param = '?corpid=' + sendNotify.QYWX_PY_AM.split(',')[0] + '&corpsecret=' + sendNotify.QYWX_PY_AM.split(',')[1]
+            token_param = '?corpid=' + sendNotify.QYWX_AM.split(',')[0] + '&corpsecret=' + sendNotify.QYWX_AM.split(',')[1]
             token_data = requests.get(url + token_param)
             token_data.encoding = 'utf-8'
             token_data = token_data.json()
@@ -264,9 +264,9 @@ class sendNotify:
             content = desp
             #创建要发送的消息
             data = {
-                "touser": sendNotify.QYWX_PY_AM.split(',')[2],
+                "touser": sendNotify.QYWX_AM.split(',')[2],
                 "msgtype": "text",
-                "agentid": sendNotify.QYWX_PY_AM.split(',')[3],
+                "agentid": sendNotify.QYWX_AM.split(',')[3],
                 "text": {"content": content}
             }
             send_url = 'https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=' + access_token
