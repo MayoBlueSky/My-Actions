@@ -10,7 +10,7 @@ sendNotify = sendNotify()
 
 SEND_KEY = os.environ['SEND_KEY']
 
-msg = '【哔咔漫画自动签到】\n'
+msg = ''
 
 # noinspection SpellCheckingInspection
 pica_api_host = "picaapi.picacomic.com"
@@ -92,4 +92,4 @@ if __name__ == '__main__':
         print(msg)
 
 if SEND_KEY == '':
-    sendNotify.send(title=u"哔咔漫画自动打哔咔", msg=msg)
+    sendNotify.send(title=u"哔咔漫画自动打哔咔", msg="【哔咔漫画自动签到】\n" + msg)
