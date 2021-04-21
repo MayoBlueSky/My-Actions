@@ -9,6 +9,7 @@ import datetime
 import re
 import os
 from io import StringIO
+
 sys.path.append("My-Actions/function/wps")
 from sendNotify import *
 
@@ -47,21 +48,21 @@ invite_limit = 10
 mass_limit = 5
 # 这13个账号被邀请,且参与WPS会员群集结,如群集结失败, 请修改以下sid, 修改时注意保留双引号
 invite_sid = [
-        "V02SC1mOHS0RiUBxeoA8NTliH2h2NGc00a803c35002693584d",
-        "V02S2UBSfNlvEprMOn70qP3jHPDqiZU00a7ef4a800341c7c3b",
-        "V02StVuaNcoKrZ3BuvJQ1FcFS_xnG2k00af250d4002664c02f",
-        "V02SWIvKWYijG6Rggo4m0xvDKj1m7ew00a8e26d3002508b828",
-        "V02Sr3nJ9IicoHWfeyQLiXgvrRpje6E00a240b890023270f97",
-        "V02SBsNOf4sJZNFo4jOHdgHg7-2Tn1s00a338776000b669579",
-        "V02ScVbtm2pQD49ArcgGLv360iqQFLs014c8062e000b6c37b6",
-        "V02S2oI49T-Jp0_zJKZ5U38dIUSIl8Q00aa679530026780e96",
-        "V02ShotJqqiWyubCX0VWTlcbgcHqtSQ00a45564e002678124c",
-        "V02SFiqdXRGnH5oAV2FmDDulZyGDL3M00a61660c0026781be1",
-        "V02S7tldy5ltYcikCzJ8PJQDSy_ElEs00a327c3c0026782526",
-        "V02SPoOluAnWda0dTBYTXpdetS97tyI00a16135e002684bb5c",
-        "V02Sb8gxW2inr6IDYrdHK_ywJnayd6s00ab7472b0026849b17",
-        "V02SwV15KQ_8n6brU98_2kLnnFUDUOw00adf3fda0026934a7f",
-        "V02SBpDdos7QiFOs_5TOLF0a80pWt-U00a94ce2c003a814a17",
+    "V02SC1mOHS0RiUBxeoA8NTliH2h2NGc00a803c35002693584d",
+    "V02S2UBSfNlvEprMOn70qP3jHPDqiZU00a7ef4a800341c7c3b",
+    "V02StVuaNcoKrZ3BuvJQ1FcFS_xnG2k00af250d4002664c02f",
+    "V02SWIvKWYijG6Rggo4m0xvDKj1m7ew00a8e26d3002508b828",
+    "V02Sr3nJ9IicoHWfeyQLiXgvrRpje6E00a240b890023270f97",
+    "V02SBsNOf4sJZNFo4jOHdgHg7-2Tn1s00a338776000b669579",
+    "V02ScVbtm2pQD49ArcgGLv360iqQFLs014c8062e000b6c37b6",
+    "V02S2oI49T-Jp0_zJKZ5U38dIUSIl8Q00aa679530026780e96",
+    "V02ShotJqqiWyubCX0VWTlcbgcHqtSQ00a45564e002678124c",
+    "V02SFiqdXRGnH5oAV2FmDDulZyGDL3M00a61660c0026781be1",
+    "V02S7tldy5ltYcikCzJ8PJQDSy_ElEs00a327c3c0026782526",
+    "V02SPoOluAnWda0dTBYTXpdetS97tyI00a16135e002684bb5c",
+    "V02Sb8gxW2inr6IDYrdHK_ywJnayd6s00ab7472b0026849b17",
+    "V02SwV15KQ_8n6brU98_2kLnnFUDUOw00adf3fda0026934a7f",
+    "V02SBpDdos7QiFOs_5TOLF0a80pWt-U00a94ce2c003a814a17",
 ]
 
 # 初始化日志
@@ -70,7 +71,8 @@ sio.seek(0, 2)  # 将读写位置移动到结尾
 s = requests.session()
 tz = pytz.timezone('Asia/Shanghai')
 nowtime = datetime.datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S")
-sio.write("--------------------------"+nowtime+"----------------------------\n\n")
+sio.write("--------------------------" + nowtime + "----------------------------\n\n")
+
 
 # 主函数
 def main():
@@ -79,24 +81,6 @@ def main():
 
     for item in sid:
         sio.write("---为{}签到---↓\n\n".format(item['name']))
-        b0 = wps_webpage_clockin(item['sid'])
-        if b0 == 1:
-            # 获取当前网页签到信息
-            taskcenter_url = 'https://vipapi.wps.cn/task_center/task/summary'
-            r = s.post(taskcenter_url, headers={'sid': item['sid']})
-            resp = json.loads(r.text)
-            if resp['data']['taskNum'] < 12:
-                wps_webpage_taskreward(item['sid'])
-            r = s.post(taskcenter_url, headers={'sid': item['sid']})
-            resp = json.loads(r.text)
-            sio.write('已领取积分: {}\n\n'.format(resp['data']['wpsIntegral']))
-            sio.write('已领取会员: {}天\n\n'.format(resp['data']['member']))
-            sio.write('已完成任务: {}项\n\n'.format(resp['data']['taskNum']))
-        else:
-            desp = sio.getvalue()
-            sendNotify.send(title = "Wps签到信息",msg = desp)
-            print(desp)
-            return desp
         b1 = docer_webpage_clockin(item['sid'])
         if b1 == 1:
             checinRecord_url = 'https://zt.wps.cn/2018/docer_check_in/api/checkin_record'
@@ -108,10 +92,10 @@ def main():
             resp1 = json.loads(r1.text)
             sio.write('拥有补签卡: {}张\n\n'.format(resp1['data']))
             max_days = resp['data']['max_days']
-            if resp1['data'] > 0 and len(resp['data']['records'])>0:
-                max_days = docer_webpage_earlyclockin(item['sid'],resp1['data'],resp['data']['records'],max_days)
-            if len(resp['data']['records'])>0:
-                docer_webpage_giftReceive(item['sid'],max_days)
+            if resp1['data'] > 0 and len(resp['data']['records']) > 0:
+                max_days = docer_webpage_earlyclockin(item['sid'], resp1['data'], resp['data']['records'], max_days)
+            if len(resp['data']['records']) > 0:
+                docer_webpage_giftReceive(item['sid'], max_days)
 
         b2 = wps_miniprogram_clockin(item['sid'])
         if b2 == 1:
@@ -126,14 +110,17 @@ def main():
         summary_url = 'https://vip.wps.cn/2019/user/summary'
         r = s.post(summary_url, headers={'sid': item['sid']})
         resp = json.loads(r.text)
-        sio.write('会员积分:{}\n\n"稻米数量":{}\n\n'.format(resp['data']['integral'],resp['data']['wealth']))
+        sio.write('会员积分:{}\n\n"稻米数量":{}\n\n'.format(resp['data']['integral'], resp['data']['wealth']))
         userinfo_url = 'https://vip.wps.cn/userinfo'
         r = s.get(userinfo_url, headers={'sid': item['sid']})
         resp = json.loads(r.text)
         if len(resp['data']['vip']['enabled']) > 0:
             sio.write('会员信息:\n\n')
             for i in range(len(resp['data']['vip']['enabled'])):
-                sio.write('"类型":{}, "过期时间":{}\n\n'.format(resp['data']['vip']['enabled'][i]['name'],datetime.datetime.fromtimestamp(resp['data']['vip']['enabled'][i]['expire_time']).strftime("%Y--%m--%d %H:%M:%S")))
+                sio.write('"类型":{}, "过期时间":{}\n\n'.format(resp['data']['vip']['enabled'][i]['name'],
+                                                          datetime.datetime.fromtimestamp(
+                                                              resp['data']['vip']['enabled'][i][
+                                                                  'expire_time']).strftime("%Y--%m--%d %H:%M:%S")))
     # wps签到邀请
     sio.write("\n\n          ==========wps邀请==========\n\n")
     for item in sid:
@@ -144,9 +131,10 @@ def main():
             sio.write("邀请失败: 用户ID错误, 请检查用户sid\n\n")
 
     desp = sio.getvalue()
-    sendNotify.send(title = "Wps签到邀请",msg = desp)
+    sendNotify.send(title="Wps签到邀请", msg=desp)
     print(desp)
     return desp
+
 
 # wps网页签到
 def wps_webpage_clockin(sid: str):
@@ -170,7 +158,7 @@ def wps_webpage_clockin(sid: str):
         sio.write("签到信息: 今日{}\n\n".format(resp['msg']))
         return 1
     # 打卡签到需要参加活动
-    elif resp['msg'] == 'need_captcha' :
+    elif resp['msg'] == 'need_captcha':
         getquestion_url = 'https://vip.wps.cn/checkcode/signin/question'
         r = s.get(getquestion_url, headers={'sid': sid})
         '''
@@ -214,21 +202,22 @@ def wps_webpage_clockin(sid: str):
         for i in range(4):
             opt = resp['data']['options'][i]
             if opt in answer_set:
-                answer_id = i+1
+                answer_id = i + 1
                 break
         sio.write("选项: {}\n\n".format(resp['data']['options']))
         sio.write("选择答案: {}\n\n".format(answer_id))
         # 提交答案
         answer_url = 'https://vip.wps.cn/sigin/do'
-        r = s.post(answer_url, headers={'sid': sid}, data={'platform':2, 'answer':answer_id, 'auth_type':'answer'})
+        r = s.post(answer_url, headers={'sid': sid}, data={'platform': 2, 'answer': answer_id, 'auth_type': 'answer'})
         resp = json.loads(r.text)
         # 答案错误
         if resp['msg'] == 'wrong answer':
             sio.write("答案不对, 挨个尝试\n\n")
             for i in range(4):
-                r = s.post(answer_url, headers={'sid': sid}, data={'platform':2, 'answer':i+1, 'auth_type':'answer'})
+                r = s.post(answer_url, headers={'sid': sid},
+                           data={'platform': 2, 'answer': i + 1, 'auth_type': 'answer'})
                 resp = json.loads(r.text)
-                sio.write(i+1)
+                sio.write(i + 1)
                 if resp['result'] == 'ok':
                     break
         # 打卡签到
@@ -246,6 +235,7 @@ def wps_webpage_clockin(sid: str):
         sio.write('签到失败信息: {}\n\n'.format(r.text))
         return 1
 
+
 # wps网页任务提示
 def wps_webpage_taskreward(sid: str):
     tasklist_url = 'https://vipapi.wps.cn/task_center/task/list'
@@ -260,36 +250,40 @@ def wps_webpage_taskreward(sid: str):
                  resp['data']['3']['task']])
     statustask = 1
     for i in range(len(resplist)):
-        checkinformation(resplist[i],sid)
+        checkinformation(resplist[i], sid)
+
 
 # 检查wps网页任务提示信息
-def checkinformation(information,sid):
+def checkinformation(information, sid):
     for i in range(len(information)):
         if information[i]['status'] == 0:
             fetchMission_url = 'https://vipapi.wps.cn/task_center/task/receive_task'
-            r = s.post(fetchMission_url, data= {'id': information[i]['id']}, headers={'sid': sid})
+            r = s.post(fetchMission_url, data={'id': information[i]['id']}, headers={'sid': sid})
             resp = json.loads(r.text)
-            sio.write("任务{} “{}”领取情况: {}\n\n".format(information[i]['id'],information[i]['taskName'],resp['msg']))
+            sio.write("任务{} “{}”领取情况: {}\n\n".format(information[i]['id'], information[i]['taskName'], resp['msg']))
         elif information[i]['status'] == 1:
-            sio.write("任务{} “{}”未完成".format(information[i]['id'],information[i]['taskName']))
+            sio.write("任务{} “{}”未完成".format(information[i]['id'], information[i]['taskName']))
             if len(information[i]['prizes']) > 0:
                 sio.write(",手动完成可获得")
                 for j in range(len(information[i]['prizes'])):
                     sio.write("{}{}{} ".format(
-                        information[i]['prizes'][j]['name'], information[i]['prizes'][j]['num'], information[i]['prizes'][j]['size']))
+                        information[i]['prizes'][j]['name'], information[i]['prizes'][j]['num'],
+                        information[i]['prizes'][j]['size']))
             sio.write("\n\n")
         elif information[i]['status'] == 2:
-            sio.write("任务{} “{}”已完成".format(information[i]['id'],information[i]['taskName']))
+            sio.write("任务{} “{}”已完成".format(information[i]['id'], information[i]['taskName']))
             if len(information[i]['prizes']) > 0:
                 sio.write(",可获得")
                 for j in range(len(information[i]['prizes'])):
                     sio.write("{}{}{} ".format(
-                        information[i]['prizes'][j]['name'], information[i]['prizes'][j]['num'], information[i]['prizes'][j]['size']))
+                        information[i]['prizes'][j]['name'], information[i]['prizes'][j]['num'],
+                        information[i]['prizes'][j]['size']))
             fetchReward_url = 'https://vipapi.wps.cn/task_center/task/receive_reward'
-            s.post(fetchReward_url, data= {'id': information[i]['id']}, headers={'sid': sid})
+            s.post(fetchReward_url, data={'id': information[i]['id']}, headers={'sid': sid})
             sio.write("已自动为您领取奖励\n\n")
         else:
             pass
+
 
 # Docer网页签到
 def docer_webpage_clockin(sid: str):
@@ -308,17 +302,18 @@ def docer_webpage_clockin(sid: str):
         sio.write('签到信息: 重复签到\n\n')
         return 1
 
+
 # Docer网页补签
-def docer_webpage_earlyclockin(sid,checkinEarly_times,checkinrecord,max_days):
+def docer_webpage_earlyclockin(sid, checkinEarly_times, checkinrecord, max_days):
     now = datetime.datetime.now(tz)
     this_month_start = datetime.datetime(now.year, now.month, 1).date()
     checkin_Earliestdate = datetime.datetime.strptime(checkinrecord[0]['checkin_date'], '%Y-%m-%d').date()
     for i in range(checkinEarly_times):
         if checkin_Earliestdate.day > this_month_start.day:
-            checkin_date = checkin_Earliestdate - datetime.timedelta(days=(i+1))
+            checkin_date = checkin_Earliestdate - datetime.timedelta(days=(i + 1))
             checkin_date = datetime.datetime.strptime(str(checkin_date), '%Y-%m-%d').strftime('%Y%m%d')
             checkinEarly_url = 'https://zt.wps.cn/2018/docer_check_in/api/checkin_early'
-            s.post(checkinEarly_url, data= {'date':checkin_date}, headers={'sid': sid})
+            s.post(checkinEarly_url, data={'date': checkin_date}, headers={'sid': sid})
         else:
             if i == 0:
                 sio.write('无需补签\n\n')
@@ -337,8 +332,9 @@ def docer_webpage_earlyclockin(sid,checkinEarly_times,checkinrecord,max_days):
     sio.write('补签后连续签到: {}天\n\n'.format(resp['data']['max_days']))
     return resp['data']['max_days']
 
+
 # Docer网页领取礼物
-def docer_webpage_giftReceive(sid,max_days):
+def docer_webpage_giftReceive(sid, max_days):
     userinfo_url = 'https://vip.wps.cn/userinfo'
     r = s.get(userinfo_url, headers={'sid': sid})
     resp = json.loads(r.text)
@@ -355,7 +351,8 @@ def docer_webpage_giftReceive(sid,max_days):
         for i in rewardRecord_list:
             if i['reward_type'] == 'vip' or i['reward_type'] == 'code':
                 if int(i['limit_days']) <= max_days and int(i['limit_vip']) in memberid and i['status'] == 'unreceived':
-                    r1 = s.post(rewardReceive_url, data={'reward_id': i['id'],'receive_from':'pc_client'},headers={'sid': sid})
+                    r1 = s.post(rewardReceive_url, data={'reward_id': i['id'], 'receive_from': 'pc_client'},
+                                headers={'sid': sid})
                     sio.write('领取礼物: {} '.format(i['reward_name']))
                     if 'reward_info' in r1.text:
                         resp1 = json.loads(r1.text)
@@ -368,6 +365,7 @@ def docer_webpage_giftReceive(sid,max_days):
                     if 'reward_info' in i:
                         sio.write('礼物信息: {}'.format(i['reward_info']))
                     sio.write('\n\n')
+
 
 # wps小程序签到
 def wps_miniprogram_clockin(sid: str):
@@ -398,7 +396,7 @@ def wps_miniprogram_clockin(sid: str):
     elif resp['msg'] == '前一天未报名':
         sio.write('前一天未报名\n\n')
         signup_url = 'http://zt.wps.cn/2018/clock_in/api/sign_up'
-        r=s.get(signup_url, headers={'sid': sid})
+        r = s.get(signup_url, headers={'sid': sid})
         resp = json.loads(r.text)
         if resp['result'] == 'ok':
             sio.write('报名信息: 已自动报名, 报名后第二天签到\n\n')
@@ -407,7 +405,7 @@ def wps_miniprogram_clockin(sid: str):
             sio.write('报名失败: 请手动报名, 报名后第二天签到\n\n')
             return 0
     # 打卡签到需要参加活动
-    elif resp['msg'] == '答题未通过' :
+    elif resp['msg'] == '答题未通过':
         getquestion_url = 'http://zt.wps.cn/2018/clock_in/api/get_question?member=wps'
         r = s.get(getquestion_url, headers={'sid': sid})
         answer_set = {
@@ -435,7 +433,7 @@ def wps_miniprogram_clockin(sid: str):
         for i in range(4):
             opt = resp['data']['options'][i]
             if opt in answer_set:
-                answer_id = i+1
+                answer_id = i + 1
                 break
         sio.write("选项: {}\n\n".format(resp['data']['options']))
         sio.write("选择答案: {}\n\n".format(answer_id))
@@ -447,9 +445,9 @@ def wps_miniprogram_clockin(sid: str):
         if resp['msg'] == 'wrong answer':
             sio.write("答案不对, 挨个尝试\n\n")
             for i in range(4):
-                r = s.post(answer_url, headers={'sid': sid}, data={'answer': i+1})
+                r = s.post(answer_url, headers={'sid': sid}, data={'answer': i + 1})
                 resp = json.loads(r.text)
-                sio.write(i+1)
+                sio.write(i + 1)
                 if resp['result'] == 'ok':
                     sio.write(r.text)
                     break
@@ -458,16 +456,16 @@ def wps_miniprogram_clockin(sid: str):
         r = s.get(clockin_url, headers={'sid': sid})
         sio.write("签到信息: {}\n\n".format(r.text))
         return 1
-    elif resp['msg'] == 'ParamData Empty' :
+    elif resp['msg'] == 'ParamData Empty':
         sio.write('签到失败信息: {}\n\n'.format(r.text))
         signup_url = 'http://zt.wps.cn/2018/clock_in/api/sign_up'
-        r=s.get(signup_url, headers={'sid': sid})
+        r = s.get(signup_url, headers={'sid': sid})
         sio.write('签到接口失效, 请手动打卡\n\n')
         return 1
     elif resp['msg'] == '不在打卡时间内':
         sio.write('签到失败: 不在打卡时间内\n\n')
         signup_url = 'http://zt.wps.cn/2018/clock_in/api/sign_up'
-        r=s.get(signup_url, headers={'sid': sid})
+        r = s.get(signup_url, headers={'sid': sid})
         resp = json.loads(r.text)
         if resp['result'] == 'ok':
             sio.write('已自动报名, 报名后请设置在规定时间内签到\n\n')
@@ -479,7 +477,7 @@ def wps_miniprogram_clockin(sid: str):
     elif resp['result'] == 'error':
         sio.write('签到失败信息: {}\n\n'.format(r.text))
         signup_url = 'http://zt.wps.cn/2018/clock_in/api/sign_up'
-        r=s.get(signup_url, headers={'sid': sid})
+        r = s.get(signup_url, headers={'sid': sid})
         resp = json.loads(r.text)
         if resp['result'] == 'ok':
             sio.write('已自动报名, 报名后请设置在规定时间内签到\n\n')
@@ -487,6 +485,7 @@ def wps_miniprogram_clockin(sid: str):
         else:
             sio.write('报名失败: 请手动报名, 报名后第二天签到\n\n')
             return 0
+
 
 # wps小程序接受邀请
 def wps_miniprogram_invite(sid: list, invite_userid: int) -> None:
@@ -503,18 +502,20 @@ def wps_miniprogram_invite(sid: list, invite_userid: int) -> None:
             if r.status_code == 200:
                 try:
                     resp = json.loads(r.text)
-                    sio.write("邀请对象ID={}, Result: {}\n\n".format(str(index+1).zfill(2),resp['result']))
+                    sio.write("邀请对象ID={}, Result: {}\n\n".format(str(index + 1).zfill(2), resp['result']))
                     k += 1
                 except:
                     resp = r.text[:25]
-                    sio.write("邀请对象ID={}, Result: ID已失效\n\n".format(str(index+1).zfill(2)))
+                    sio.write("邀请对象ID={}, Result: ID已失效\n\n".format(str(index + 1).zfill(2)))
             else:
-                sio.write("邀请对象ID={}, 状态码: {},\n\n  请求信息{}\n\n".format(str(index+1).zfill(2), r.status_code, r.text[:25]))
+                sio.write(
+                    "邀请对象ID={}, 状态码: {},\n\n  请求信息{}\n\n".format(str(index + 1).zfill(2), r.status_code, r.text[:25]))
     return k
 
 
 def main_handler(event, context):
     return main()
+
 
 if __name__ == '__main__':
     main()
