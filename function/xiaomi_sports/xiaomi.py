@@ -132,58 +132,6 @@ def get_app_token(login_token):
     return app_token
 
 
-# 企业微信推送
-def wxpush(msg, usr, corpid, corpsecret):
-    base_url = 'https://qyapi.weixin.qq.com/cgi-bin/gettoken?'
-    req_url = 'https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token='
-    corpid = corpid
-    corpsecret = corpsecret
-
-    # 获取access_token，每次的access_token都不一样，所以需要运行一次请求一次
-    def get_access_token(base_url, corpid, corpsecret):
-        urls = base_url + 'corpid=' + corpid + '&corpsecret=' + corpsecret
-        resp = requests.get(urls).json()
-        access_token = resp['access_token']
-        return access_token
-
-    def send_message(msg, usr):
-        data = get_message(msg, usr)
-        req_urls = req_url + get_access_token(base_url, corpid, corpsecret)
-        res = requests.post(url=req_urls, data=data)
-        ret = res.json()
-        if ret["errcode"] == 0:
-            print(f"[{now}] 企业微信推送成功")
-        else:
-            print(f"[{now}] 推送失败：{ret['errcode']} 错误信息：{ret['errmsg']}")
-
-    def get_message(msg, usr):
-        data = {
-            "touser": usr,
-            "toparty": "@all",
-            "totag": "@all",
-            "msgtype": "text",
-            "agentid": 1000002,
-            "text": {
-                "content": msg
-            },
-            "safe": 0,
-            "enable_id_trans": 0,
-            "enable_duplicate_check": 0,
-            "duplicate_check_interval": 1800
-        }
-        data = json.dumps(data)
-        return data
-
-    msg = msg
-    usr = usr
-    if corpid == '':
-        print("[注意] 未提供corpid，不进行企业微信推送！")
-    elif corpsecret == '':
-        print("[注意] 未提供corpsecret，不进行企业微信推送！")
-    else:
-        send_message(msg, usr)
-
-
 if __name__ == "__main__":
     # Push Mode
     SEND_KEY = os.environ['SEND_KEY']
