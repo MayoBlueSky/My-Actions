@@ -255,7 +255,7 @@ class sendNotify:
         if sendNotify.QYWX_AM != '':
             # 获得access_token
             url = 'https://qyapi.weixin.qq.com/cgi-bin/gettoken'
-            token_param = '?corpid=' + sendNotify.QYWX_AM['id'] + '&corpsecret=' + sendNotify.QYWX_AM['secret']
+            token_param = '?corpid=' + sendNotify.QYWX_AM.split(',')[0] + '&corpsecret=' + sendNotify.QYWX_AM.split(',')[1]
             token_data = requests.get(url + token_param)
             token_data.encoding = 'utf-8'
             token_data = token_data.json()
@@ -266,7 +266,7 @@ class sendNotify:
             data = {
                 "touser": "@all",
                 "msgtype": "text",
-                "agentid": sendNotify.QYWX_AM['agentld'],
+                "agentid": sendNotify.QYWX_AM.split(',')[2],
                 "text": {"content": content}
             }
             send_url = 'https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=' + access_token
