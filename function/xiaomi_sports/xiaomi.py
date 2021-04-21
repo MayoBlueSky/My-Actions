@@ -1,11 +1,8 @@
 # -*- coding: utf8 -*-
 # python >=3.8
 
-import requests
-import time
-import re
-import json
 import random
+import re
 import sys
 
 sys.path.append("My-Actions/function/wps")
@@ -87,6 +84,8 @@ def main(user, passwd, step):
     login_token, userid = login(user, password)
     if login_token == 0:
         print("登陆失败！")
+        if SEND_KEY != '':
+            sendNotify.send(title="小米运动自动刷步数", msg="登陆失败！")
         return "login fail!"
 
     t = get_time()
