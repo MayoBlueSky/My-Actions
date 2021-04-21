@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-import json
-import os
-import requests
-import sys;
+import sys
 sys.path.append("My-Actions/function/bilibili/")
 from bilibiliapi import *
 from sendNotify import *

@@ -1,12 +1,7 @@
-import requests
-import hashlib
-import hmac
-import json
 import random
 import string
-import time
-import os
-import sys;
+import sys
+
 sys.path.append("My-Actions/function/bika/")
 from sendNotify import *
 from http import client
@@ -15,8 +10,7 @@ sendNotify = sendNotify()
 
 SEND_KEY = os.environ['SEND_KEY']
 
-banner = '【哔咔漫画自动签到】'
-msg = ''
+msg = '【哔咔漫画自动签到】\n'
 
 # noinspection SpellCheckingInspection
 pica_api_host = "picaapi.picacomic.com"
@@ -64,11 +58,12 @@ def send_request(path: string, method: string, body: string = None, token: strin
     json_object = json.loads(response)
     if json_object["code"] != 200:
         if SEND_KEY != '':
-            sendNotify.send(title = u"哔咔漫画自动打哔咔", msg = "登录失败 账号或密码错误")
+            sendNotify.send(title=u"哔咔漫画自动打哔咔", msg="登录失败 账号或密码错误")
             print(json_object["message"])
         exit(0)
         raise RuntimeError(json_object["message"])
     return json_object
+
 
 def sign_in(email: string, password: string) -> string:
     body = {
@@ -77,11 +72,12 @@ def sign_in(email: string, password: string) -> string:
     }
     return send_request(sign_in_path, POST, json.dumps(body))["data"]["token"]
 
+
 def punch_in(token: string):
     return send_request(punch_in_path, POST, token=token)
 
+
 if __name__ == '__main__':
-    print(banner)
     if os.environ['BIKA_USER'] == "" or os.environ['BIKA_PASS'] == "":
         print("未填写哔咔账号密码 取消运行")
         exit(0)
@@ -96,5 +92,4 @@ if __name__ == '__main__':
         print(msg)
 
 if SEND_KEY == '':
-    sendNotify.send(title = u"哔咔漫画自动打哔咔", msg = msg)
-
+    sendNotify.send(title=u"哔咔漫画自动打哔咔", msg=msg)
