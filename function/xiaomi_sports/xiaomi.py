@@ -9,7 +9,7 @@ sys.path.append("My-Actions/function/wps")
 from sendNotify import *
 
 sendNotify = sendNotify()
-
+banner = '【小米运动自动刷步数】'
 now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 headers = {
     'User-Agent': 'Dalvik/2.1.0 (Linux; U; Android 9; MI 6 MIUI/20.6.18)'
@@ -76,7 +76,7 @@ def main(user, passwd, step):
         print("未填写小米运动用户名或密码,取消运行")
         exit(0)
         # return "用户名或密码填写有误！"
-
+    print(banner)
     if step == '':
         print("已设置为随机步数（10000-19999）")
         step = str(random.randint(10000, 19999))

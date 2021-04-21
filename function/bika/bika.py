@@ -15,6 +15,7 @@ sendNotify = sendNotify()
 
 SEND_KEY = os.environ['SEND_KEY']
 
+banner = '【哔咔漫画自动签到】'
 msg = ''
 
 # noinspection SpellCheckingInspection
@@ -80,6 +81,7 @@ def punch_in(token: string):
     return send_request(punch_in_path, POST, token=token)
 
 if __name__ == '__main__':
+    print(banner)
     if os.environ['BIKA_USER'] == "" or os.environ['BIKA_PASS'] == "":
         print("未填写哔咔账号密码 取消运行")
         exit(0)
