@@ -17,9 +17,9 @@
 2. 点击Settings -> Secrets -> 点击绿色按钮 (如无绿色按钮说明已激活。直接到第三步。)
 3. 新增 new secret 并设置 Secrets:
 4. 双击右上角自己仓库Star触发，如有不使用项目请[禁用部分项目](https://cdn.jsdelivr.net/gh/BlueskyClouds/BlueskyClouds.github.io/2020/10/19/img/2020-10-19.jpg)
-5. **必须** - 请随便找个文件(例如`README.md`)，加个空格提交一下，否则可能会出现无法定时执行的问题
-6. 由于规则更新,可能会Fork后会默认禁用,请手动点击Actions 选择要签到的项目 `enable workflows`激活
-7. [定时执行](#定时执行)
+6. **必须** - 请随便找个文件(例如`README.md`)，加个空格提交一下，否则可能会出现无法定时执行的问题
+7. 由于规则更新,可能会Fork后会默认禁用,请手动点击Actions 选择要签到的项目 `enable workflows`激活
+8. [定时执行](#定时执行)
 
 # 定时执行
 1. 支持手动执行，具体在Actions中选中要执行的Workflows后再在右侧可以看到Run workflow，点击即可运行此workflow。
@@ -32,8 +32,11 @@
 
 | 名称     | 内容           |   说明  |
 | -------- | -------------|   ----- |
-| `PAT`                   |   自动同步**必须设置**    |利用Github Actions自动同步上游仓库或新建仓库[PAT获取教程](./reposync.md)|
+| `PAT`                   |   自动同步**必须设置**    |利用Github Actions自动同步上游仓库或新建仓库[PAT获取教程](RepoSync.md)|
 | `IQIYI_COOKIE`          |   爱奇艺authcookie    |P00001的值 详情[文字教程](https://www.bilibili.com/read/cv7437179) [视频教程](https://www.bilibili.com/video/BV1B541157DE) 电脑版有效期三个月|
+| `Xiaomi_User`           |   小米运动手机号 |小米运动账号|
+| `Xiaomi_Pw`             |   小米运动密码   |小米运动密码|
+| `Xiaomi_Bs`             |   小米运动步数   |默认为1w-2w之间随机 或自定义随机范围`[18000-25000]`|
 | `BILI_USER`             |   哔哩哔哩账号   |B站账号|
 | `BILI_PASS`             |   哔哩哔哩密码   |B站密码|
 | `BILI_COOKIE`           |   哔哩哔哩COOKIE`(非必填)`   |哔哩哔哩COOKIE,如果账号密码无法登陆就用COOKIE,等一段时间再用账号密码即可.|

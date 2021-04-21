@@ -76,8 +76,9 @@ def main(user, passwd, step):
     password = str(passwd)
     step = str(step)
     if user == '' or password == '':
-        print("用户名或密码填写有误！")
-        return "用户名或密码填写有误！"
+        print("未填写小米运动用户名或密码,取消运行")
+        exit(0)
+        # return "用户名或密码填写有误！"
 
     if step == '':
         print("已设置为随机步数（10000-19999）")
@@ -189,8 +190,6 @@ def wxpush(msg, usr, corpid, corpsecret):
 if __name__ == "__main__":
     # Push Mode
     SEND_KEY = os.environ['SEND_KEY']
-    if SEND_KEY != '':
-        print("仅在Cookies失效时提醒")
     # 用户名（格式为 13800138000）
     user = os.environ['Xiaomi_User']
     # 登录密码
@@ -211,6 +210,6 @@ if __name__ == "__main__":
                 step = ''
             push += main(user_list[line], passwd_list[line], step) + '\n'
         if SEND_KEY == '':
-            sendNotify.send(title="小米运动", msg=push)
+            sendNotify.send(title="小米运动自动刷步数", msg=push)
     else:
         print('用户名和密码数量不对')
