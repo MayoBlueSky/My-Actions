@@ -40,14 +40,13 @@ class sendNotify:
     # =======================================企业微信机器人通知设置区域=========================================== 此处填你企业微信机器人的
     # webhook(详见文档 https://work.weixin.qq.com/api/doc/90000/90136/91770)，例如：693a91f6-7xxx-4bc4-97a0-0ec2sifa5aaa
     # 注：此处设置github action用户填写到Settings-Secrets里面(Name输入QYWX_KEY)
-    QYWX_KEY = ''
+    # QYWX_KEY = ''
 
     # =======================================企业微信应用消息通知设置区域=========================================== 此处填你企业微信应用消息的
-    # 值(详见文档 https://work.weixin.qq.com/api/doc/90000/90135/90236)，依次填上corpid的值,corpsecret的值,touser的值,
-    # agentid的值，素材库图片id（见https://github.com/lxk0301/jd_scripts/issues/519) 注意用,号隔开，例如：wwcff56746d9adwers,
+    # 第一个值是企业id，第二个值是secret，第三个值@all(或者成员id)，第四个值是AgentID，第五个值是图片id  中间以逗号隔开
+    # 详情查看https://note.youdao.com/ynoteshare1/index.html?id=351e08a72378206f9dd64d2281e9b83b&type=note#/
     # B-791548lnzXBE6_BWfxdf3kSTMJr9vFEPKAbh6WERQ,mingcheng,1000001,2COXgjH2UIfERF2zxrtUOKgQ9XklUqMdGSWLBoW_lSDAdafat
-    # 增加一个选择推送消息类型，用图文消息直接填写素材库图片id的值，用卡片消息就填写0(就是数字零) 注：此处设置github action用户填写到Settings-Secrets里面(Name输入QYWX_AM)
-    # QYWX_AM = ''
+    QYWX_AM = ''
 
     # =======================================QQ酷推通知设置区域===========================================
     # 此处填你申请的SKEY(具体详见文档 https://cp.xuthus.cc/)
@@ -99,8 +98,8 @@ class sendNotify:
     # 企业微信
     # if os.environ['QYWX_KEY'] != "":
     #     QQ_SKEY = os.environ['QYWX_KEY']
-    # if os.environ['QYWX_AM'] != "":
-    #     QQ_MODE = os.environ['QYWX_AM']
+    if os.environ['QYWX_AM'] != "":
+        QYWX_AM = os.environ['QYWX_AM']
 
     # push+
     if os.environ['PUSH_PLUS_TOKEN'] != "":
@@ -251,6 +250,34 @@ class sendNotify:
             print('\n您未提供push+的PUSH_PLUS_TOKEN，取消push+推送消息通知\n')
             pass
 
+    # 企业微信推送
+    def sendWechat(self, desp):
+        if sendNotify.QYWX_AM != '':
+            # 获得access_token
+            url = 'https://qyapi.weixin.qq.com/cgi-bin/gettoken'
+            token_param = '?corpid=' + sendNotify.QYWX_AM['id'] + '&corpsecret=' + sendNotify.QYWX_AM['secret']
+            token_data = requests.get(url + token_param)
+            token_data.encoding = 'utf-8'
+            token_data = token_data.json()
+            access_token = token_data['access_token']
+            #发送内容
+            content = desp
+            #创建要发送的消息
+            data = {
+                "touser": "@all",
+                "msgtype": "text",
+                "agentid": sendNotify.QYWX_AM['agentld'],
+                "text": {"content": content}
+            }
+            send_url = 'https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=' + access_token
+            message = requests.post(send_url, json=data)
+            message.encoding = 'utf-8'
+            res = message.json()
+            print('Wechat send : ' + res['errmsg'])
+        else:
+            print('\n您未提供企业微信的QYWX_AM，取消企业微信推送消息通知\n')
+            pass
+
     def send(self, **kwargs):
         send = sendNotify()
         title = kwargs.get("title", "")
@@ -260,6 +287,7 @@ class sendNotify:
         send.tgBotNotify(title, msg)
         send.dingNotify(title, msg)
         send.pushNotify(title, msg)
+        send.sendWechat(msg)
         # send.coolpush(title,msg)
 
 # if __name__ == "__main__":
