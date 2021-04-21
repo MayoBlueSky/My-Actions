@@ -64,7 +64,7 @@
 | `DD_BOT_SECRET`         |   钉钉推送   | 非必须 | (`DD_BOT_TOKEN`和`DD_BOT_SECRET`两者必需) ,密钥，机器人安全设置页面，加签一栏下面显示的SEC开头的`SECXXXXXXXXXX`等字符 , 注:钉钉机器人安全设置只需勾选`加签`即可，其他选项不要勾选,再不懂看 [这个图](https://github.com/BlueskyClouds/My-Actions/blob/master/icon/DD_bot.png) |
 | `QYWX_KEY`              |   企业微信机器人推送     | 非必须 | 密钥，企业微信推送 webhook 后面的 key [详见官方说明文档](https://work.weixin.qq.com/api/doc/90000/90136/91770) |
 | `QYWX_AM`               |   企业微信应用推送-JS版      | 非必须 | QYWX_AM依次填入 corpid,corpsecret,touser(注:多个成员ID使用,隔开),agentid,消息类型(选填,不填默认文本消息类型) [详见官方说明文档](https://work.weixin.qq.com/api/doc/90000/90135/90236) |
-| `QYWX_PY_AM`            |   企业微信应用推送-PY版      | 非必须 | QYWX_PY_AM依次填入 企业id,secret,@all(或者成员id),AgentID,图片id不填写 用不上  例子：ww479cadfqfe8c151f,MPKN9gX97w4e4b4h4u7u4i4i4i4iO6mN_dDedBFzqC5c,@all,1000002 [详见说明文档](https://note.youdao.com/ynoteshare1/index.html?id=351e08a72378206f9dd64d2281e9b83b) |
+| `QYWX_PY_AM`            |   企业微信应用推送-PY版      | 非必须 | QYWX_PY_AM依次填入 企业id,secret,@all(或者成员id),AgentID,图片id不填写 [详见说明文档](https://note.youdao.com/ynoteshare1/index.html?id=351e08a72378206f9dd64d2281e9b83b) |
 | `IGOT_PUSH_KEY`         |   iGot推送   | 非必须 | iGot聚合推送，支持多方式推送，确保消息可达。 [参考文档](https://wahao.github.io/Bark-MP-helper ) |
 | `PUSH_PLUS_TOKEN`       |   pushplus推送  | 非必须 | 微信扫码登录后一对一推送或一对多推送下面的token(您的Token) [官方网站](https://www.pushplus.plus/)                     |
 | `PUSH_PLUS_USER`        |   pushplus推送  | 非必须 | 一对多推送的“群组编码”（一对多推送下面->您的群组(如无则新建)->群组编码）注:(1、需订阅者扫描二维码 2、如果您是创建群组所属人，也需点击“查看二维码”扫描绑定，否则不能接受群组消息推送)，只填`PUSH_PLUS_TOKEN`默认为一对一推送                    |
