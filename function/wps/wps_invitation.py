@@ -106,6 +106,7 @@ tz = pytz.timezone('Asia/Shanghai')
 nowtime = datetime.datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S")
 sio.write("---" + nowtime + "---\n\n")
 
+
 # 获取百度ocr的token
 def gettoken(id, secret):
     # 获取access_token
@@ -120,7 +121,7 @@ def gettoken(id, secret):
     token = tex['access_token']
     # sio.write("百度文字识别Token: {}\n\n".format(token))
     # print("百度文字识别Token: {}\n\n".format(token))
-    return (token)
+    return token
 
 
 # wps积分签到
@@ -186,9 +187,9 @@ def picocr(headers: dict, bdocr_token):
     url = 'https://vip.wps.cn/checkcode/signin/captcha.png?platform=8&encode=0&img_witdh=280&img_height=70.4'
     r = s.get(url, headers=headers)
     if r.status_code == 200:
-        ##测试时去掉##dir = os.path.abspath(tmp_dir+os.path.sep+"original.png")#导出图片(原图)
-        ##测试时去掉##fp = open(dir, 'wb')#导出图片(原图)
-        ##测试时去掉##fp.write(r.content)#导出图片(原图)
+        # 测试时去掉##dir = os.path.abspath(tmp_dir+os.path.sep+"original.png")#导出图片(原图)
+        # 测试时去掉##fp = open(dir, 'wb')#导出图片(原图)
+        # 测试时去掉##fp.write(r.content)#导出图片(原图)
         '''
         img = r.content
         img = Image.open(BytesIO(img))
@@ -207,12 +208,12 @@ def magic(img, result, bdocr_token):
     # 二值化
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     _, thresh = cv2.threshold(gray, 190, 255, cv2.THRESH_BINARY)  # 二值化(190-255变0-->这个范围的变成白色
-    ##测试时去掉##cv2.imwrite(os.path.abspath(tmp_dir+os.path.sep+"gray.png"), thresh)#导出图片(二值化)
+    # 测试时去掉##cv2.iwrite(os.path.abspath(tmp_dir+os.path.sep+"gray.png"), thresh)#导出图片(二值化)
 
     # 形态学图像处理（膨胀腐蚀）###让轮廓更明显
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (6, 10))
     eroded = cv2.erode(thresh, kernel)
-    ##测试时去掉##cv2.imwrite(os.path.abspath(tmp_dir+os.path.sep+"eroded.png"), eroded)#导出图片(加粗)
+    # 测试时去掉##cv2.iwrite(os.path.abspath(tmp_dir+os.path.sep+"eroded.png"), eroded)#导出图片(加粗)
 
     # 轮廓检测
     contours, _ = cv2.findContours(eroded, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -220,10 +221,10 @@ def magic(img, result, bdocr_token):
     contours:轮廓(很多个特征点)
     hierarchy:层次
     第二个参数表示轮廓的检索模式，有四种（本文介绍的都是新的cv2接口）：
-        cv2.RETR_EXTERNAL表示只检测外轮廓
-        cv2.RETR_LIST检测的轮廓不建立等级关系
-        cv2.RETR_CCOMP建立两个等级的轮廓，上面的一层为外边界，里面的一层为内孔的边界信息。如果内孔内还有一个连通物体，这个物体的边界也在顶层。
-        cv2.RETR_TREE建立一个等级树结构的轮廓。
+        cv2.RETRY_EXTERNAL表示只检测外轮廓
+        cv2.RETRY_LIST检测的轮廓不建立等级关系
+        cv2.RETRY_COMP建立两个等级的轮廓，上面的一层为外边界，里面的一层为内孔的边界信息。如果内孔内还有一个连通物体，这个物体的边界也在顶层。
+        cv2.RETRY_TREE建立一个等级树结构的轮廓。
     第三个参数method为轮廓的近似办法
         cv2.CHAIN_APPROX_NONE存储所有的轮廓点，相邻的两个点的像素位置差不超过1，即max（abs（x1-x2），abs（y2-y1））==1
         cv2.CHAIN_APPROX_SIMPLE压缩水平方向，垂直方向，对角线方向的元素，只保留该方向的终点坐标，例如一个矩形轮廓只需4个点来保存轮廓信息
@@ -232,7 +233,7 @@ def magic(img, result, bdocr_token):
     '''
 
     color = (0, 255, 0)  # 画边界矩阵的颜色(0,255,0是纯绿色)第一位是红最后是蓝
-    ###选取边界矩形
+    # 选取边界矩形
     temps = []  # 识别出的文字列表
     tmp = []  # 反转字体列表
     for c in contours[1:]:
@@ -245,13 +246,14 @@ def magic(img, result, bdocr_token):
             temps.append((x, y, w, h))
     for x, y, w, h in temps:
         # sio.write("识别文字坐标: x={}, y={}, w={}, h={}\n\n".format(x,y,w,h))
-        ##测试时去掉##sio.write("对应图片名字: {}-{}.png\n\n".format(x-10,y-10))
+        # 测试时去掉##sio.write("对应图片名字: {}-{}.png\n\n".format(x-10,y-10))
         # print("识别文字坐标: x={}, y={}, w={}, h={}\n\n".format(x,y,w,h))
         cv2.rectangle(img, (x, y), (x + w, y + h), color, 1)  # rectangle划线
         # temp = result[y:(y + h), x:(x + w)]#对result切割
         temp = thresh[y:(y + h), x:(x + w)]  # 对result切割#单字
         temp2 = temp.copy()
-        ##测试时去掉##cv2.imwrite(os.path.abspath(tmp_dir+os.path.sep+str(x-10)+"-"+str(y-10)+".png"), temp)###通过ROI将每张图片输出(导出)+ str(i)
+        # 测试时去掉##cv2.iwrite(os.path.abspath(tmp_dir+os.path.sep+str(x-10)+"-"+str(y-10)+".png"), temp)
+        # 通过ROI将每张图片输出(导出)+ str(i)
         image_code = str(base64.b64encode(cv2.imencode('.png', temp)[1].tobytes()))[2:-1]  # 图片转base64？
         res = shibie(image_code, bdocr_token)
         if not res:
@@ -296,7 +298,7 @@ def shibie(img, token):
         # else:
         #     sio.write("文字识别结果: None\n\n")
         # print("文字识别结果:{}\n\n".format(result_json))
-        return (result_json)
+        return result_json
 
 
 def list2str(x_y):
