@@ -771,7 +771,6 @@ def wps_massing(*args):
     digest = dio.getvalue()
 
     sendNotify.send(title=digest, msg=desp)
-
     print(desp)
     return desp
 
@@ -990,7 +989,7 @@ def main():
     desp = sio.getvalue()
     digest = dio.getvalue()
     ss = '{"errno":0,"errmsg":"当前未推送"}'
-
+    sendNotify.send(title=digest, msg=desp)
     print(desp)
     if scf_environment == 0:
         with open(os.path.abspath(tmp_dir + os.path.sep + "result.txt"), "w", encoding='utf-8') as f:
@@ -1001,7 +1000,7 @@ def main():
         sio.close()
         dio.close()
     else:
-        print('日志推送信息: ' + tt)
+        print('日志推送信息: ' + str(tt))
     return desp
 
 
