@@ -32,7 +32,7 @@
 
 | 名称     | 内容           |   说明  |
 | -------- | -------------|   ----- |
-| `PAT`                   |   自动同步**必须设置**    |利用Github Actions自动同步上游仓库或新建仓库[PAT获取教程](RepoSync.md)|
+| `PAT`                   |   自动同步**必须设置**    |利用Github Actions自动同步上游仓库或新建仓库[PAT获取教程](RepoSync.md)如有pull插件最好使用pull[具体点击](#自动同步)|
 | `IQIYI_COOKIE`          |   爱奇艺authcookie    |P00001的值 详情[文字教程](https://www.bilibili.com/read/cv7437179) [视频教程](https://www.bilibili.com/video/BV1B541157DE) 电脑版有效期三个月|
 | `Xiaomi_User`           |   小米运动账号   |小米运动账号,多账号请用#分割 例如：13800138000#13800138001|
 | `Xiaomi_Pw`             |   小米运动密码   |小米运动密码,多账号请用#分割 例如：abc123qwe#abcqwe2|
