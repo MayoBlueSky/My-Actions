@@ -87,11 +87,11 @@ invite_sid = [
     {"name": "公共用户9",
      "sid": "V02SPoOluAnWda0dTBYTXpdetS97tyI00a16135e002684bb5c"},
     {"name": "公共用户10",
-     "sid": "V02Sb8gxW2inr6IDYrdHK_ywJnayd6s00ab7472b0026849b17"},
+     "sid": "V02StVuaNcoKrZ3BuvJQ1FcFS_xnG2k00af250d4002664c02f"},
     {"name": "公共用户11",
-     "sid": "V02SwV15KQ_8n6brU98_2kLnnFUDUOw00adf3fda0026934a7f"},
+     "sid": "V02Sb8gxW2inr6IDYrdHK_ywJnayd6s00ab7472b0026849b17"},
     {"name": "公共用户12",
-     "sid": "V02SC1mOHS0RiUBxeoA8NTliH2h2NGc00a803c35002693584d"}
+     "sid": "V02SwV15KQ_8n6brU98_2kLnnFUDUOw00adf3fda0026934a7f"}
 ]
 
 # 初始化日志
@@ -990,20 +990,8 @@ def main():
 
     desp = sio.getvalue()
     digest = dio.getvalue()
-    ss = '{"errno":0,"errmsg":"当前未推送"}'
     sendNotify.send(title=digest, msg=desp)
     print(desp)
-    if scf_environment == 0:
-        with open(os.path.abspath(tmp_dir + os.path.sep + "result.txt"), "w", encoding='utf-8') as f:
-            f.write(desp)
-            f.close()
-    tt = json.loads(ss)
-    if tt['errmsg'] == 'success' or tt['errmsg'] == 'ok':
-        sio.close()
-        dio.close()
-    else:
-        print('日志推送信息: ' + str(tt))
-    return desp
 
 
 def main_handler(event, context):
