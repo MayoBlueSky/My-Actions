@@ -139,6 +139,7 @@ if (process.env.PUSH_PLUS_USER) {
 async function sendNotify(text, desp, params = {}) {
   //提供6种通知
   //desp += `\n本脚本开源免费使用 By：https://github.com/LXK9301/jd_scripts`;
+  desp += '\n Github Actions 每一个月还是两个月会检查代码是否更新,如近期无更新会停止需要重新启用Actions 最好设置好pull同步或者Actions同步 我会每月定期推送一些无用内容防止被自动停止\n https://github.com/BlueSkyClouds/My-Actions';
   await Promise.all([
     serverNotify(text, desp),//微信server酱
     pushPlusNotify(text, desp)//pushplus(推送加)

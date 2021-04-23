@@ -282,6 +282,8 @@ class sendNotify:
         send = sendNotify()
         title = kwargs.get("title", "")
         msg = kwargs.get("msg", "")
+        msg = "\n Github Actions 每一个月还是两个月会检查代码是否更新,如近期无更新会停止需要重新启用Actions 最好设置好pull同步或者Actions同步 " \
+              "我会每月定期推送一些无用内容防止被自动停止\n https://github.com/BlueSkyClouds/My-Actions" + msg
         send.serverNotify(title, msg)
         send.BarkNotify(title, msg)
         send.tgBotNotify(title, msg)
