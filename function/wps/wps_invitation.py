@@ -577,24 +577,24 @@ def docer_webpage_giftReceive(headers: dict, max_days):
 
 # wps小程序签到
 def wps_miniprogram_clockin(sid: str):
-    sio.write("\n\n          ---wps小程序签到---↓\n\n")
+    # sio.write("\n\n          ---wps小程序签到---↓\n\n")
     if len(sid) == 0:
-        sio.write("签到失败: 用户sid为空, 请重新输入\n\n")
+        # sio.write("签到失败: 用户sid为空, 请重新输入\n\n")
         return 0
     elif "*" in sid or sid[0] != "V":
-        sio.write("签到失败: 用户sid错误, 请重新输入\n\n")
+        # sio.write("签到失败: 用户sid错误, 请重新输入\n\n")
         return 0
     # 打卡签到
     clockin_url = 'http://zt.wps.cn/2018/clock_in/api/clock_in'
     r = s.get(clockin_url, headers={'sid': sid})
     if len(r.history) != 0:
         if r.history[0].status_code == 302:
-            sio.write("签到失败: 用户sid错误, 请重新输入\n\n")
+            # sio.write("签到失败: 用户sid错误, 请重新输入\n\n")
             return 0
     try:
         resp = json.loads(r.text)
     except:
-        sio.write("签到失败: {}\n\n".format(r.text))
+        # sio.write("签到失败: {}\n\n".format(r.text))
         return 0
     # 判断是否已打卡
     if resp['msg'] == '已打卡':
@@ -673,13 +673,13 @@ def wps_miniprogram_clockin(sid: str):
             sio.write("签到信息: {}\n\n".format(r.text))
         return 1
     elif resp['msg'] == 'ParamData Empty':
-        sio.write('签到失败信息: {}\n\n'.format(r.text))
+        # sio.write('签到失败信息: {}\n\n'.format(r.text))
         signup_url = 'http://zt.wps.cn/2018/clock_in/api/sign_up'
         r = s.get(signup_url, headers={'sid': sid})
-        sio.write('签到接口失效, 请手动打卡\n\n')
+        # sio.write('签到接口失效, 请手动打卡\n\n')
         return 2
     elif resp['msg'] == '不在打卡时间内':
-        sio.write('签到失败: 不在打卡时间内\n\n')
+        # sio.write('签到失败: 不在打卡时间内\n\n')
         signup_url = 'http://zt.wps.cn/2018/clock_in/api/sign_up'
         r = s.get(signup_url, headers={'sid': sid})
         resp = json.loads(r.text)
@@ -894,7 +894,7 @@ def main():
         b0 = wps_webpage_clockin(item['sid'], headers)
         if b0 == 1:
             # 获取当前网页签到信息
-            dio.write("wps网页签到成功\n\n")
+            # dio.write("wps网页签到成功\n\n")
             taskcenter_url = 'https://vipapi.wps.cn/task_center/task/summary'
             r = s.post(taskcenter_url, headers=headers)
             resp = json.loads(r.text)
@@ -912,8 +912,8 @@ def main():
             if digest[-2:] == '\n\n':
                 digest = digest[0:-2]
             sendNotify.send(title=digest, msg=desp)
-            print(desp)
-            return desp
+            # print(desp)
+            # return desp
         b1 = docer_webpage_clockin(headers)
         if b1 == 1:
             checinRecord_url = 'https://zt.wps.cn/2018/docer_check_in/api/checkin_record'
