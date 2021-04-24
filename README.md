@@ -57,7 +57,7 @@
 
 | Name                    |   归属   | 属性   | 说明                                                         |
 | :---------------------: | :----------: | --------- | ------------------------------------------------------------ |
-| `SEND_KEY`              |   推送开关        | 非必须 | 仅在Cookie失效时发送推送,值随意|
+| `SEND_KEY`              |   推送开关        | 非必须 | 推送开关设置如设置该参数 仅在Cookie失效时推送,不设置则默认全部推送无论是否失败|
 | `PUSH_KEY`              |   微信server酱推送   | 非必须 | server酱的微信通知[更新公告](https://sc.ftqq.com/9.version) |
 | `BARK_PUSH`             |   [BARK推送](https://apps.apple.com/us/app/bark-customed-notifications/id1403753865)   | 非必须 | IOS用户下载BARK这个APP,填写内容是app提供的`设备码`，例如：https://api.day.app/123 ，那么此处的设备码就是`123`，再不懂看 [这个图](https://github.com/BlueskyClouds/My-Actions/blob/master/icon/bark.jpg)（注：支持自建填完整链接即可） |
 | `BARK_SOUND`            |   [BARK推送](https://apps.apple.com/us/app/bark-customed-notifications/id1403753865)   | 非必须 | bark推送声音设置，例如`choo`,具体值请在`bark`-`推送铃声`-`查看所有铃声` |
