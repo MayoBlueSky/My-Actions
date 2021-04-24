@@ -717,7 +717,7 @@ def wps_miniprogram_invite(sid: list, invite_userid: int) -> None:
                 'sid': sid[index]['sid']
             }
             r = s.post(invite_url, headers=headers, allow_redirects=False, data={
-                'invite_userid': invite_userid})
+                'invite_userid': invite_userid, "client_code": "040ce6c23213494c8de9653e0074YX30", "client": "alipay"})
             if r.status_code == 200:
                 try:
                     resp = json.loads(r.text)
