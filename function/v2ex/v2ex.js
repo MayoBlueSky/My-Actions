@@ -36,14 +36,15 @@ function check() {
                     return;
                 }
             } else {
-                reg = /每日登录奖励已领取/;
+				console.log(`请求daily result: \n${res.data}\n`);
+                reg = /领取 X 铜币/;
                 if (reg.test(res.data)) {
-                    notice += "今天已经签到过啦\n";
-                    signstatus = 1;
-                } else {
-                    reg = /redeem\?once=(.*?)'/;
+					reg = /redeem\?once=(.*?)'/;
                     once = res.data.match(reg)[1];
                     console.log(`获取成功 once:${once}`);
+                } else {
+                    notice += "今天已经签到过啦\n";
+                    signstatus = 1;
                 }
             }
         } catch (err) {
@@ -64,7 +65,7 @@ function daily() {
                 notice += "签到成功\n";
                 signstatus = 1;
             } else {
-                notice += "签到失败Cookie疑似失效\n";
+               notice += "签到失败Cookie疑似失效\n";
                 if(SEND_KEY){
                     notify.sendNotify("V2ex自动签到", notice);
                     return;
@@ -84,6 +85,8 @@ function balance() {
             let url = "https://www.v2ex.com/balance";
             let res = await axios.get(url, header);
             reg = /\d+?\s的每日登录奖励\s\d+\s铜币/;
+            let cc = res.data.match(/<td class=\"d\" style=\"text-align: right;\">(\d+).0<\/td>/)
+            let bb = res.data.match(reg)[0].match(/\d+/g)
             console.log(res.data.match(reg)[0]);
             notice += res.data.match(reg)[0];
         } catch (err) {
@@ -93,31 +96,32 @@ function balance() {
     });
 }
 
+
 function sign() {
     return new Promise(async (resolve) => {
         try {
-
             if (!cookie) {
                 console.log("你的cookie呢！！！");
+                server("V2EX运行失败： 你的cookie呢！！！");
+				pushplus("V2EX运行失败： 你的cookie呢！！！");
                 return;
             }
             await check();
-            if (once && signstatus === 0) {
+            if (once && signstatus == 0) {
                 await daily();
                 await balance();
-                if (signstatus === 0) {
-                    console.log("签到失败Cookie疑似失效")
+                if (signstatus == 0) {
+                    console.log("签到失败")
                 }
             }
             console.log(notice);
-            notify.sendNotify("V2ex自动签到", notice);
+			notify.sendNotify("V2ex自动签到", notice);
         } catch (err) {
             console.log(err);
         }
         resolve();
     });
 }
-
 sign();
 
 function timeFormat(time) {
