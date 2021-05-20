@@ -8,13 +8,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MayoBlueSky/Actions.git"
+    "url": "git+https://github.com/MayoBlueSky/My-Actions.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MayoBlueSky/Actions/issues"
+    "url": "https://github.com/MayoBlueSky/My-Actions/issues"
   },
   "homepage": "https://github.com/MayoBlueSky/Actions#readme",
   "dependencies": {
