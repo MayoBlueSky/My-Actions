@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BlueskyClouds/My-Actions.git"
+    "url": "git+https://github.com/MayoBlueSky/Actions.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/BlueskyClouds/My-Actions/issues"
+    "url": "https://github.com/MayoBlueSky/Actions/issues"
   },
-  "homepage": "https://github.com/BlueskyClouds/My-Actions#readme",
+  "homepage": "https://github.com/MayoBlueSky/Actions#readme",
   "dependencies": {
     "axios": "^0.21.1",
     "axios-cookiejar-support": "^1.0.1",

@@ -2,7 +2,7 @@
 
 ## Why
 
-如果不想fork,通过下面的方法重新创建分支，同步代码
+通过下面的方法重新创建分支，同步代码
 
 此方式亲测可行，请放心食用
 
@@ -25,7 +25,7 @@
 
 <img src="icon/set_up_workflow.png" alt="set_up_workflow" style="zoom:75%;" />
 
-复制https://github.com/BlueskyClouds/My-Actions/blob/master/.github/workflows/repo_sync.yml 里面的代码
+复制https://github.com/MayoBlueSky/Actions/blob/master/.github/workflows/repo_sync.yml 里面的代码
 
 复制完毕后直接点击右上角的`Start commit`后直接`Commit new file`即可
 
