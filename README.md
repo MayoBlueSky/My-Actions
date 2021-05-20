@@ -6,13 +6,13 @@
 3. 新增 new secret 并设置 Secrets:
 4. 双击右上角自己仓库Star触发，如有不使用项目请[禁用部分项目](https://cdn.jsdelivr.net/gh/BlueskyClouds/BlueskyClouds.github.io/2020/10/19/img/2020-10-19.jpg)
 6. **必须** - 请随便找个文件(例如`README.md`)，加个空格提交一下，否则可能会出现无法定时执行的问题
-7. 由于规则更新,可能会Fork后会默认禁用,请手动点击Actions 选择要签到的项目 `enable workflows`激活
+7. 由于规则更新,同步后会默认禁用,请手动点击Actions 选择要签到的项目 `enable workflows`激活
 8. [定时执行](#定时执行)
 
 # 定时执行
 1. 支持手动执行，具体在Actions中选中要执行的Workflows后再在右侧可以看到Run workflow，点击即可运行此workflow。
 
-2. 如果嫌上一步麻烦的，也可以直接点击一下star，你会发现所有的workflow都已执行。
+2. 如果嫌上一步麻烦的，也可以直接点击一下自己的star，你会发现所有的workflow都已执行。
 
 3. 如需修改执行时间自行修改`.github\workflows\`下面的yaml内的` cron:` 执行时间为国际标准时间 [时间转换](http://www.timebie.com/cn/universalbeijing.php) 分钟在前 小时在后 尽量提前几分钟,因为下载安装部署环境需要一定时间
 
@@ -20,7 +20,7 @@
 
 | 名称     | 内容           |   说明  |
 | -------- | -------------|   ----- |
-| `PAT`                   |   使用Github Actions同步和拉取代码 pull请无视    |利用Github Actions自动同步上游仓库或新建仓库[PAT获取教程](RepoSync.md)|
+| `PAT`                   |   使用Github Actions同步和拉取代码    |利用Github Actions自动同步上游仓库或新建仓库[PAT获取教程](RepoSync.md)|
 | `IQIYI_COOKIE`          |   爱奇艺P00001    |P00001的值 详情[文字教程](https://www.bilibili.com/read/cv7437179) [视频教程](https://www.bilibili.com/video/BV1B541157DE) 电脑版有效期三个月|
 | `Xiaomi_User`           |   小米运动账号   |小米运动账号,多账号请用#分割 例如：13800138000#13800138001|
 | `Xiaomi_Pw`             |   小米运动密码   |小米运动密码,多账号请用#分割 例如：abc123qwe#abcqwe2|
@@ -65,12 +65,6 @@
 
 [手动同步 https://blog.blueskyclouds.com/jsfx/58.html](https://blog.blueskyclouds.com/jsfx/58.html)
 
-
-### 鸣谢
-
-特别感谢 [JetBrains](https://www.jetbrains.com/?from=My-Actions) 为开源项目提供免费的 [WebStrom](https://www.jetbrains.com/?from=My-Actions) 等 IDE 的授权  
-[<img src="https://cdn.jsdelivr.net/gh/BlueskyClouds/BlueskyClouds.github.io/2020/12/1/img/idea/jetbrains.png" width="200"/>](https://www.jetbrains.com/?from=My-Actions)
-
 ### 访问量
 
-![](http://profile-counter.glitch.me/BlueSkyClouds/count.svg)
+![](http://profile-counter.glitch.me/MayoBlueSky/count.svg)
