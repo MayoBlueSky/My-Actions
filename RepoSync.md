@@ -16,8 +16,12 @@
 
 填入`Repository name`后点击最下方的`Create repository`即可完成创建
 
-如默认分支非`master`请自行修改`repo_sync.yml`的`destination_branch`或新建master分支并设置为默认分支
-*Settings* -> *Branch* -> 重命名分支为`master`即可
+如默认分支非`master`请自行修改`repo_sync.yml`的`destination_branch`或修改当前分支名称
+![1](https://cdn.jsdelivr.net/gh/BlueskyClouds/BlueskyClouds.github.io/2021/05/20/img/1.png)
+![2](https://cdn.jsdelivr.net/gh/BlueskyClouds/BlueskyClouds.github.io/2021/05/20/img/2.png)
+![3](https://cdn.jsdelivr.net/gh/BlueskyClouds/BlueskyClouds.github.io/2021/05/20/img/3.png)
+
+
 
 ### 自己创建工作流
 
