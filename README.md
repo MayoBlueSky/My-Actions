@@ -1,26 +1,26 @@
 个人收集并适配Github Actions的各类签到大杂烩
 ## 不要fork了 ⭐️star就行 
 # 使用方式
-1. [使用教程并自动同步](RepoSync.md)
-2. 点击Settings -> Secrets -> 点击绿色按钮 (如无绿色按钮说明已激活。直接到第三步。)
+1. [新建仓库并同步代码](RepoSync.md)
+2. 点击Settings -> Secrets -> 点击绿色按钮 (如无绿色按钮说明已激活。直接到下一步。)
 3. 新增 new secret 并设置 Secrets:
 4. 双击右上角自己仓库Star触发，如有不使用项目请[禁用部分项目](https://cdn.jsdelivr.net/gh/BlueskyClouds/BlueskyClouds.github.io/2020/10/19/img/2020-10-19.jpg)
 6. **必须** - 请随便找个文件(例如`README.md`)，加个空格提交一下，否则可能会出现无法定时执行的问题
 7. 由于规则更新,同步后会默认禁用,请手动点击Actions 选择要签到的项目 `enable workflows`激活
-8. [定时执行](#定时执行)
+8. [定时执行](#定时执行) (如修改了执行时间 请关闭同步源仓库  否则同步时会覆盖)
 
 # 定时执行
 1. 支持手动执行，具体在Actions中选中要执行的Workflows后再在右侧可以看到Run workflow，点击即可运行此workflow。
 
 2. 如果嫌上一步麻烦的，也可以直接点击一下自己的star，你会发现所有的workflow都已执行。
 
-3. 如需修改执行时间自行修改`.github\workflows\`下面的yaml内的` cron:` 执行时间为国际标准时间 [时间转换](http://www.timebie.com/cn/universalbeijing.php) 分钟在前 小时在后 尽量提前几分钟,因为下载安装部署环境需要一定时间
+3. 如需修改执行时间自行修改`.github\workflows\`下面的yaml内的` cron:` 执行时间为国际标准时间 [时间转换](http://www.timebie.com/cn/universalbeijing.php) 分钟在前 小时在后 尽量提前几分钟,因为安装部署环境需要一定时间
 
 ##### Cookie变量设置 Secrets:**
 
 | 名称     | 内容           |   说明  |
 | -------- | -------------|   ----- |
-| `PAT`                   |   使用Github Actions同步和拉取代码    |利用Github Actions自动同步上游仓库或新建仓库[PAT获取教程](RepoSync.md)|
+| `PAT`                   |   使用Github Actions同步和拉取代码    |利用Github Actions自动同步上游仓库[PAT获取教程](RepoSync.md)|
 | `IQIYI_COOKIE`          |   爱奇艺P00001    |P00001的值 详情[文字教程](https://www.bilibili.com/read/cv7437179) [视频教程](https://www.bilibili.com/video/BV1B541157DE) 电脑版有效期三个月|
 | `Xiaomi_User`           |   小米运动账号   |小米运动账号,多账号请用#分割 例如：13800138000#13800138001|
 | `Xiaomi_Pw`             |   小米运动密码   |小米运动密码,多账号请用#分割 例如：abc123qwe#abcqwe2|
@@ -37,7 +37,7 @@
 | `V_REF_URL`             |   腾讯视频Request URL |电脑端搜索auth_refresh复制整段Request url[图片教程](https://cdn.jsdelivr.net/gh/BlueskyClouds/BlueskyClouds.github.io/2020/11/1/img/v_1.jpg)|
 | `V_COOKIE`              |   腾讯视频Cookie   |电脑端搜索auth_refresh复制Cookie[图片教程](https://cdn.jsdelivr.net/gh/BlueskyClouds/BlueskyClouds.github.io/2020/11/1/img/v_2.jpg)|
 | `TELECOM_MOBILE`        |   中国电信手机号         |只需要手机号 单账号 `多账号将会暴露手机号` 自行考虑,多账号使用`,`分割 部分地区或手机号暂无法签到，自行测试使用|
-| `BDUSS`                 |   百度BDUSS         |BDUSS值切勿使用双击复制 (结尾有一个`符号`双击复制可能无法复制完整)|
+| `BDUSS`                 |   百度BDUSS         |BDUSS值切勿使用双击复制 (结尾可能会有一个`符号`双击复制可能无法复制完整)|
 ##### 推送通知环境变量(目前提供`微信server酱`、`pushplus(推送加)`、`iOS Bark APP`、`telegram机器人`、`钉钉机器人`、`企业微信机器人`、`iGot`等通知方式)
 
 | Name                    |   归属   | 属性   | 说明                                                         |
