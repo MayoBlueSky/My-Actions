@@ -63,7 +63,8 @@
 #### 手动同步
 
 [手动同步 https://blog.blueskyclouds.com/jsfx/58.html](https://blog.blueskyclouds.com/jsfx/58.html)
-
+#### 自动同步
+开启并启用`同步源仓库`即可 每天会定时同步两次
 ### 访问量
 
 ![](http://profile-counter.glitch.me/MayoBlueSky/count.svg)
