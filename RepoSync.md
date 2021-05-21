@@ -74,3 +74,7 @@
 操作到这一步,表示您已经全部完成了
 
 剩下的去配置cookie等secrets就好啦
+
+## 删除Actions日志
+设置需要保留日志天数即可
+![1](https://cdn.jsdelivr.net/gh/BlueskyClouds/BlueskyClouds.github.io/2021/05/21/img/1.png)
