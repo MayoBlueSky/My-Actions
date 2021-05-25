@@ -37,6 +37,7 @@
 | `V_REF_URL`             |   腾讯视频Request URL |电脑端搜索auth_refresh复制整段Request url[图片教程](https://cdn.jsdelivr.net/gh/BlueskyClouds/Script/img/2020/11/1/img/v_1.jpg)|
 | `V_COOKIE`              |   腾讯视频Cookie   |电脑端搜索auth_refresh复制Cookie[图片教程](https://cdn.jsdelivr.net/gh/BlueskyClouds/Script/img/2020/11/1/img/v_2.jpg)|
 | `TELECOM_MOBILE`        |   中国电信手机号         |只需要手机号 单账号 `多账号将会暴露手机号` 自行考虑,多账号使用`,`分割 部分地区或手机号暂无法签到，自行测试使用|
+| `V2EXCK`                |   V2EX的Cookie         |V2EX的Cookie(由于被墙可能会签到失败)|
 | `BDUSS`                 |   百度BDUSS         |BDUSS值切勿使用双击复制 (结尾可能会有一个`符号`双击复制可能无法复制完整)|
 ##### 推送通知环境变量(目前提供`微信server酱`、`pushplus(推送加)`、`iOS Bark APP`、`telegram机器人`、`钉钉机器人`、`企业微信机器人`、`iGot`等通知方式)
 
