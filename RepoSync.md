@@ -15,8 +15,11 @@
 [点击创建自己的仓库](https://github.com/new)
 
 填入`Repository name`后点击最下方的`Create repository`即可完成创建
+###可选 将默认分支修改为master
+如默认分支非`master`可以请自行修改当前分支名称
 
-如默认分支非`master`请自行修改`repo_sync.yml`的`destination_branch`或修改当前分支名称
+如不修改自行`切换分支`即可.
+
 ![1](https://cdn.jsdelivr.net/gh/BlueskyClouds/Script/img/2021/05/20/img/1.png)
 ![2](https://cdn.jsdelivr.net/gh/BlueskyClouds/Script/img/2021/05/20/img/2.png)
 ![3](https://cdn.jsdelivr.net/gh/BlueskyClouds/Script/img/2021/05/20/img/3.png)
