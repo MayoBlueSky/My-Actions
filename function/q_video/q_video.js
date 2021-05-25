@@ -182,8 +182,8 @@ function txVideoCheckin(headers){
                 notice += "腾讯视频会员二次签到：二次签到成功" + "\n"
             } else {
                 console.log("腾讯视频会员二次签到：签到失败，自行在腾讯视频APP内登录网址签到http://v.qq.com/x/bu/mobile_checkin (基本每周都需要手动签到一次才可以.)")
-                console.log("腾讯视频会员二次签到相关教程：https://cdn.jsdelivr.net/gh/BlueskyClouds/BlueskyClouds.github.io@master/2021/01/15/img/v_2sign.jpg")
-                notice += "腾讯视频会员二次签到：签到失败，自行在腾讯视频APP内登录网址签到http://v.qq.com/x/bu/mobile_checkin"+ "\n" + "详情查看Github log"
+                console.log("腾讯视频会员二次签到相关教程：https://cdn.jsdelivr.net/gh/BlueskyClouds/Script@master/img/2021/01/15/img/v_2sign.jpg")
+                notice += "腾讯视频会员二次签到：签到失败，自行在腾讯视频APP内部登录网址签到http://v.qq.com/x/bu/mobile_checkin"+ "\n" + "基本每周都需要手动签到一次第二天才会自动运行\n"
                 //输出日志查找原因
                 //console.log(data)
             }
