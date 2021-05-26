@@ -249,7 +249,11 @@ class BiliBiliCheckIn(object):
         else:
             coin_type = int(os.environ['BILI_TYPE'])
 
-        silver2coin = True #是否开启银瓜子换硬币，默认为 True 开启
+        if os.environ['BILI_S2C'] == "":
+            silver2coin = True # 是否开启银瓜子换硬币，默认为 True 开启
+        else:
+            silver2coin = False
+        
         session = requests.session()
         requests.utils.add_dict_to_cookiejar(session.cookies, bilibili_cookie)
         session.headers.update(
