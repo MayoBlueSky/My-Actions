@@ -60,7 +60,7 @@ def send_request(path: string, method: string, body: string = None, token: strin
         print(json_object["message"])
         if SEND_KEY != '':
             sendNotify.send(title=u"哔咔漫画自动打哔咔", msg="登录失败 账号或密码错误")
-        exit(0)
+            exit(0)
         raise RuntimeError(json_object["message"])
     return json_object
 
