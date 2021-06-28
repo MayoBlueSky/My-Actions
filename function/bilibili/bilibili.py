@@ -325,6 +325,7 @@ class BiliBiliCheckIn(object):
             print(share_msg)
             if silver2coin:
                 silver2coin_ret = self.silver2coin(session=session, bili_jct=bili_jct)
+                print(silver2coin_ret)
                 if silver2coin_ret["code"] == 0:
                     silver2coin_msg = f"成功将银瓜子兑换为1个硬币"
                 else:
