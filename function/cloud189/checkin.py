@@ -122,7 +122,7 @@ def login(username, password):
         "mailSuffix": "@189.cn",
         "paramId": paramId
         }
-    r = s.post(url, data=data, headers=headers, timeout=5)
+    r = s.post(url, data=data, headers=headers, timeout=45)
     if(r.json()['result'] == 0):
         print(r.json()['msg'])
     else:
