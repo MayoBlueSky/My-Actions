@@ -47,6 +47,7 @@ class BiliBiliCheckIn(object):
                 msg = f'签到失败，信息为: {ret["message"]}'
         except Exception as e:
             msg = f"签到异常，原因为{str(e)}"
+            print(msg)
         return msg
 
     @staticmethod
@@ -66,6 +67,7 @@ class BiliBiliCheckIn(object):
                 msg = f'签到失败，信息为({ret["msg"]})'
         except Exception as e:
             msg = f"签到异常,原因为: {str(e)}"
+            print(msg)
         return msg
 
     @staticmethod
@@ -253,19 +255,19 @@ class BiliBiliCheckIn(object):
             silver2coin = True # 是否开启银瓜子换硬币，默认为 True 开启
         else:
             silver2coin = False
-        
+
         session = requests.session()
         requests.utils.add_dict_to_cookiejar(session.cookies, bilibili_cookie)
         session.headers.update(
             {
-                "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/63.0.3239.108",
+                "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.64",
                 "Referer": "https://www.bilibili.com/",
+                "accept-language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
                 "Connection": "keep-alive",
             }
         )
         success_count = 0
         uname, uid, is_login, coin, vip_type, current_exp = self.get_nav(session=session)
-        # print(uname, uid, is_login, coin, vip_type, current_exp)
         if is_login:
             manhua_msg = self.manga_sign(session=session)
             print(manhua_msg)
@@ -273,7 +275,6 @@ class BiliBiliCheckIn(object):
             print(live_msg)
             aid_list = self.get_region(session=session)
             reward_ret = self.reward(session=session)
-            # print(reward_ret) # 取消本段输出
             coins_av_count = reward_ret.get("data", {}).get("coins_av") // 10
             coin_num = coin_num - coins_av_count
             coin_num = coin_num if coin_num < coin else coin
@@ -316,25 +317,24 @@ class BiliBiliCheckIn(object):
                 report_msg = f"观看《{title}》300秒"
             else:
                 report_msg = f"任务失败"
+                print(report_msg)
             print(report_msg)
             share_ret = self.share_task(session=session, bili_jct=bili_jct, aid=aid)
             if share_ret.get("code") == 0:
                 share_msg = f"分享《{title}》成功"
             else:
                 share_msg = f"分享失败"
-            print(share_msg)
+                print(share_msg)
             if silver2coin:
                 silver2coin_ret = self.silver2coin(session=session, bili_jct=bili_jct)
                 if silver2coin_ret["code"] == 0:
                     silver2coin_msg = f"成功将银瓜子兑换为1个硬币"
-                elif silver2coin_ret["code"] == -111:
-                    silver2coin_msg = silver2coin_ret["message"]
                 else:
-                    silver2coin_msg = silver2coin_ret["msg"]
+                    silver2coin_msg = silver2coin_ret["message"]
                 print(silver2coin_msg)
             else:
                 silver2coin_msg = f"未开启银瓜子兑换硬币功能"
-            #live_stats = self.live_status(session=session)
+            live_stats = self.live_status(session=session)
             uname, uid, is_login, new_coin, vip_type, new_current_exp = self.get_nav(session=session)
             # print(uname, uid, is_login, new_coin, vip_type, new_current_exp)
             reward_ret = self.reward(session=session)
@@ -346,16 +346,15 @@ class BiliBiliCheckIn(object):
             today_exp += coins_av
             update_data = (28800 - new_current_exp) // (today_exp if today_exp else 1)
             msg = (
-                f"【Bilibili签到】\n帐号信息: {uname}\n漫画签到: {manhua_msg}\n直播签到: {live_msg}\n"
+                f"帐号信息: {uname}\n漫画签到: {manhua_msg}\n直播签到: {live_msg}\n"
                 f"登陆任务: 今日已登陆\n观看视频: {report_msg}\n分享任务: {share_msg}\n投币任务: {coin_msg}\n"
                 f"银瓜子兑换硬币: {silver2coin_msg}\n今日获得经验: {today_exp}\n当前经验: {new_current_exp}\n"
-                f"按当前速度升级还需: {update_data}天\n"
+                f"按当前速度升级还需: {update_data}天\n{live_stats}"
             )
             print(msg)
             if SEND_KEY == '':
                 sendNotify.send(title = u"哔哩哔哩签到",msg = msg)
-            msg_list.append(msg)
-        return msg_list
+        return msg
 
 
 if __name__ == "__main__":
