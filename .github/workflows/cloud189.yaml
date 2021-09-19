@@ -25,7 +25,6 @@ jobs:
 
             - name: "运行 天翼云盘签到抽奖"
               run: |
-                pip install -r requirements.txt
 
                 user='${{ secrets.Cloud_USER }}'
                 pwd='${{ secrets.Cloud_PWD }}'
