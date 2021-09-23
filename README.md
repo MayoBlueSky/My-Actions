@@ -9,7 +9,11 @@
 </div>
 
 个人收集并适配Github Actions的各类签到大杂烩
-## 不要fork了 ⭐️star就行 
+## 不要fork了 ⭐️star就行 #
+
+[点这里加TG群](https://t.me/joinchat/Os0AUkWMJl43ODBl)
+需要什么签到可以去提issues,也欢迎大佬PR
+
 # 使用方式
 1. [新建仓库并同步代码](RepoSync.md)
 2. 点击Settings -> Secrets -> 点击绿色按钮 (如无绿色按钮说明已激活。直接到下一步。)
