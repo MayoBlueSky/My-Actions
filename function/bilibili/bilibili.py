@@ -142,7 +142,7 @@ class BiliBiliCheckIn(object):
     @staticmethod
     def space_arc_search(
             session, uid: int, pn: int = 1, ps: int = 100, tid: int = 0, order: str = "pubdate", keyword: str = ""
-    ) -> list[dict[str, Union[int, Any]]]:
+    ) -> dict:
         """
         获取指定up主空间视频投稿信息
         uid int 账户uid，默认为本账户
