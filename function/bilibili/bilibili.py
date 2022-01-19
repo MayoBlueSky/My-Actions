@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from typing import List, Dict, Union, Any
 
 import sys
 
@@ -215,8 +214,11 @@ class BiliBiliCheckIn(object):
     @staticmethod
     def silver2coin(session, bili_jct) -> dict:
         """银瓜子兑换硬币"""
-        url = "https://api.live.bilibili.com/pay/v1/Exchange/silver2coin"
-        post_data = {"csrf_token": bili_jct}
+        url = "https://api.live.bilibili.com/xlive/revenue/v1/wallet/silver2coin"
+        post_data = {
+            "csrf": bili_jct,
+            "csrf_token": bili_jct
+        }
         ret = session.post(url=url, data=post_data).json()
         return ret
 
