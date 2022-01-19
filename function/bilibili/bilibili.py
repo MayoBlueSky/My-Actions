@@ -284,7 +284,6 @@ class BiliBiliCheckIn(object):
             coins_av_count = reward_ret.get("data", {}).get("coins_av") // 10
             coin_num = coin_num - coins_av_count
             coin_num = coin_num if coin_num < coin else coin
-            print(coin_num)
             if coin_type == 1 and coin_num:
                 following_list = self.get_followings(session=session, uid=uid)
                 for following in following_list.get("data", {}).get("list"):
