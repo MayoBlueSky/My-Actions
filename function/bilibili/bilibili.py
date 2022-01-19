@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+from typing import List, Dict, Union, Any
+
 import sys
+
 sys.path.append("My-Actions/function/bilibili/")
 from bilibiliapi import *
 from sendNotify import *
@@ -7,6 +10,7 @@ from sendNotify import *
 sendNotify = sendNotify()
 SEND_KEY = os.environ['SEND_KEY']
 BILI_COOKIE = os.environ['BILI_COOKIE'].replace(" ", "")
+
 
 class BiliBiliCheckIn(object):
     # 待测试，需要大会员账号测试领取福利
@@ -34,7 +38,7 @@ class BiliBiliCheckIn(object):
         return ret
 
     @staticmethod
-    def live_sign(session) -> dict:
+    def live_sign(session) -> str:
         """B站直播签到"""
         try:
             url = "https://api.live.bilibili.com/xlive/web-ucenter/v1/sign/DoSign"
@@ -51,7 +55,7 @@ class BiliBiliCheckIn(object):
         return msg
 
     @staticmethod
-    def manga_sign(session, platform="android") -> dict:
+    def manga_sign(session, platform="android") -> str:
         """
         模拟B站漫画客户端签到
         """
@@ -138,7 +142,7 @@ class BiliBiliCheckIn(object):
     @staticmethod
     def space_arc_search(
             session, uid: int, pn: int = 1, ps: int = 100, tid: int = 0, order: str = "pubdate", keyword: str = ""
-    ) -> dict:
+    ) -> list[dict[str, Union[int, Any]]]:
         """
         获取指定up主空间视频投稿信息
         uid int 账户uid，默认为本账户
@@ -197,7 +201,7 @@ class BiliBiliCheckIn(object):
         return ret
 
     @staticmethod
-    def live_status(session) -> dict:
+    def live_status(session) -> str:
         """B站直播获取金银瓜子状态"""
         url = "https://api.live.bilibili.com/pay/v1/Exchange/getStatus"
         ret = session.get(url=url).json()
@@ -217,7 +221,7 @@ class BiliBiliCheckIn(object):
         return ret
 
     @staticmethod
-    def get_region(session, rid=1, num=6) -> dict:
+    def get_region(session, rid=1, num=6) -> list[dict[str, Any]]:
         """
         获取 B站分区视频信息
         rid int 分区号
@@ -242,17 +246,17 @@ class BiliBiliCheckIn(object):
         bili_jct = bilibili_cookie.get("bili_jct")
 
         if os.environ['BILI_NUM'] == "":
-            coin_num = 0 # 投币数量
+            coin_num = 0  # 投币数量
         else:
             coin_num = int(os.environ['BILI_NUM'])
 
         if os.environ['BILI_TYPE'] == "":
-            coin_type = 1 # 投币方式 默认为 1 ；1: 为关注用户列表视频投币 0: 为随机投币。如果关注用户发布的视频不足配置的投币数，则剩余部分使用随机投币
+            coin_type = 1  # 投币方式 默认为 1 ；1: 为关注用户列表视频投币 0: 为随机投币。如果关注用户发布的视频不足配置的投币数，则剩余部分使用随机投币
         else:
             coin_type = int(os.environ['BILI_TYPE'])
 
         if os.environ['BILI_S2C'] == "":
-            silver2coin = True # 是否开启银瓜子换硬币，默认为 True 开启
+            silver2coin = True  # 是否开启银瓜子换硬币，默认为 True 开启
         else:
             silver2coin = False
 
@@ -260,7 +264,8 @@ class BiliBiliCheckIn(object):
         requests.utils.add_dict_to_cookiejar(session.cookies, bilibili_cookie)
         session.headers.update(
             {
-                "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.64",
+                "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
+                              "Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.64",
                 "Referer": "https://www.bilibili.com/",
                 "accept-language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
                 "Connection": "keep-alive",
@@ -353,8 +358,11 @@ class BiliBiliCheckIn(object):
             )
             print(msg)
             if SEND_KEY == '':
-                sendNotify.send(title = u"哔哩哔哩签到",msg = msg)
+                sendNotify.send(title=u"哔哩哔哩签到", msg=msg)
             return msg
+        else:
+            print("登录失败Cookie已失效")
+            sendNotify.send(title=u"哔哩哔哩签到", msg="登录失败 Cookie已失效")
 
 
 if __name__ == "__main__":
@@ -368,10 +376,10 @@ if __name__ == "__main__":
         b = Bilibili()
         login = b.login(username=os.environ['BILI_USER'], password=os.environ['BILI_PASS'])
         if login == False:
-            sendNotify.send(title = u"哔哩哔哩签到", msg = "登录失败 账号或密码错误，详情前往Github查看")
+            sendNotify.send(title=u"哔哩哔哩签到", msg="登录失败 账号或密码错误，详情前往Github查看")
             exit(0)
         _bilibili_cookie_list = b.get_cookies()
     else:
-        _bilibili_cookie_list = {cookie.split('=')[0]:cookie.split('=')[-1] for cookie in BILI_COOKIE.split(';')}
+        _bilibili_cookie_list = {cookie.split('=')[0]: cookie.split('=')[-1] for cookie in BILI_COOKIE.split(';')}
 
     BiliBiliCheckIn(bilibili_cookie_list=_bilibili_cookie_list).main()
