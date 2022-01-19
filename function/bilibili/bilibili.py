@@ -244,7 +244,7 @@ class BiliBiliCheckIn(object):
 
     def main(self):
         bilibili_cookie = self.bilibili_cookie_list
-        bili_jct = bilibili_cookie.get(" bili_jct")
+        bili_jct = bilibili_cookie.get("bili_jct")
 
         if os.environ['BILI_NUM'] == "":
             coin_num = 0  # 投币数量
