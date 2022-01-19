@@ -221,7 +221,7 @@ class BiliBiliCheckIn(object):
         return ret
 
     @staticmethod
-    def get_region(session, rid=1, num=6) -> list[dict[str, Any]]:
+    def get_region(session, rid=1, num=6) -> dict:
         """
         获取 B站分区视频信息
         rid int 分区号
