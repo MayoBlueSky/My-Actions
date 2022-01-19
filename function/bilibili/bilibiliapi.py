@@ -273,7 +273,7 @@ class Bilibili:
                                 break
                         elif response['code'] == -449:
                             self._log("服务繁忙, 尝试使用V3接口登录")
-                            url = f"{self.protocol}://passport.bilibili.com/api/v3/oauth2/login"
+                            url = f"{self.protocol}://passport.bilibili.com/x/passport-login/oauth2/login"
                             param = f"access_key=&actionKey=appkey&appkey={Bilibili.app_key}&build=6040500&captcha=&challenge=&channel=bili&cookies=&device=phone&mobi_app=android&password={parse.quote_plus(base64.b64encode(rsa.encrypt(f'{key_hash}{self.password}'.encode(), pub_key)))}&permission=ALL&platform=android&seccode=&subid=1&ts={int(time.time())}&username={parse.quote_plus(self.username)}&validate="
                             payload = f"{param}&sign={self.calc_sign(param)}"
                             headers = {'Content-type': "application/x-www-form-urlencoded"}
