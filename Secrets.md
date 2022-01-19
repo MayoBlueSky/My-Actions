@@ -1,27 +1,27 @@
 ##### Cookie变量设置 Secrets:**
 
-| 名称               | 内容                      | 说明                                                                                                                       |
-|------------------|-------------------------|--------------------------------------------------------------------------------------------------------------------------|
-| `PAT`            | 使用Github Actions同步和拉取代码 | 利用Github Actions自动同步上游仓库[PAT获取教程](RepoSync.md)                                                                           |
-| `IQIYI_COOKIE`   | 爱奇艺P00001               | P00001的值 详情[文字教程](https://www.bilibili.com/read/cv7437179) [视频教程](https://www.bilibili.com/video/BV1B541157DE) 电脑版有效期三个月 |
-| `Xiaomi_User`    | 小米运动账号                  | 小米运动账号,多账号请用#分割 例如：13800138000#13800138001                                                                               |
-| `Xiaomi_Pw`      | 小米运动密码                  | 小米运动密码,多账号请用#分割 例如：abc123qwe#abcqwe2                                                                                     |
-| `Xiaomi_Bs`      | 小米运动步数                  | 默认为1w-2w之间随机 或自定义随机范围`[18000-25000]`                                                                                     |
-| `Cloud_USER`     | 天翼云盘账号                  | 天翼云盘手机号,多账号请用#分割 例如：13800000000#13800000001                                                                              |
-| `Cloud_PWD`      | 天翼云盘密码                  | 天翼云盘密码,多账号请用#分割 例如：cxkjntm#jntmcxk                                                                                       |
-| `BILI_USER`      | 哔哩哔哩账号                  | B站账号                                                                                                                     |
-| `BILI_PASS`      | 哔哩哔哩密码                  | B站密码                                                                                                                     |
-| `BILI_COOKIE`    | 哔哩哔哩COOKIE`(非必填)`       | 哔哩哔哩COOKIE,如果账号密码无法登陆就用COOKIE,等一段时间再用账号密码即可.                                                                             |
-| `BILI_NUM`       | 哔哩哔哩每日投币数量              | 每日投币数量`可不填`默认0 不投币                                                                                                       |
-| `BILI_TYPE`      | 哔哩哔哩每日投币方式              | 投币方式`可不填`默认1,只给关注的人投币 0 则随机投币                                                                                            |
-| `BILI_S2C`       | 哔哩哔哩每日银瓜子兑换硬币           | `可不填`默认兑换,设置为`任意数值`则不自动兑换                                                                                                |
-| `BIKA_USER`      | 哔咔漫画用户名                 | 哔咔漫画用户名                                                                                                                  |
-| `BIKA_PASS`      | 哔咔漫画密码                  | 哔咔漫画密码                                                                                                                   |
-| `V_REF_URL`      | 腾讯视频Request URL         | 电脑端搜索auth_refresh复制整段Request url[图片教程](https://cdn.jsdelivr.net/gh/BlueskyClouds/Script/img/2020/11/1/img/v_1.jpg)       |
-| `V_COOKIE`       | 腾讯视频Cookie              | 电脑端搜索auth_refresh复制Cookie[图片教程](https://cdn.jsdelivr.net/gh/BlueskyClouds/Script/img/2020/11/1/img/v_2.jpg)              |
-| `TELECOM_MOBILE` | 中国电信手机号                 | 只需要手机号 单账号 `多账号将会暴露手机号` 自行考虑,多账号使用`,`分割 部分地区或手机号暂无法签到，自行测试使用                                                             |
-| `V2EXCK`         | V2EX的Cookie             | V2EX的Cookie(由于被墙可能会签到失败)                                                                                                 |
-| `BDUSS`          | 百度BDUSS                 | BDUSS值切勿使用双击复制 (结尾可能会有一个`符号`双击复制可能无法复制完整)                                                                                |
+| 名称               | 内容                      | 说明                                                                                                                 |
+|------------------|-------------------------|--------------------------------------------------------------------------------------------------------------------|
+| `PAT`            | 使用Github Actions同步和拉取代码 | 利用Github Actions自动同步上游仓库[PAT获取教程](RepoSync.md)                                                                     |
+| `IQIYI_COOKIE`   | 爱奇艺Cookie               | F12控制台执行`console.log(document.cookie)`电脑版有效期三个月                                                                    |
+| `Xiaomi_User`    | 小米运动账号                  | 小米运动账号,多账号请用#分割 例如：13800138000#13800138001                                                                         |
+| `Xiaomi_Pw`      | 小米运动密码                  | 小米运动密码,多账号请用#分割 例如：abc123qwe#abcqwe2                                                                               |
+| `Xiaomi_Bs`      | 小米运动步数                  | 默认为1w-2w之间随机 或自定义随机范围`[18000-25000]`                                                                               |
+| `Cloud_USER`     | 天翼云盘账号                  | 天翼云盘手机号,多账号请用#分割 例如：13800000000#13800000001                                                                        |
+| `Cloud_PWD`      | 天翼云盘密码                  | 天翼云盘密码,多账号请用#分割 例如：cxkjntm#jntmcxk                                                                                 |
+| `BILI_USER`      | 哔哩哔哩账号                  | B站账号                                                                                                               |
+| `BILI_PASS`      | 哔哩哔哩密码                  | B站密码                                                                                                               |
+| `BILI_COOKIE`    | 哔哩哔哩COOKIE`(非必填)`       | 哔哩哔哩COOKIE,如果账号密码无法登陆就用COOKIE,等一段时间再用账号密码即可.                                                                       |
+| `BILI_NUM`       | 哔哩哔哩每日投币数量              | 每日投币数量`可不填`默认0 不投币                                                                                                 |
+| `BILI_TYPE`      | 哔哩哔哩每日投币方式              | 投币方式`可不填`默认1,只给关注的人投币 0 则随机投币                                                                                      |
+| `BILI_S2C`       | 哔哩哔哩每日银瓜子兑换硬币           | `可不填`默认兑换,设置为`任意数值`则不自动兑换                                                                                          |
+| `BIKA_USER`      | 哔咔漫画用户名                 | 哔咔漫画用户名                                                                                                            |
+| `BIKA_PASS`      | 哔咔漫画密码                  | 哔咔漫画密码                                                                                                             |
+| `V_REF_URL`      | 腾讯视频Request URL         | 电脑端搜索auth_refresh复制整段Request url[图片教程](https://cdn.jsdelivr.net/gh/BlueskyClouds/Script/img/2020/11/1/img/v_1.jpg) |
+| `V_COOKIE`       | 腾讯视频Cookie              | 电脑端搜索auth_refresh复制Cookie[图片教程](https://cdn.jsdelivr.net/gh/BlueskyClouds/Script/img/2020/11/1/img/v_2.jpg)        |
+| `TELECOM_MOBILE` | 中国电信手机号                 | 只需要手机号 单账号 `多账号将会暴露手机号` 自行考虑,多账号使用`,`分割 部分地区或手机号暂无法签到，自行测试使用                                                       |
+| `V2EXCK`         | V2EX的Cookie             | V2EX的Cookie(由于被墙可能会签到失败)                                                                                           |
+| `BDUSS`          | 百度BDUSS                 | BDUSS值切勿使用双击复制 (结尾可能会有一个`符号`双击复制可能无法复制完整)                                                                          |
 ##### 推送通知环境变量(目前提供`微信server酱`、`pushplus(推送加)`、`iOS Bark APP`、`telegram机器人`、`钉钉机器人`、`企业微信机器人`、`iGot`等通知方式)
 
 |       Name        |                                        归属                                        | 属性  | 说明                                                                                                                                                                                                          |
