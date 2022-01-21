@@ -29,6 +29,7 @@
     "request": "^2.88.2",
     "request-promise": "^4.2.5",
     "tough-cookie": "^4.0.0",
-    "tunnel": "0.0.6"
+    "tunnel": "0.0.6",
+    "string-random": "^0.1.3"
   }
 }
