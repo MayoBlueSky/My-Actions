@@ -55,7 +55,7 @@ async function start() {
     if (fs.existsSync(path)) {
         content = fs.readFileSync(path, "utf8");
     }
-    if (content.includes("爱奇艺-签到失败: 任务次数已经到达上限")) {
+    if (content.includes("任务次数已经到达上限")) {
         //重复签到,不推送仅输出，因为每天会签到两次防止抽奖失败.
         console.log("爱奇艺签到-" + content + '\n重复签到，取消推送')
     }else if(SEND_KEY) {
