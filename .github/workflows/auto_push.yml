@@ -1,0 +1,32 @@
+name: 自动push防止Actions自动停止
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 1,15 * *'
+  repository_dispatch:
+    types: start_action
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+
+    steps:
+    - name: Getting the repo
+      uses: actions/checkout@v2
+
+    - name: Re setting the url for `origin`
+      run: |
+        git remote set-url origin https://${{ github.event.owner.login }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.event.repository.full_name }}.git
+    - name: Adding git info
+      run: |
+        git config --global user.name "BlueSkyClouds"
+        git config --global user.email "*****@gmail.com"
+    - name: Creating an empty commit 
+      run: |
+        git commit --allow-empty -m "Auto amazing commit"
+    
+    - name: Finilly pushing the repo
+      run: |
+        git push origin master
