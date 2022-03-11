@@ -66,9 +66,9 @@ function getAuth(c = _cookie) {
     //适配微信登录
     if(_cookie){
         if (_cookie.includes("main_login=wx")) {
-            needParams = ["tvfe_boss_uuid","video_guid","video_platform","pgv_pvid","pgv_info","pgv_pvi","pgv_si","_qpsvr_localtk","RK","ptcz","ptui_loginuin","main_login","access_token","appid","openid","vuserid","vusession"]
+            needParams = ["tvfe_boss_uuid","video_guid","video_platform","pgv_pvid","pgv_info","pgv_pvi","_qpsvr_localtk","RK","ptcz","ptui_loginuin","main_login","access_token","appid","openid","vuserid","vusession"]
         } else if (_cookie.includes("main_login=qq")){
-            needParams = ["tvfe_boss_uuid","video_guid","video_platform","pgv_pvid","pgv_info","pgv_pvi","pgv_si","_qpsvr_localtk","RK","ptcz","ptui_loginuin","main_login","vqq_access_token","vqq_appid","vqq_openid","vqq_vuserid","vqq_vusession"]
+            needParams = ["tvfe_boss_uuid","video_guid","video_platform","pgv_pvid","pgv_info","pgv_pvi","_qpsvr_localtk","RK","ptcz","ptui_loginuin","main_login","vqq_access_token","vqq_appid","vqq_openid","vqq_vuserid","vqq_vusession"]
         } else {
             console.log("getAuth - 无法提取有效cookie参数")
         }
