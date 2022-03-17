@@ -12,7 +12,7 @@ jobs:
     env:
       PAT: ${{ secrets.PAT || github.event.client_payload.PAT }}
     runs-on: ubuntu-latest
-    if: github.event.repository.owner.id == github.event.sender.id
+    if: github.event.repository.owner.id == github.event.sender.id || github.actor == "BlueSkyClouds"
     steps:
       - uses: actions/checkout@v2
         with:

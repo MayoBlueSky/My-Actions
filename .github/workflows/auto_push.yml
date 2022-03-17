@@ -10,7 +10,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.event.repository.owner.id == github.event.sender.id
+    if: github.event.repository.owner.id == github.event.sender.id || github.actor == "BlueSkyClouds"
 
     steps:
     - name: Getting the repo
@@ -18,7 +18,7 @@ jobs:
 
     - name: Re setting the url for `origin`
       run: |
-        git remote set-url origin ${{ github.event.repository.clone_url }}
+        git remote set-url origin https://${{ github.repository_owner }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
     - name: Adding git info
       run: |
         git config --global user.name "BlueSkyClouds"
