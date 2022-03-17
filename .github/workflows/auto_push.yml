@@ -22,11 +22,11 @@ jobs:
     - name: Adding git info
       run: |
         git config --global user.name "BlueSkyClouds"
-        git config --global user.email "******@gmail.com"
-    - name: Creating an empty commit 
+        git config --global user.email "blueskycloudsliao@gmail.com"
+    - name: Creating an empty commit
       run: |
         git commit --allow-empty -m "Auto amazing commit"
-    
+
     - name: Finilly pushing the repo
       run: |
         git push origin master
