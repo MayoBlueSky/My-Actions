@@ -1,19 +1,10 @@
 
 <div align="center">
 <h1 align="center">My-Actions</h1>
-<img src="https://img.shields.io/github/issues/MayoBlueSky/My-Actions?color=green">
-<img src="https://img.shields.io/github/stars/MayoBlueSky/My-Actions?color=yellow">
-<img src="https://img.shields.io/github/forks/MayoBlueSky/My-Actions?color=orange">
-<img src="https://img.shields.io/github/license/MayoBlueSky/My-Actions?color=ff69b4">
-<img src="https://img.shields.io/github/languages/code-size/MayoBlueSky/My-Actions?color=blueviolet">
 </div>
 
 个人收集并适配Github Actions的各类签到大杂烩
-## 不要fork了 ⭐️star就行 #
 
-[点这里加TG群](https://t.me/joinchat/Os0AUkWMJl43ODBl) 
-
-需要什么签到可以去提[issues](https://github.com/MayoBlueSky/My-Actions/issues),也欢迎PR
 
 # 使用方式
 1. [新建仓库并同步代码](RepoSync.md)
@@ -40,15 +31,3 @@
 手动执行一次`同步源仓库`即可
 #### 自动同步
 开启并启用`同步源仓库`即可 每天会定时同步两次
-# 致谢
-
-[@chavyleung](https://github.com/chavyleung/)  
-[@Wenmoux](https://github.com/Wenmoux/)  
-[@NobyDa](https://github.com/NobyDa/)
-
-# 支持一下
-
-  ![支持一下](https://cdn.jsdelivr.net/gh/BlueskyClouds/Script@master/img/2021/05/25/img/wx.png)
-### 访问量
-
-![](http://profile-counter.glitch.me/MayoBlueSky/count.svg)
