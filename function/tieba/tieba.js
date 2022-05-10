@@ -55,7 +55,7 @@ function tieba() {
                 $.bars = $.bars.sort((a, b) => b.exp - a.exp)
                 // 开始签到
                 await signbars($.bars)
-                await getbars($.bars)
+                //await getbars($.bars)
             } catch (e) {
                 $.logErr(e, resp)
             } finally {
@@ -132,10 +132,12 @@ async function signbars(bars) {
 function getbars(bars) {
     const getBarActs = []
     for (let bar of bars) {
-        const getBarAct = (resove) => {
-            const url = { url: `http://tieba.baidu.com/sign/loadmonth?kw=${encodeURIComponent(bar.name)}&ie=utf-8`, headers: { Cookie: headerInfo } }
-            url.headers['Host'] = 'tieba.baidu.com'
-            url.headers['User-Agent'] = 'User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 13_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1 Mobile/15E148 Safari/604.1'
+        const url = {
+        url: `http://tieba.baidu.com/sign/loadmonth?kw=${encodeURIComponent(bar.name)}&ie=utf-8`,
+        headers: { Cookie: $.VAL_cookies }
+      }
+      url.headers['Host'] = 'tieba.baidu.com'
+      url.headers['User-Agent'] = 'User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 13_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1 Mobile/15E148 Safari/604.1'
             $.get(url, (err, resp, data) => {
                 try {
                     if(!isJSON_test(data)){
@@ -250,13 +252,15 @@ function showmsg() {
         $.desc = []
         $.bars.forEach((bar, index) => {
             const barno = index + 1
-            const signbar = `${bar.isSign || bar.issignSuc ? '🟢' : '🔴'} [${barno}]【${bar.name}】排名: ${bar.signRank}`
+            //const signbar = `${bar.isSign || bar.issignSuc ? '🟢' : '🔴'} [${barno}]【${bar.name}】排名: ${bar.signRank}`
+            const signbar = `${bar.isSign || bar.issignSuc ? '🟢' : '🔴'} [${barno}]【${bar.name}】`
             const signlevel = `等级: ${bar.level}`
             const signexp = `经验: ${bar.exp}`
             const signcnt = `连签: ${bar.contsignCnt}/${bar.totalsignCnt}天`
             const signmsg = `${bar.isSign || bar.issignSuc ? '' : `失败原因: ${bar.signMsg}\n`}`
             $.desc.push(`${signbar}`)
-            $.desc.push(`${signlevel}, ${signexp}, ${signcnt}`)
+            //$.desc.push(`${signlevel}, ${signexp}, ${signcnt}`)
+            $.desc.push(`${signlevel}, ${signexp}`)
             $.desc.push(`${signmsg}`)
             if (barno % $.CFG_maxShowBars === 0 || barno === allbarCnt) {
                 const _descinfo = []
