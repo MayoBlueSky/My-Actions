@@ -130,34 +130,33 @@ async function signbars(bars) {
 }
 
 function getbars(bars) {
-    const getBarActs = []
-    for (let bar of bars) {
-        const url = {
+  const getBarActs = []
+  for (let bar of bars) {
+    const getBarAct = (resove) => {
+      const url = {
         url: `http://tieba.baidu.com/sign/loadmonth?kw=${encodeURIComponent(bar.name)}&ie=utf-8`,
         headers: { Cookie: $.VAL_cookies }
       }
       url.headers['Host'] = 'tieba.baidu.com'
-      url.headers['User-Agent'] = 'User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 13_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1 Mobile/15E148 Safari/604.1'
-            $.get(url, (err, resp, data) => {
-                try {
-                    if(!isJSON_test(data)){
-                        return false;
-                    }
-                    const _signinfo = JSON.parse(data).data.sign_user_info
-                    bar.signRank = _signinfo.rank
-                    bar.contsignCnt = _signinfo.sign_keep
-                    bar.totalsignCnt = _signinfo.sign_total
-                } catch (e) {
-                    bar.contsignCnt = '❓'
-                    $.logErr(e, resp)
-                } finally {
-                    resove()
-                }
-            })
+      url.headers['User-Agent'] =
+        'User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 13_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1 Mobile/15E148 Safari/604.1'
+      $.get(url, (err, resp, data) => {
+        try {
+          const _signinfo = JSON.parse(data).data.sign_user_info
+          bar.signRank = _signinfo.rank
+          bar.contsignCnt = _signinfo.sign_keep
+          bar.totalsignCnt = _signinfo.sign_total
+        } catch (e) {
+          bar.contsignCnt = '❓'
+          $.logErr(e, resp)
+        } finally {
+          resove()
         }
-        getBarActs.push(new Promise(getBarAct))
+      })
     }
-    return Promise.all(getBarActs)
+    getBarActs.push(new Promise(getBarAct))
+  }
+  return Promise.all(getBarActs)
 }
 
 async function zhidao() {
