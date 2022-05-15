@@ -32,7 +32,7 @@ class BiliBiliCheckIn(object):
     @staticmethod
     def reward(session) -> dict:
         """取B站经验信息"""
-        url = "https://api.bilibili.com/x/web-interface/nav"
+        url = "https://api.bilibili.com/x/member/web/exp/reward"
         ret = session.get(url=url).json()
         return ret
 
@@ -281,7 +281,7 @@ class BiliBiliCheckIn(object):
             print(live_msg)
             aid_list = self.get_region(session=session)
             reward_ret = self.reward(session=session)
-            coins_av_count = reward_ret.get("data", {}).get("money") // 10
+            coins_av_count = reward_ret.get("data", {}).get("coins") // 10
             coin_num = coin_num - coins_av_count
             coin_num = coin_num if coin_num < coin else coin
             if coin_type == 1 and coin_num:
