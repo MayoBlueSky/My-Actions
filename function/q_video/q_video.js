@@ -2,7 +2,7 @@
  *
  * @description 腾讯视频好莱坞会员V力值签到，手机签到和领取任务及奖励。
  * @author BlueSkyClouds
- * @create_at 2021-01-10
+ * @create_at 2022-05-21
  */
 
 const $ = new Env('腾讯视频会员签到');
@@ -144,9 +144,9 @@ function txVideoSignIn(headers) {
                 notice += "腾讯视频会员签到：签到失败-Cookie失效 ‼️‼️"+ "\n"
                 console.log("腾讯视频会员签到：签到失败, Cookie失效 ‼️‼️")
             } else if (data.match(/checkin_score/)) {
-                msg = data.match(/checkin_score": (.+?),"msg/)[1]
+                msg = data.match(/checkin_score":"(.*?)"/)[1]
                 //通过分数判断是否重复签到
-                if(msg == '0'){
+                if(msg === '0'){
                     console.log("腾讯视频会员手机端签到失败：重复签到 ‼️‼️")
                     notice += "腾讯视频会员手机端签到失败：重复签到 ‼️‼️" + "\n"
                 }else{
