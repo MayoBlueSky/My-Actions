@@ -2,7 +2,7 @@
  *
  * @description 腾讯视频好莱坞会员V力值签到，手机签到和领取任务及奖励。
  * @author BlueSkyClouds
- * @create_at 2022-05-21
+ * @create_at 2022-05-31
  */
 
 const $ = new Env('腾讯视频会员签到');
@@ -200,17 +200,13 @@ function txVideoDownTask1(headers) {
             $.log(error);
             console.log("腾讯视频会员签到", "下载任务签到请求 ‼️‼️", error)
         } else {
-            if (data.match(/已发过货/)) {
-                console.log("腾讯视频会员下载任务签到：签到失败, 请勿重复领取任务 ‼️‼️")
-                notice += "腾讯视频会员下载任务签到：签到失败, 请勿重复领取任务 ‼️‼️" + "\n"
+            if (data.match(/-1010/)) {
+                console.log("腾讯视频会员下载任务签到：签到失败, 任务未完成 ‼️")
+                notice += "腾讯视频会员下载任务签到：签到失败, 任务未完成 ‼️\n"
             } else if (data.match(/score/)) {
                 msg = data.match(/score":(.*?)}/)[1]
                 console.log("腾讯视频会员下载任务签到：签到成功，签到分数：" + msg + "分 🎉")
                 notice += "腾讯视频会员下载任务签到：签到成功，签到分数：" + msg + "分 🎉" + "\n"
-            } else {
-                //console.log("腾讯视频会员下载任务签到", "", "签到失败, 任务未完成 ‼️‼️")
-                console.log("腾讯视频会员下载任务签到：", data)
-                notice += "腾讯视频会员下载任务签到：" + data.match(/msg":"(.*?)"/)[1] + "\n"
             }
         }
     })
@@ -225,17 +221,13 @@ function txVideoDownTask2(headers) {
             $.log(error);
             console.log("腾讯视频会员签到", "赠送任务签到请求 ‼️‼️", error)
         } else {
-            if (data.match(/已发过货/)) {
-                console.log("腾讯视频会员赠送任务签到：签到失败, 请勿重复领取任务 ‼️‼️")
-                notice += "腾讯视频会员赠送任务签到：签到失败, 请勿重复领取任务 ‼️‼️" + "\n"
+            if (data.match(/-1010/)) {
+                console.log("腾讯视频会员赠送任务签到：签到失败, 任务未完成 ‼️")
+                notice += "腾讯视频会员赠送任务签到：签到失败, 任务未完成 ‼️\n"
             } else if (data.match(/score/)) {
                 msg = data.match(/score":(.*?)}/)[1]
                 console.log("腾讯视频会员赠送任务签到：签到成功，签到分数：" + msg + "分 🎉")
                 notice += "腾讯视频会员赠送任务签到：签到成功，签到分数：" + msg + "分 🎉" + "\n"
-            } else {
-                //console.log("腾讯视频会员赠送任务签到", "", "签到失败, 任务未完成 ‼️‼️")
-                console.log("腾讯视频会员赠送任务签到：", data)
-                notice += "腾讯视频会员赠送任务签到：" + data.match(/msg":"(.*?)"/)[1] + "\n"
             }
         }
     })
@@ -250,17 +242,13 @@ function txVideoDownTask3(headers) {
             $.log(error);
             console.log("腾讯视频会员签到", "弹幕任务签到请求 ‼️‼️", error)
         } else {
-            if (data.match(/已发过货/)) {
-                console.log("腾讯视频会员弹幕任务签到：签到失败, 请勿重复领取任务 ‼️‼️")
-                notice += "腾讯视频会员弹幕任务签到：签到失败, 请勿重复领取任务 ‼️‼️" + "\n"
+            if (data.match(/-1010/)) {
+                console.log("腾讯视频会员弹幕任务签到：签到失败, 任务未完成 ‼️")
+                notice += "腾讯视频会员弹幕任务签到：签到失败, 任务未完成 ‼️\n"
             } else if (data.match(/score/)) {
                 msg = data.match(/score":(.*?)}/)[1]
                 console.log("腾讯视频会员弹幕任务签到：签到成功，签到分数：" + msg + "分 🎉")
                 notice += "腾讯视频会员弹幕任务签到：签到成功，签到分数：" + msg + "分 🎉" + "\n"
-            } else {
-                //console.log("腾讯视频会员弹幕任务签到", "", "签到失败, 任务未完成 ‼️‼️")
-                console.log("腾讯视频会员弹幕任务签到：", data)
-                notice += "腾讯视频会员弹幕任务签到：" + data.match(/msg":"(.*?)"/)[1] + "\n"
             }
         }
     })
@@ -275,17 +263,13 @@ function txVideoDownTask4(headers) {
             $.log(error);
             console.log("腾讯视频会员签到", "观看任务签到请求 ‼️‼️", error)
         } else {
-            if (data.match(/已发过货/)) {
-                console.log("腾讯视频会员观看任务签到：签到失败, 请勿重复领取任务 ‼️‼️")
-                notice += "腾讯视频会员观看任务签到：签到失败, 请勿重复领取任务 ‼️‼️" + "\n"
+            if (data.match(/-1010/)) {
+                console.log("腾讯视频会员观看任务签到：签到失败, 任务未完成 ‼️")
+                notice += "腾讯视频会员观看任务签到：签到失败, 任务未完成 ‼️\n"
             } else if (data.match(/score/)) {
                 msg = data.match(/score":(.*?)}/)[1]
                 console.log("腾讯视频会员观看任务签到：签到成功，签到分数：" + msg + "分 🎉")
                 notice += "腾讯视频会员观看任务签到：签到成功，签到分数：" + msg + "分 🎉" + "\n"
-            } else {
-                //console.log("腾讯视频会员观看任务签到", "", "签到失败, 任务未完成 ‼️‼️")
-                console.log("腾讯视频会员观看任务签到：", data)
-                notice += "腾讯视频会员观看任务签到：" + data.match(/msg":"(.*?)"/)[1] + "\n"
             }
         }
     })
