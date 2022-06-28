@@ -42,3 +42,6 @@ objdir
 .vs/*
 .vscode/*
 /node_modules/
+function/iQIYI-DailyBonus/iQIYI-bak.js
+package-lock.json
+.gitignore
