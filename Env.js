@@ -37,6 +37,7 @@ function Env(name, opts) {
       this.isMute = false
       this.isNeedRewrite = false
       this.logSeparator = '\n'
+      this.encoding = 'utf-8'
       this.startTime = new Date().getTime()
       Object.assign(this, opts)
       this.log('', `🔔${this.name}, 开始!`)
@@ -60,6 +61,10 @@ function Env(name, opts) {
 
     isShadowrocket() {
       return 'undefined' !== typeof $rocket
+    }
+
+    isStash() {
+      return 'undefined' !== typeof $environment && $environment['stash-version']
     }
 
     toObj(str, defaultValue = null) {
@@ -273,7 +278,8 @@ function Env(name, opts) {
         $httpClient.get(opts, (err, resp, body) => {
           if (!err && resp) {
             resp.body = body
-            resp.statusCode = resp.status
+            resp.statusCode = resp.status ? resp.status : resp.statusCode
+            resp.status = resp.statusCode
           }
           callback(err, resp, body)
         })
@@ -287,9 +293,10 @@ function Env(name, opts) {
             const { statusCode: status, statusCode, headers, body } = resp
             callback(null, { status, statusCode, headers, body }, body)
           },
-          (err) => callback(err)
+          (err) => callback((err && err.error) || 'UndefinedError')
         )
       } else if (this.isNode()) {
+        let iconv = require('iconv-lite')
         this.initGotEnv(opts)
         this.got(opts)
           .on('redirect', (resp, nextOpts) => {
@@ -308,12 +315,13 @@ function Env(name, opts) {
           })
           .then(
             (resp) => {
-              const { statusCode: status, statusCode, headers, body } = resp
-              callback(null, { status, statusCode, headers, body }, body)
+              const { statusCode: status, statusCode, headers, rawBody } = resp
+              const body = iconv.decode(rawBody, this.encoding)
+              callback(null, { status, statusCode, headers, rawBody, body }, body)
             },
             (err) => {
               const { message: error, response: resp } = err
-              callback(error, resp, resp && resp.body)
+              callback(error, resp, resp && iconv.decode(resp.rawBody, this.encoding))
             }
           )
       }
@@ -334,7 +342,8 @@ function Env(name, opts) {
         $httpClient[method](opts, (err, resp, body) => {
           if (!err && resp) {
             resp.body = body
-            resp.statusCode = resp.status
+            resp.statusCode = resp.status ? resp.status : resp.statusCode
+            resp.status = resp.statusCode
           }
           callback(err, resp, body)
         })
@@ -349,19 +358,21 @@ function Env(name, opts) {
             const { statusCode: status, statusCode, headers, body } = resp
             callback(null, { status, statusCode, headers, body }, body)
           },
-          (err) => callback(err)
+          (err) => callback((err && err.error) || 'UndefinedError')
         )
       } else if (this.isNode()) {
+        let iconv = require('iconv-lite')
         this.initGotEnv(opts)
         const { url, ..._opts } = opts
         this.got[method](url, _opts).then(
           (resp) => {
-            const { statusCode: status, statusCode, headers, body } = resp
-            callback(null, { status, statusCode, headers, body }, body)
+            const { statusCode: status, statusCode, headers, rawBody } = resp
+            const body = iconv.decode(rawBody, this.encoding)
+            callback(null, { status, statusCode, headers, rawBody, body }, body)
           },
           (err) => {
             const { message: error, response: resp } = err
-            callback(error, resp, resp && resp.body)
+            callback(error, resp, resp && iconv.decode(resp.rawBody, this.encoding))
           }
         )
       }
@@ -392,6 +403,28 @@ function Env(name, opts) {
         if (new RegExp('(' + k + ')').test(fmt))
           fmt = fmt.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ('00' + o[k]).substr(('' + o[k]).length))
       return fmt
+    }
+
+    /**
+     *
+     * @param {Object} options
+     * @returns {String} 将 Object 对象 转换成 queryStr: key=val&name=senku
+     */
+    queryStr(options) {
+      let queryString = ''
+
+      for (const key in options) {
+        let value = options[key]
+        if (value != null && value !== '') {
+          if (typeof value === 'object') {
+            value = JSON.stringify(value)
+          }
+          queryString += `${key}=${value}&`
+        }
+      }
+      queryString = queryString.substring(0, queryString.length - 1)
+
+      return queryString
     }
 
     /**
@@ -426,7 +459,8 @@ function Env(name, opts) {
           } else if (this.isQuanX()) {
             let openUrl = rawopts['open-url'] || rawopts.url || rawopts.openUrl
             let mediaUrl = rawopts['media-url'] || rawopts.mediaUrl
-            return { 'open-url': openUrl, 'media-url': mediaUrl }
+            let updatePasteboard = rawopts['update-pasteboard'] || rawopts.updatePasteboard
+            return { 'open-url': openUrl, 'media-url': mediaUrl, 'update-pasteboard': updatePasteboard }
           } else if (this.isSurge()) {
             let openUrl = rawopts.url || rawopts.openUrl || rawopts['open-url']
             return { url: openUrl }
@@ -479,6 +513,8 @@ function Env(name, opts) {
       this.log()
       if (this.isSurge() || this.isQuanX() || this.isLoon()) {
         $done(val)
+      } else if (this.isNode()) {
+        process.exit(1)
       }
     }
   })(name, opts)
