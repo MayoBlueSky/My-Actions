@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/MayoBlueSky/Actions#readme",
   "dependencies": {
+    "iconv-lite": "0.6.3",
     "axios": "^0.26.0",
     "axios-cookiejar-support": "^1.0.1",
     "crypto-js": "^4.0.0",
