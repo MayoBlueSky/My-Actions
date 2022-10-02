@@ -134,13 +134,24 @@ def get_app_token(login_token):
 
 if __name__ == "__main__":
     # Push Mode
-    SEND_KEY = os.environ['SEND_KEY']
+    if os.environ.get('SEND_KEY'):
+        SEND_KEY = os.environ['SEND_KEY']
+    else:
+        SEND_KEY = ''
     # 用户名（格式为 13800138000）
-    user = os.environ['Xiaomi_User']
-    # 登录密码
-    passwd = os.environ['Xiaomi_Pw']
+    if os.environ.get('Xiaomi_User') and os.environ.get('Xiaomi_Pw'):
+        # 用户名（格式为 13800138000）
+        user = os.environ['Xiaomi_User']
+        # 登录密码
+        passwd = os.environ['Xiaomi_Pw']
+    else:
+        print("未填写小米运动账号或密码取消运行")
+        exit(0)
+
     # 要修改的步数，直接输入想要修改的步数值，留空为随机步数
-    step = os.environ['Xiaomi_Bs'].replace('[', '').replace(']', '')
+    step = ''
+    if os.environ.get('Xiaomi_Bs'):
+        step = os.environ['Xiaomi_Bs'].replace('[', '').replace(']', '')
 
     user_list = user.split('#')
     passwd_list = passwd.split('#')

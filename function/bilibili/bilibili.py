@@ -7,8 +7,6 @@ from bilibiliapi import *
 from sendNotify import *
 
 sendNotify = sendNotify()
-SEND_KEY = os.environ['SEND_KEY']
-BILI_COOKIE = os.environ['BILI_COOKIE'].replace(" ", "")
 
 
 class BiliBiliCheckIn(object):
@@ -246,20 +244,20 @@ class BiliBiliCheckIn(object):
         bilibili_cookie = self.bilibili_cookie_list
         bili_jct = bilibili_cookie.get("bili_jct")
 
-        if os.environ['BILI_NUM'] == "":
-            coin_num = 0  # 投币数量
-        else:
+        if os.environ.get('BILI_NUM'):
             coin_num = int(os.environ['BILI_NUM'])
-
-        if os.environ['BILI_TYPE'] == "":
-            coin_type = 1  # 投币方式 默认为 1 ；1: 为关注用户列表视频投币 0: 为随机投币。如果关注用户发布的视频不足配置的投币数，则剩余部分使用随机投币
         else:
+            coin_num = 0  # 投币数量
+
+        if os.environ.get('BILI_TYPE'):
             coin_type = int(os.environ['BILI_TYPE'])
-
-        if os.environ['BILI_S2C'] == "":
-            silver2coin = True  # 是否开启银瓜子换硬币，默认为 True 开启
         else:
+            coin_type = 1  # 投币方式 默认为 1 ；1: 为关注用户列表视频投币 0: 为随机投币。如果关注用户发布的视频不足配置的投币数，则剩余部分使用随机投币
+
+        if os.environ.get('BILI_S2C'):
             silver2coin = False
+        else:
+            silver2coin = True  # 是否开启银瓜子换硬币，默认为 True 开启
 
         session = requests.session()
         requests.utils.add_dict_to_cookiejar(session.cookies, bilibili_cookie)
@@ -344,10 +342,10 @@ class BiliBiliCheckIn(object):
             # print(uname, uid, is_login, new_coin, vip_type, new_current_exp)
             reward_ret = self.reward(session=session)
             login = reward_ret.get("data", {}).get("login")
-            watch_av = reward_ret.get("data", {}).get("watch_av")
+            watch = reward_ret.get("data", {}).get("watch")
             coins_av = reward_ret.get("data", {}).get("coins_av", 0)
-            share_av = reward_ret.get("data", {}).get("share_av")
-            today_exp = len([one for one in [login, watch_av, share_av] if one]) * 5
+            share = reward_ret.get("data", {}).get("share")
+            today_exp = len([one for one in [login, watch, share] if one]) * 5
             today_exp += coins_av
             update_data = (28800 - new_current_exp) // (today_exp if today_exp else 1)
             if update_data <= 0:
@@ -359,7 +357,7 @@ class BiliBiliCheckIn(object):
                 f"按当前速度升级还需: {update_data}天\n{live_stats}"
             )
             print(msg)
-            if SEND_KEY == '':
+            if os.environ.get('SEND_KEY'):
                 sendNotify.send(title=u"哔哩哔哩签到", msg=msg)
             return msg
         else:
@@ -369,19 +367,18 @@ class BiliBiliCheckIn(object):
 
 if __name__ == "__main__":
     # 未填写参数取消运行
-    if os.environ['BILI_USER'] == "" or os.environ['BILI_PASS'] == "":
-        if os.environ['BILI_COOKIE'] == "":
-            print("未填写哔哩哔哩账号密码或COOKIE取消运行")
-            exit(0)
-
-    if BILI_COOKIE == "":
+    if os.environ.get('BILI_USER') and os.environ.get('BILI_PASS'):
         b = Bilibili()
         login = b.login(username=os.environ['BILI_USER'], password=os.environ['BILI_PASS'])
         if login == False:
             sendNotify.send(title=u"哔哩哔哩签到", msg="登录失败 账号或密码错误，详情前往Github查看")
             exit(0)
         _bilibili_cookie_list = b.get_cookies()
-    else:
+    elif os.environ.get('BILI_COOKIE'):
+        BILI_COOKIE = os.environ['BILI_COOKIE'].replace(" ", "")
         _bilibili_cookie_list = {cookie.split('=')[0]: cookie.split('=')[-1] for cookie in BILI_COOKIE.split(';')}
+    else:
+        print("未填写哔哩哔哩账号密码或COOKIE取消运行")
+        exit(0)
 
     BiliBiliCheckIn(bilibili_cookie_list=_bilibili_cookie_list).main()
