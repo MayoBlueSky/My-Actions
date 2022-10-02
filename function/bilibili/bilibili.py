@@ -357,7 +357,7 @@ class BiliBiliCheckIn(object):
                 f"按当前速度升级还需: {update_data}天\n{live_stats}"
             )
             print(msg)
-            if os.environ.get('SEND_KEY'):
+            if SEND_KEY == '':
                 sendNotify.send(title=u"哔哩哔哩签到", msg=msg)
             return msg
         else:
@@ -366,6 +366,10 @@ class BiliBiliCheckIn(object):
 
 
 if __name__ == "__main__":
+    if os.environ.get('SEND_KEY'):
+        SEND_KEY = os.environ['SEND_KEY']
+    else:
+        SEND_KEY = ''
     # 未填写参数取消运行
     if os.environ.get('BILI_USER') and os.environ.get('BILI_PASS'):
         b = Bilibili()
