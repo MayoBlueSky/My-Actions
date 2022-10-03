@@ -342,10 +342,10 @@ class BiliBiliCheckIn(object):
             # print(uname, uid, is_login, new_coin, vip_type, new_current_exp)
             reward_ret = self.reward(session=session)
             login = reward_ret.get("data", {}).get("login")
-            watch = reward_ret.get("data", {}).get("watch")
-            coins_av = reward_ret.get("data", {}).get("coins_av", 0)
-            share = reward_ret.get("data", {}).get("share")
-            today_exp = len([one for one in [login, watch, share] if one]) * 5
+            watch_av = reward_ret.get("data", {}).get("watch")
+            coins_av = reward_ret.get("data", {}).get("coins", 0)
+            share_av = reward_ret.get("data", {}).get("share")
+            today_exp = len([one for one in [login, watch_av, share_av] if one]) * 5
             today_exp += coins_av
             update_data = (28800 - new_current_exp) // (today_exp if today_exp else 1)
             if update_data <= 0:
