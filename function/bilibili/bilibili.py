@@ -33,6 +33,20 @@ class BiliBiliCheckIn(object):
         url = "https://api.bilibili.com/x/member/web/exp/reward"
         ret = session.get(url=url).json()
         return ret
+    
+    @staticmethod
+    def coin_today_exp(session) -> dict:
+        """取B站硬币经验信息"""
+        url = "https://api.bilibili.com/x/web-interface/coin/today/exp"
+        ret = session.get(url=url).json()
+        return ret
+    
+    @staticmethod
+    def vip_privilege_my(session) -> dict:
+        """取B站大会员硬币经验信息"""
+        url = "https://api.bilibili.com/x/vip/privilege/my"
+        ret = session.get(url=url).json()
+        return ret
 
     @staticmethod
     def live_sign(session) -> str:
@@ -79,6 +93,14 @@ class BiliBiliCheckIn(object):
         """
         url = "https://api.bilibili.com/x/vip/privilege/receive"
         post_data = {"type": receive_type, "csrf": bili_jct}
+        session.headers.update(
+            {
+                "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.67 Safari/537.36",
+                "Referer": "https://account.bilibili.com",
+                "Connection": "keep-alive",
+                "sec-fetch-mode": "cors",
+            }
+        )
         ret = session.post(url=url, data=post_data).json()
         return ret
 
@@ -278,6 +300,12 @@ class BiliBiliCheckIn(object):
             live_msg = self.live_sign(session=session)
             print(live_msg)
             aid_list = self.get_region(session=session)
+            vip_privilege_my_ret = self.vip_privilege_my(session=session)
+            welfare_list = vip_privilege_my_ret.get("data", {}).get("list",[])
+            for welfare in welfare_list:
+                if welfare.get("state") == 0 and welfare.get("vip_type") == vip_type:
+                    vip_privilege_receive_ret = self.vip_privilege_receive(session=session,bili_jct=bili_jct,receive_type=welfare.get("type"))
+                    print(vip_privilege_receive_ret) # 取消本段输出
             reward_ret = self.reward(session=session)
             coins_av_count = reward_ret.get("data", {}).get("coins") // 10
             coin_num = coin_num - coins_av_count

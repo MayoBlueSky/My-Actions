@@ -63,30 +63,30 @@ class sendNotify:
     PUSH_PLUS_USER = ''
 
     # Server酱
-    if os.environ['PUSH_KEY'] != "":
+    if os.environ.get('PUSH_KEY'):
         SCKEY = os.environ['PUSH_KEY']
 
     # Bark App
-    if os.environ['BARK_PUSH'] != "":
+    if os.environ.get('BARK_PUSH'):
         if os.environ['BARK_PUSH'].find("https") != -1 or os.environ['BARK_PUSH'].find("http") != -1:
             BARK_PUSH = os.environ['PUSH_KEY']
         else:
             BARK_PUSH = "https://api.day.app/" + os.environ['BARK_PUSH']
-    elif os.environ['BARK_SOUND'] != "":
+    elif os.environ.get('BARK_SOUND'):
         BARK_SOUND = os.environ['BARK_SOUND']
     elif BARK_PUSH != "" or BARK_PUSH.find("https") != -1 or BARK_PUSH.find("http") != -1:
         BARK_PUSH = "https://api.day.app/" + BARK_PUSH
 
     # telegram
-    if os.environ['TG_BOT_TOKEN'] != "":
+    if os.environ.get('TG_BOT_TOKEN'):
         TG_BOT_TOKEN = os.environ['TG_BOT_TOKEN']
-    if os.environ['TG_USER_ID'] != "":
+    if os.environ.get('TG_USER_ID'):
         TG_USER_ID = os.environ['TG_USER_ID']
 
     # 钉钉机器人
-    if os.environ['DD_BOT_TOKEN'] != "":
+    if os.environ.get('DD_BOT_TOKEN'):
         DD_BOT_TOKEN = os.environ['DD_BOT_TOKEN']
-    if os.environ['DD_BOT_SECRET'] != "":
+    if os.environ.get('DD_BOT_SECRET'):
         DD_BOT_SECRET = os.environ['DD_BOT_SECRET']
 
     # QQ酷推
@@ -98,13 +98,13 @@ class sendNotify:
     # 企业微信
     # if os.environ['QYWX_KEY'] != "":
     #     QQ_SKEY = os.environ['QYWX_KEY']
-    if os.environ['QYWX_AM'] != "":
+    if os.environ.get('QYWX_AM'):
         QYWX_AM = os.environ['QYWX_AM']
 
     # push+
-    if os.environ['PUSH_PLUS_TOKEN'] != "":
+    if os.environ.get('PUSH_PLUS_TOKEN'):
         PUSH_PLUS_TOKEN = os.environ['PUSH_PLUS_TOKEN']
-    if os.environ['PUSH_PLUS_USER'] != "":
+    if os.environ.get('PUSH_PLUS_USER'):
         PUSH_PLUS_USER = os.environ['PUSH_PLUS_USER']
 
     def serverNotify(self, text, desp):
