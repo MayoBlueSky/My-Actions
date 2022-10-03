@@ -62,6 +62,18 @@ class sendNotify:
     # PUSH_PLUS_USER： 一对多推送的“群组编码”（一对多推送下面->您的群组(如无则新建)->群组编码，如果您是创建群组人。也需点击“查看二维码”扫描绑定，否则不能接受群组消息推送）
     PUSH_PLUS_USER = ''
 
+    # =======================================go-cqhttp设置区域=======================================
+    # go-cqhttp
+    # 推送到个人QQ: http://127.0.0.1/send_private_msg
+    # 群: http://127.0.0.1/send_group_msg
+    GOBOT_URL = ''
+    # go-cqhttp 的推送群或用户
+    # GOBOT_URL 设置 /send_private_msg 时填入 user_id=个人QQ
+    # /send_group_msg   时填入 group_id=QQ群
+    GOBOT_QQ = ''
+    # go-cqhttp 的 access_token
+    GOBOT_TOKEN = ''
+
     # Server酱
     if os.environ.get('PUSH_KEY'):
         SCKEY = os.environ['PUSH_KEY']
@@ -106,6 +118,14 @@ class sendNotify:
         PUSH_PLUS_TOKEN = os.environ['PUSH_PLUS_TOKEN']
     if os.environ.get('PUSH_PLUS_USER'):
         PUSH_PLUS_USER = os.environ['PUSH_PLUS_USER']
+
+    # go-cqhttp
+    if os.environ.get('GOBOT_URL'):
+        GOBOT_URL = os.environ['GOBOT_URL']
+    if os.environ.get('GOBOT_QQ'):
+        GOBOT_QQ = os.environ['GOBOT_QQ']
+    if os.environ.get('GOBOT_TOKEN'):
+        GOBOT_TOKEN = os.environ['GOBOT_TOKEN']
 
     def serverNotify(self, text, desp):
         if sendNotify.SCKEY != '':
@@ -277,6 +297,33 @@ class sendNotify:
         else:
             print('\n您未提供企业微信的QYWX_AM，取消企业微信推送消息通知\n')
             pass
+    
+    # go_cqhttp推送
+    def go_cqhttp(self, title, content):
+        """
+        使用 go_cqhttp 推送消息。
+        """
+        if not sendNotify.GOBOT_URL or not sendNotify.GOBOT_QQ or not sendNotify.GOBOT_TOKEN:
+            print("go-cqhttp 服务的 GOBOT_URL 或 GOBOT_QQ 或 GOBOT_TOKEN 未设置!!\n取消推送")
+            return
+        print("go-cqhttp 服务启动")
+
+        url = f'{sendNotify.GOBOT_URL}?access_token={sendNotify.GOBOT_TOKEN}&{sendNotify.GOBOT_QQ}&message=标题:{title}\n内容:{content}'
+
+        try:
+            response = requests.get(url, timeout=15)
+            try:
+                datas = response.json()
+                if datas.get("status") == "ok":
+                    print("go-cqhttp 推送成功!")
+                else:
+                    print(f"go-cqhttp 推送失败!响应数据: {datas}")
+            except json.JSONDecodeError:
+                print(f"推送返回值非 json 格式，请检查网址和账号是否填写正确。\n{response.text}")
+        except requests.exceptions.RequestException:
+            print(f"网络异常，请检查你的网络连接、推送服务器和代理配置。\n{traceback.format_exc()}")
+        except Exception:
+            print(f"其他错误信息: \n{traceback.format_exc()}")
 
     def send(self, **kwargs):
         send = sendNotify()
@@ -288,6 +335,7 @@ class sendNotify:
         send.dingNotify(title, msg)
         send.pushNotify(title, msg)
         send.sendWechat(msg)
+        send.go_cqhttp(title, msg)
         # send.coolpush(title,msg)
 
 # if __name__ == "__main__":
