@@ -298,7 +298,7 @@ exports.main = () => new Promise(
             //setTimeout(() => {txVideoDownTask1(params)},1000),
             //setTimeout(() => {txVideoDownTask2(params)},2000),
             //setTimeout(() => {txVideoDownTask3(params)},3000),
-            setTimeout(() => {txVideoDownTask4(params)},4000),
+            //setTimeout(() => {txVideoDownTask4(params)},4000),
             setTimeout(() => {sendNotify()},10000)
             ])
             .then(e=>resovle())
