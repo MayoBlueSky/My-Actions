@@ -8,19 +8,18 @@
 const $ = new Env('腾讯视频会员签到');
 const notify = $.isNode() ? require('../sendNotify') : '';
 let ref_url = ''
-const _cookie = process.env.V_COOKIE.replace("video_platform=2", "video_platform=3")
+let _cookie = process.env.V_COOKIE
 const SEND_KEY = process.env.SEND_KEY
 const auth = getAuth()
 const axios = require('axios')
 const UTC8 = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000;
 let notice = timeFormat(UTC8) + "\n"
 
-const headers = {
+let headers = {
     'Referer': 'https://v.qq.com',
     'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.204 Safari/537.36',
     'Cookie': _cookie
 }
-
 /**
  * @description 拼接REF_URL
  */
@@ -134,37 +133,59 @@ function ref_url_ver(url = ref_url,_cookie) {
 // 手机端签到
 function txVideoSignIn(headers) {
     $.get({
-        url: `https://vip.video.qq.com/rpc/trpc.new_task_system.task_system.TaskSystem/CheckIn?rpc_data=%7B%7D`,headers
+        url: `https://vip.video.qq.com/fcgi-bin/comm_cgi?name=hierarchical_task_system&cmd=2&_=${ parseInt(Math.random()*1000) }`,headers
     }, function(error, response, data) {
         if (error) {
             $.log(error);
             console.log("腾讯视频会员签到", "签到请求失败 ‼️‼️", error)
         } else {
-
-            if(data != null) {
-                let jsonParsed , code, check_in_score;
-                jsonParsed = JSON.parse(data);
-                code = jsonParsed.ret;
-                check_in_score = jsonParsed.check_in_score;
-                if(code === 0) {
-                    notice += "腾讯视频会员手机端签到成功：签到分数：" + check_in_score + "分 🎉"+ "\n"
-                    console.log("腾讯视频会员手机端签到成功：签到分数：" + check_in_score + "分 🎉")
-                } else if (code === -2002) {
-                    console.log("腾讯视频会员手机端签到失败：重复签到 ‼️‼️")
-                    notice += "腾讯视频会员手机端签到失败：重复签到 ‼️‼️" + "\n"
-                } else if (code === -2007) {
-                    notice += "腾讯视频会员签到：非会员无法签到"
-                    console.log("腾讯视频会员签到：非会员无法签到" )
-                }else {
-                    console.log("腾讯视频会员手机端签到失败：未知错误请查看控制台输出 ‼️‼️\n" + data)
-                    notice += "腾讯视频会员手机端签到失败：未知错误请查看控制台输出 ‼️‼️" + "\n" + data
-                }
-
-            } else {
+            if (data.match(/Account Verify Error/)) {
                 notice += "腾讯视频会员签到：签到失败-Cookie失效 ‼️‼️"+ "\n"
                 console.log("腾讯视频会员签到：签到失败, Cookie失效 ‼️‼️")
+            } else if (data.match(/checkin_score/)) {
+                msg = data.match(/checkin_score":"(.*?)"/)[1]
+                //通过分数判断是否重复签到
+                if(msg === '0'){
+                    console.log("腾讯视频会员手机端签到失败：重复签到 ‼️‼️")
+                    notice += "腾讯视频会员手机端签到失败：重复签到 ‼️‼️" + "\n"
+                }else{
+                    notice += "腾讯视频会员手机端签到成功：签到分数：" + msg + "分 🎉"+ "\n"
+                    console.log("腾讯视频会员手机端签到成功：签到分数：" + msg + "分 🎉")
+                }
+            } else if (data.match(/Not VIP/)) {
+                notice += "腾讯视频会员签到：非会员无法签到"
+                console.log("腾讯视频会员签到：非会员无法签到" )
+            } else {
+                console.log("腾讯视频会员签到：脚本待更新 ‼️‼️")
+                //输出日志查找原因
+                console.log(data)
             }
+        }
+    })
+}
 
+// 签到2
+function txVideoCheckin(headers){
+    $.get({
+        url: `http://v.qq.com/x/bu/mobile_checkin?isDarkMode=0&uiType=REGULAR`,headers
+    }, function(error, response, data) {
+        if (error) {
+            $.log(error);
+            console.log("腾讯视频会员二次签到", "签到请求失败 ‼️‼️", error)
+        } else {
+            if (data.match(/Unauthorized/)) {
+                notice += "腾讯视频会员二次签到失败：Cookie失效 ‼️‼️"+ "\n"
+                console.log("腾讯视频会员签到：二次签到失败, Cookie失效 ‼️‼️")
+            } else if (data.match(/isMultiple/)) {
+                console.log("腾讯视频会员二次签到：二次签到成功" )
+                notice += "腾讯视频会员二次签到：二次签到成功" + "\n"
+            } else {
+                console.log("腾讯视频会员二次签到：签到失败，自行在腾讯视频APP内登录网址签到http://v.qq.com/x/bu/mobile_checkin (基本每周都需要手动签到一次才可以.)")
+                console.log("腾讯视频会员二次签到相关教程：https://cdn.jsdelivr.net/gh/BlueskyClouds/Script@master/img/2021/01/15/img/v_2sign.jpg")
+                notice += "腾讯视频会员二次签到：签到失败，自行在腾讯视频APP内部登录网址签到http://v.qq.com/x/bu/mobile_checkin"+ "\n" + "基本每周都需要手动签到一次第二天才会自动运行\n"
+                //输出日志查找原因
+                //console.log(data)
+            }
         }
     })
 }
@@ -178,7 +199,9 @@ function txVideoDownTask1(headers) {
             $.log(error);
             console.log("腾讯视频会员签到", "下载任务签到请求 ‼️‼️", error)
         } else {
+            console.log(data)
             if (data.match(/score/)) {
+                let msg;
                 msg = data.match(/score":(.*?)}/)[1]
                 if (msg !== 0) {
                     console.log("腾讯视频会员下载任务签到：签到失败, 任务未完成 ‼️")
@@ -296,11 +319,11 @@ exports.main = () => new Promise(
         .then(params=>Promise.all([
             txVideoSignIn(params),
             //txVideoCheckin(params),
-            setTimeout(() => {txVideoDownTask1(params)},1000),
-            setTimeout(() => {txVideoDownTask2(params)},2000),
-            setTimeout(() => {txVideoDownTask3(params)},3000),
-            setTimeout(() => {txVideoDownTask4(params)},4000),
-            setTimeout(() => {sendNotify()},10000)
+            setTimeout(() => {txVideoDownTask1(params)},5000),
+            setTimeout(() => {txVideoDownTask2(params)},10000),
+            setTimeout(() => {txVideoDownTask3(params)},15000),
+            setTimeout(() => {txVideoDownTask4(params)},20000),
+            setTimeout(() => {sendNotify()},25000)
             ])
             .then(e=>resovle())
             .catch(e=>reject())
