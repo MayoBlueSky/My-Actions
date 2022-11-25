@@ -319,9 +319,9 @@ exports.main = () => new Promise(
         .then(params=>Promise.all([
             txVideoSignIn(params),
             //txVideoCheckin(params),
-            setTimeout(() => {txVideoDownTask1(params)},5000),
-            setTimeout(() => {txVideoDownTask2(params)},10000),
-            setTimeout(() => {txVideoDownTask3(params)},15000),
+            //setTimeout(() => {txVideoDownTask1(params)},5000),
+            //setTimeout(() => {txVideoDownTask2(params)},10000),
+            //setTimeout(() => {txVideoDownTask3(params)},15000),
             setTimeout(() => {txVideoDownTask4(params)},20000),
             setTimeout(() => {sendNotify()},25000)
             ])
