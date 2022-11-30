@@ -169,7 +169,7 @@ function txVideoSignIn(headers) {
 //观看60分钟任务签到请求
 function txVideoDownTasks(headers) {
     $.get({
-        url: `https://vip.video.qq.com/rpc/trpc.new_task_system.task_system.TaskSystem/CheckIn?rpc_data=%7B%7D`, headers
+        url: `https://vip.video.qq.com/rpc/trpc.new_task_system.task_system.TaskSystem/ProvideAward?rpc_data=%7B%22task_id%22:1%7D`, headers
     }, function(error, response, data) {
         if (error) {
             $.log(error);
