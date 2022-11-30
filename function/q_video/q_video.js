@@ -101,7 +101,7 @@ function refCookie(url = ref_url) {
             }
             // 刷新cookie后去签到
             resovle({
-                ...headers, Cookie: Object.keys(auth).map(i => i + '=' + auth[i]).join('; '),
+                ...headers, Cookie: Object.keys(auth).map(i => i + '=' + auth[i]).join('; ').replace("video_platform=2","video_platform=3"),
                 'Referer': 'https://film.video.qq.com/'
             })
         }).catch(reject)
@@ -133,32 +133,34 @@ function ref_url_ver(url = ref_url,_cookie) {
 // 手机端签到
 function txVideoSignIn(headers) {
     $.get({
-        url: `https://vip.video.qq.com/fcgi-bin/comm_cgi?name=hierarchical_task_system&cmd=2&_=${ parseInt(Math.random()*1000) }`,headers
+        url: `https://vip.video.qq.com/rpc/trpc.new_task_system.task_system.TaskSystem/CheckIn?rpc_data=%7B%7D`,headers
     }, function(error, response, data) {
         if (error) {
             $.log(error);
             console.log("腾讯视频会员签到", "签到请求失败 ‼️‼️", error)
         } else {
-            if (data.match(/Account Verify Error/)) {
-                notice += "腾讯视频会员签到：签到失败-Cookie失效 ‼️‼️"+ "\n"
-                console.log("腾讯视频会员签到：签到失败, Cookie失效 ‼️‼️")
-            } else if (data.match(/checkin_score/)) {
-                msg = data.match(/checkin_score":"(.*?)"/)[1]
-                //通过分数判断是否重复签到
-                if(msg === '0'){
+            if(data != null) {
+                let jsonParsed , code, check_in_score;
+                jsonParsed = JSON.parse(data);
+                code = jsonParsed.ret;
+                check_in_score = jsonParsed.check_in_score;
+                if(code === 0) {
+                    notice += "腾讯视频会员手机端签到成功：签到分数：" + check_in_score + "分 🎉"+ "\n"
+                    console.log("腾讯视频会员手机端签到成功：签到分数：" + check_in_score + "分 🎉")
+                } else if (code === -2002) {
                     console.log("腾讯视频会员手机端签到失败：重复签到 ‼️‼️")
                     notice += "腾讯视频会员手机端签到失败：重复签到 ‼️‼️" + "\n"
-                }else{
-                    notice += "腾讯视频会员手机端签到成功：签到分数：" + msg + "分 🎉"+ "\n"
-                    console.log("腾讯视频会员手机端签到成功：签到分数：" + msg + "分 🎉")
+                } else if (code === -2007) {
+                    notice += "腾讯视频会员签到：非会员无法签到"
+                    console.log("腾讯视频会员签到：非会员无法签到" )
+                }else {
+                    console.log("腾讯视频会员手机端签到失败：未知错误请查看控制台输出 ‼️‼️\n" + data)
+                    notice += "腾讯视频会员手机端签到失败：未知错误请查看控制台输出 ‼️‼️" + "\n" + data
                 }
-            } else if (data.match(/Not VIP/)) {
-                notice += "腾讯视频会员签到：非会员无法签到"
-                console.log("腾讯视频会员签到：非会员无法签到" )
+
             } else {
-                console.log("腾讯视频会员签到：脚本待更新 ‼️‼️")
-                //输出日志查找原因
-                console.log(data)
+                notice += "腾讯视频会员签到：签到失败-Cookie失效 ‼️‼️"+ "\n"
+                console.log("腾讯视频会员签到：签到失败, Cookie失效 ‼️‼️")
             }
         }
     })
@@ -167,25 +169,33 @@ function txVideoSignIn(headers) {
 //观看60分钟任务签到请求
 function txVideoDownTasks(headers) {
     $.get({
-        url: `https://vip.video.qq.com/fcgi-bin/comm_cgi?name=spp_MissionFaHuo&cmd=4&task_id=2&_=${ parseInt(Math.random()*1000) }`, headers
+        url: `https://vip.video.qq.com/rpc/trpc.new_task_system.task_system.TaskSystem/CheckIn?rpc_data=%7B%7D`, headers
     }, function(error, response, data) {
         if (error) {
             $.log(error);
             console.log("腾讯视频会员签到", "观看任务签到请求 ‼️‼️", error)
         } else {
-            if (data.match(/score/)) {
-                let msg;
-                msg = data.match(/score":(.*?)}/)[1]
-                if (msg !== 0) {
-                    console.log("腾讯视频会员观看任务签到：签到失败, 任务未完成 ‼️")
-                    notice += "腾讯视频会员观看任务签到：签到失败, 任务未完成 ‼️\n"
-                } else {
-                    console.log("腾讯视频会员观看任务签到：签到成功，签到分数：" + msg + "分 🎉")
-                    notice += "腾讯视频会员观看任务签到：签到成功，签到分数：" + msg + "分 🎉" + "\n"
+            if(data != null) {
+                let jsonParsed , code, check_in_score;
+                jsonParsed = JSON.parse(data);
+                code = jsonParsed.ret;
+                check_in_score = jsonParsed.check_in_score;
+                if(code === 0) {
+                    notice += "腾讯视频会员观看任务签到成功：签到分数：" + check_in_score + "分 🎉"+ "\n"
+                    console.log("腾讯视频会员观看任务签到成功：签到分数：" + check_in_score + "分 🎉")
+                } else if (code === -2002) {
+                    console.log("腾讯视频会员观看任务签到成功：重复签到 ‼️‼️")
+                    notice += "腾讯视频会员观看任务签到成功：重复签到 ‼️‼️" + "\n"
+                } else if (code === -2007) {
+                    notice += "腾讯视频会员签到：非会员无法签到"
+                    console.log("腾讯视频会员签到：非会员无法签到" )
+                }else {
+                    console.log("腾讯视频会员观看任务签到成功：未知错误请查看控制台输出 ‼️‼️\n" + data)
+                    notice += "腾讯视频会员观看任务签到成功：未知错误请查看控制台输出 ‼️‼️" + "\n" + data
                 }
             } else {
-                console.log("腾讯视频会员观看任务签到失败：未知错误请查看控制台输出 ‼️‼️\n" + data)
-                notice += "腾讯视频会员观看任务签到失败：未知错误请查看控制台输出 ‼️‼️" + "\n" + data
+                notice += "腾讯视频会员签到：签到失败-Cookie失效 或 脚本待更新 ‼️‼️"+ "\n"
+                console.log("腾讯视频会员签到：签到失败, Cookie失效 或 脚本待更新 ‼️‼️")
             }
         }
     })
