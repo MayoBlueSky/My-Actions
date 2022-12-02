@@ -144,7 +144,7 @@ function txVideoSignIn(headers) {
                 jsonParsed = JSON.parse(data);
                 code = jsonParsed.ret;
                 check_in_score = jsonParsed.check_in_score;
-                if (code === 0) {
+                if (code === 0 && check_in_score != undefined) {
                     notice += "腾讯视频会员手机端签到成功：签到分数：" + check_in_score + "分 🎉" + "\n"
                     console.log("腾讯视频会员手机端签到成功：签到分数：" + check_in_score + "分 🎉")
                 } else if (code === -2002) {
@@ -180,7 +180,7 @@ function txVideoDownTasks(headers) {
                 jsonParsed = JSON.parse(data);
                 code = jsonParsed.ret;
                 check_in_score = jsonParsed.check_in_score;
-                if (code === 0) {
+                if (code === 0 && check_in_score != undefined) {
                     notice += "腾讯视频会员观看任务签到成功：签到分数：" + check_in_score + "分 🎉" + "\n"
                     console.log("腾讯视频会员观看任务签到成功：签到分数：" + check_in_score + "分 🎉")
                 } else if (code === -2002) {
