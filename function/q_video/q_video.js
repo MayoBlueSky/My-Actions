@@ -180,15 +180,12 @@ function txVideoDownTasks(headers) {
                 jsonParsed = JSON.parse(data);
                 code = jsonParsed.ret;
                 provide_value = jsonParsed.provide_value;
-                if (code === 0 && provide_value != undefined) {
+                if (code === 0 && provide_value != 0) {
                     notice += "腾讯视频会员观看任务签到成功：签到分数：" + provide_value + "分 🎉" + "\n"
                     console.log("腾讯视频会员观看任务签到成功：签到分数：" + provide_value + "分 🎉")
-                } else if (code === -2002) {
-                    console.log("腾讯视频会员观看任务签到成功：重复签到 ‼️‼️")
-                    notice += "腾讯视频会员观看任务签到成功：重复签到 ‼️‼️" + "\n"
                 } else if (code === -2003) {
-                    console.log("腾讯视频会员观看任务签到失败：任务未完成 ‼️‼️")
-                    notice += "腾讯视频会员观看任务签到失败：任务未完成 ‼️‼️" + "\n"
+                    console.log("腾讯视频会员观看任务签到失败：任务未完成或重复领取 ‼️‼️")
+                    notice += "腾讯视频会员观看任务签到失败：任务未完成或重复领取 ‼️‼️" + "\n"
                 } else if (code === -2007) {
                     notice += "腾讯视频会员签到：非会员无法签到"
                     console.log("腾讯视频会员签到：非会员无法签到")
