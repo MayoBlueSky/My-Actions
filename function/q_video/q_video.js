@@ -180,7 +180,7 @@ function txVideoDownTasks(headers) {
                 jsonParsed = JSON.parse(data);
                 code = jsonParsed.ret;
                 provide_value = jsonParsed.provide_value;
-                if (code === 0 && check_in_score != undefined) {
+                if (code === 0 && provide_value != undefined) {
                     notice += "腾讯视频会员观看任务签到成功：签到分数：" + provide_value + "分 🎉" + "\n"
                     console.log("腾讯视频会员观看任务签到成功：签到分数：" + provide_value + "分 🎉")
                 } else if (code === -2002) {
