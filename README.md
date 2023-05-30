@@ -11,7 +11,7 @@
 个人收集并适配Github Actions的各类签到大杂烩
 ## 不要fork了 ⭐️star就行 #
 
-[点这里加TG群](https://t.me/joinchat/Os0AUkWMJl43ODBl) 
+[点这里加TG群](https://t.me/+bCXtiD4YI1ExNjE1) 
 
 需要什么签到可以去提[issues](https://github.com/MayoBlueSky/My-Actions/issues),也欢迎PR
 
