@@ -1,10 +1,10 @@
+from http import client
+from sendNotify import *
 import random
 import string
 import sys
 
 sys.path.append("My-Actions/function/bika/")
-from sendNotify import *
-from http import client
 
 sendNotify = sendNotify()
 
@@ -97,11 +97,12 @@ if __name__ == '__main__':
         # print(msg)
 
     profile_response = profile(current_token)
-    profile_result = profile_response["data"]["user"]
-    msg = msg + f'\n用户名: {profile_result["name"]}\n等级: {profile_result["level"]}\n经验: {profile_result["exp"]}'
-
-    print(msg)
-    if os.environ.get('SEND_KEY'):
-        print("SEND_KEY = True")
+    if profile_response["code"] == 200:
+        profile_result = profile_response["data"]["user"]
+        msg = msg + f'\n用户名: {profile_result["name"]}\n等级: {profile_result["level"]}\n经验: {profile_result["exp"]}'
     else:
+        profile_result = profile_response["data"]["user"]
+        msg = msg + f'\n {profile_result["message"]}'
+    print(msg)
+    if not os.environ.get('SEND_KEY'):
         sendNotify.send(title=u"哔咔漫画自动打哔咔", msg="【哔咔漫画自动签到】\n" + msg)
