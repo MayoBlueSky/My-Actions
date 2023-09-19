@@ -17,7 +17,7 @@
 | `BILI_S2C`       | 哔哩哔哩每日银瓜子兑换硬币           | `可不填`默认兑换,设置为`任意数值`则不自动兑换                                                                                          |
 | `BIKA_USER`      | 哔咔漫画用户名                 | 哔咔漫画用户名                                                                                                            |
 | `BIKA_PASS`      | 哔咔漫画密码                  | 哔咔漫画密码                                                                                                             |
-| `V_REF_URL`      | 腾讯视频Request URL         | 电脑端搜索auth_refresh复制整段Request url[图片教程](https://cdn.jsdelivr.net/gh/BlueskyClouds/Script/img/2020/11/1/img/v_1.jpg) |
+| `V_REF_URL`      | 腾讯视频Request URL         | 电脑端搜索auth_refresh复制整段Request url[图片教程](https://cdn.jsdelivr.net/gh/BlueskyClouds/Script/img/2020/11/1/img/v_1.jpg)[最新获取教程](https://cdn.jsdelivr.net/gh/BlueskyClouds/Script/img/2023/9/16/img/tx.png) |
 | `V_COOKIE`       | 腾讯视频Cookie              | 电脑端搜索auth_refresh复制Cookie[图片教程](https://cdn.jsdelivr.net/gh/BlueskyClouds/Script/img/2020/11/1/img/v_2.jpg)        |
 | `TELECOM_MOBILE` | 中国电信手机号                 | 只需要手机号 单账号 `多账号将会暴露手机号` 自行考虑,多账号使用`,`分割 部分地区或手机号暂无法签到，自行测试使用                                                       |
 | `V2EXCK`         | V2EX的Cookie             | V2EX的Cookie(由于被墙可能会签到失败)                                                                                           |
