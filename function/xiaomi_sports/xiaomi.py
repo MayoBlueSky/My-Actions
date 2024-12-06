@@ -110,8 +110,8 @@ def main(_user, _passwd, _step):
     _step = str(_step)
 
     if _step == '':
-        print("已设置为随机步数（10000-29999）")
-        _step = str(random.randint(10000, 29999))
+        print("已设置为随机步数（10000-39999）")
+        _step = str(random.randint(10000, 39999))
 
     login_token, userid = login(_user, _passwd, _type)
 
@@ -333,9 +333,9 @@ def main(_user, _passwd, _step):
 
 # 获取时间戳
 def get_time():
-    url = 'http://api.m.taobao.com/rest/api3.do?api=mtop.common.getTimestamp'
+    url = "https://f.m.suning.com/api/ct.do"
     response = requests.get(url, headers=headers).json()
-    t = response['data']['t']
+    t = response["currentTime"]
     return t
 
 
