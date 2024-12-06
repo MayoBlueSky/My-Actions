@@ -69,7 +69,7 @@ def login(_user, password, type):
         "device_id": "2C8B4939-0CCD-4E94-8CBA-CB8EA6E613A1",
         "device_model": "phone",
         "grant_type": "access_token",
-        "third_name": "huami_phone",
+        "third_name": "email" if "@" in _user else "huami_phone",
         }
     else:
         data2 = {
